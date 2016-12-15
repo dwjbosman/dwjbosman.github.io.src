@@ -3,7 +3,7 @@ Category: Accueil
 Tags: music, hacking, communities, ethics
 Lang: fr
 
-# Colloque International
+# Colloque international
 
 ## 8-10 Novembre 2017
 ### Musée du quai Branly – Jacques Chirac
@@ -57,7 +57,7 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (Mu
 - CNAM
 - Labex CAP
 
-# Contacts
+# Contact
 
 [hacking2017@gmail.com](mailto:hacking2017@gmail.com)
 
