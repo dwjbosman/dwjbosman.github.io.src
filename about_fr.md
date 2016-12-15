@@ -3,7 +3,7 @@ Category: Accueil
 Tags: music, hacking, communities, ethics
 Lang: fr
 
-# Colloque international
+# Colloque International
 
 ## 8-10 Novembre 2017
 ### Musée du quai Branly – Jacques Chirac
