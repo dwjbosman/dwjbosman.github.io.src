@@ -1,8 +1,7 @@
 title: Musique et hacking : Instruments, communautés, éthiques
 slug: music_and_hacking
-tags: music, hacking, communities, ethics
 lang: fr
-save_as: index_fr.html
+save_as: index.html
 
 # Colloque international
 
