@@ -1,4 +1,5 @@
 title: Music and hacking : Instruments, Communities, Values
+category: home
 tags: music, hacking, communities, ethics
 lang: en
 
