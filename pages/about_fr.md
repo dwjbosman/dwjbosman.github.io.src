@@ -1,7 +1,6 @@
-Title: Musique et hacking : Instruments, communautés, éthiques
-Category: Accueil
-Tags: music, hacking, communities, ethics
-Lang: fr
+title: Musique et hacking : Instruments, communautés, éthiques
+tags: music, hacking, communities, ethics
+lang: fr
 
 # Colloque international
 
@@ -60,5 +59,3 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (Mu
 # Contact
 
 [hacking2017@gmail.com](mailto:hacking2017@gmail.com)
-
-
