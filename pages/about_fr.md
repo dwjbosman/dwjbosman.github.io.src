@@ -1,5 +1,7 @@
-title: about
+title: Musique et hacking : Instruments, communautés, éthiques
+tags: music, hacking, communities, ethics
 lang: fr
+save_as: index.html
 
 # Colloque international
 
