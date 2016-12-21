@@ -14,6 +14,7 @@ BOOTSTRAP_THEME = 'united'
 
 PATH = '/var/in'
 OUTPUT_PATH = '/var/out'
+STATIC_PATHS = ['docs',]
 
 TIMEZONE = 'Europe/Paris'
 #
