@@ -63,5 +63,4 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (Mu
 
 # Documentation
 
-[Version PDF / Communiqué de presse]({filename}../docs/MusiqueEtHacking-2017_AAC.pdf)
-
+[Version PDF / Communiqué de presse](/docs/MusiqueEtHacking-2017_AAC.pdf)
