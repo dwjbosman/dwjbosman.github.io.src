@@ -41,7 +41,7 @@ Proposals (either in English or French) are due on May 1st, 2017, and should be 
 
 # Scientific committee
 
-Paul ADENOT (Mozilla), Sébastien BROCA (CEMTI, Université Paris 8), Nicolas COLLINS (School of the Art Institute of Chicago), Joanna DEMERS (University of Southern California, Thorton School of Music), Nicolas DONIN (APM, IRCAM), Christine GUILLEBAUD (CREM, Université Paris Ouest Nanterre), Michel LALLEMENT (LISE, CNAM), Paul LAMERE (The Echo Nest), Camille PALOQUE-BERGÈS (HT2S, CNAM), Norbert SCHNELL (ISMM, IRCAM)
+Paul ADENOT (Mozilla), Sébastien BROCA (CEMTI, Université Paris 8), Nicolas COLLINS (School of the Art Institute of Chicago), Joanna DEMERS (University of Southern California, Thorton School of Music), Nicolas DONIN (APM, IRCAM), Christine GUILLEBAUD (CREM, Université Paris Ouest Nanterre), Michel LALLEMENT (LISE, CNAM), Paul LAMERE (Spotify), Camille PALOQUE-BERGÈS (HT2S, CNAM), Norbert SCHNELL (ISMM, IRCAM)
 
 # Organizing committee
 
@@ -57,3 +57,8 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (MQ
 # Contact
 
 [hacking2017@gmail.com](mailto:hacking2017@gmail.com)
+
+# Documentation
+
+[Version PDF / Communiqué de presse]({filename}../docs/MusiqueAndHacking-2017_Call.pdf)
+
