@@ -14,7 +14,7 @@ The “Music & Hacking: Instruments, Communities, Values” conference intends t
 Since the turn of the last century, computer coding and digital instruments continue to transform the aesthetic, ergonomic, communicational, and ethical dimensions of musical practices. These shifts are taking place in part under the banner of hacking, a notion which is primarily associated with the IT world. However, it has progressively infiltrated and structured a number of other fields, such as that of artistic creation. Hacker values include re-appropriation of mass-produced technical products and a focus on freely accessible communal know-how, as well as the pleasure of serendipity, subversion, and manipulation. In sum, hacking is the foundation of a disparate, discreet form of social protest: a reaction to a normalized, globalized commercial and industrial culture.
 The conference will focus on three general themes: organological hacking, creation and federation of musical communities through hacking, and the influence of hacker ethics on musical practices. At the end of the conference, a Music Hack Day will be organized on the premises of IRCAM, which will give us a chance to extend and test our reflections on musical hacking.
 
-# Themes
+# Topics
 
 - Invention and subversion of instruments
 - Non-conformist instrumental practices
