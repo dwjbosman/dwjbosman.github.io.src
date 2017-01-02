@@ -1,7 +1,8 @@
 title: Music and hacking : Instruments, Communities, Values
-slug: music_and_hacking
 lang: en
+slug: index
 save_as: index.html
+category: about
 
 # International Conference
 
@@ -37,7 +38,7 @@ Proposals for demos, workshops or performances will be taken into consideration 
 
 # Calendar
 
-Proposals (either in English or French) are due on May 1st, 2017, and should be sent to [hacking2017@gmail.com](mailto:hacking2017@gmail.com). Authors will be notified of their participation on July 1st, 2017 at the latest. Proposals, in .doc format, should include a title and an abstract of approximately 500 words, the author’s name and institutional affiliation, as well as a brief biography.œ
+Proposals (either in English or French) are due on May 1st, 2017, and should be sent to [hacking2017@gmail.com](mailto:hacking2017@gmail.com). Authors will be notified of their participation on July 1st, 2017 at the latest. Proposals, in .doc format, should include a title and an abstract of approximately 500 words, the author’s name and institutional affiliation, as well as a brief biography.
 
 # Scientific committee
 
@@ -60,4 +61,4 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (MQ
 
 # Documentation
 
-[Version PDF / Communiqué de presse](/docs/MusicAndHacking-2017_Call.pdf)
+[PDF version / Press release]({filename}/docs/MusicAndHacking-2017_Call.pdf)
