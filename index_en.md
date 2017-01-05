@@ -38,7 +38,7 @@ Proposals for demos, workshops or performances will be taken into consideration 
 
 # Calendar
 
-Proposals (either in English or French) are due on May 1st, 2017, and should be sent to [hacking2017@gmail.com](mailto:hacking2017@gmail.com). Authors will be notified of their participation on July 1st, 2017 at the latest. Proposals, in .doc format, should include a title and an abstract of approximately 500 words, the author’s name and institutional affiliation, as well as a brief biography.
+Proposals (either in English or French) are due on May 1st, 2017, and should be sent to [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com). Authors will be notified of their participation on July 1st, 2017 at the latest. Proposals, in .doc format, should include a title and an abstract of approximately 500 words, the author’s name and institutional affiliation, as well as a brief biography.
 
 # Scientific committee
 
@@ -57,7 +57,7 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (MQ
 
 # Contact
 
-[hacking2017@gmail.com](mailto:hacking2017@gmail.com)
+[musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
 # Documentation
 
