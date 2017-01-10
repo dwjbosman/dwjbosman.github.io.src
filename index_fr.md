@@ -5,7 +5,8 @@ save_as: index.html
 category: about
 
 #Erratum
-L'adresse email de contact indiquée dans la version initiale de l'appel à contributions était erronée. Les propositions de communications et de workshops/démos doivent être envoyées à : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
+
+```L'adresse email de contact indiquée dans la version initiale de l'appel à contributions était erronée. Les propositions de communications et de workshops/démos doivent être envoyées à :``` [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
 # Colloque international
 
