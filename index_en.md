@@ -7,8 +7,7 @@ category: about
 #Erratum
 
 ```
-The initial version of the call for proposals had a typo in the contact email address. Proposals for spoken papers and workshops/demos should be sent to: [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
-```
+The initial version of the call for proposals had a typo in the contact email address. Proposals for spoken papers and workshops/demos should be sent to:``` [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
 # International Conference
 
