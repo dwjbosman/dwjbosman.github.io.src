@@ -49,7 +49,7 @@ Toutes les informations relatives au colloque et au Music Hack Day seront mises 
 
 # Comité scientifique
 
-Paul ADENOT (Mozilla), Sébastien BROCA (CEMTI, Université Paris 8), Nicolas COLLINS (School of the Art Institute of Chicago), Joanna DEMERS (University of Southern California, Thorton School of Music), Nicolas DONIN (APM, IRCAM), Christine GUILLEBAUD (CREM, Université Paris Ouest Nanterre), Michel LALLEMENT (LISE, CNAM), Paul LAMERE (Spotify), Camille PALOQUE-BERGÈS (HT2S, CNAM), Norbert SCHNELL (ISMM, IRCAM)
+Paul ADENOT (Mozilla), Sébastien BROCA (CEMTI, Université Paris 8), Nicolas COLLINS (School of the Art Institute of Chicago), Joanna DEMERS (University of Southern California, Thorton School of Music), Nicolas DONIN (APM, IRCAM), Christine GUILLEBAUD (CREM, Université Paris Ouest Nanterre), Michel LALLEMENT (LISE, CNAM), Paul LAMERE (Spotify), Camille PALOQUE-BERGÈS (HT2S, CNAM), Norbert SCHNELL (ISMM, IRCAM), Jimena ROYO-LETELIER (Deezer)
 
 # Comité d’organisation
 
