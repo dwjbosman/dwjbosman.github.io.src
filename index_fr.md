@@ -61,6 +61,7 @@ Baptiste BACOT (EHESS/IRCAM), Clément CANONNE (APM, IRCAM), Frédéric KECK (Mu
 - Ircam
 - CNAM
 - Labex CAP
+- Deezer
 
 # Contact
 
