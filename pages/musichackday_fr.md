@@ -15,6 +15,8 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
     - 20h : buffet (galerie)
     - 21h-24h: session hacking
 
+<br>
+
 - samedi 11 novembre
     - 0h-9h: session hacking
     - 9h: petit déjeuner (galerie)
