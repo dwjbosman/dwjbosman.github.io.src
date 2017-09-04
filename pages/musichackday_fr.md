@@ -49,6 +49,7 @@ https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/pre
 
 - IRCAM
 - Deezer
+- Mozilla
 - GRAME
 
 Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : musiquehacking2017@gmail.com
