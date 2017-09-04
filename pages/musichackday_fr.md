@@ -9,6 +9,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 ## Planning
 
 - vendredi 10 novembre
+
   - 12h-14h: kick-off, sponsors et outils (salle Stravinsky)
   - 14h-16h: installation et création des équipes
   - 16h-20h: session hacking
@@ -16,6 +17,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
   - 21h-24h: session hacking
 
 - samedi 11 novembre
+
   - 0h-9h: session hacking
   - 9h: petit déjeuner (galerie)
   - 10h: debriefing (studio 5)
@@ -42,7 +44,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 20 places sur invitation et 30 places sur inscription libre en soumettant le formulaire suivant :
 
-https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/prefill
+[https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/prefill](https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/prefill)
 
 
 ## Partenaires
