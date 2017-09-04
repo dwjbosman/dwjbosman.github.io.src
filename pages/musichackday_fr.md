@@ -9,25 +9,23 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 ## Planning
 
 - vendredi 10 novembre
-
-  - 12h-14h: kick-off, sponsors et outils (salle Stravinsky)
-  - 14h-16h: installation et création des équipes
-  - 16h-20h: session hacking
-  - 20h : buffet (galerie)
-  - 21h-24h: session hacking
+    - 12h-14h: kick-off, sponsors et outils (salle Stravinsky)
+    - 14h-16h: installation et création des équipes
+    - 16h-20h: session hacking
+    - 20h : buffet (galerie)
+    - 21h-24h: session hacking
 
 - samedi 11 novembre
-
-  - 0h-9h: session hacking
-  - 9h: petit déjeuner (galerie)
-  - 10h: debriefing (studio 5)
-  - 10h-13h: session hacking
-  - 13h: buffet (galerie)
-  - 14h-16h: session hacking
-  - 16h-18h: présentations des projets + Q&A (galerie)
-  - 18h-19h30: concert improvisé tuilé (galerie)
-  - 19h30-20h: awards
-  - 19h30-20h30: rangement
+    - 0h-9h: session hacking
+    - 9h: petit déjeuner (galerie)
+    - 10h: debriefing (studio 5)
+    - 10h-13h: session hacking
+    - 13h: buffet (galerie)
+    - 14h-16h: session hacking
+    - 16h-18h: présentations des projets + Q&A (galerie)
+    - 18h-19h30: concert improvisé tuilé (galerie)
+    - 19h30-20h: awards
+    - 19h30-20h30: rangement
 
 ## Moyens mis à disposition
 
