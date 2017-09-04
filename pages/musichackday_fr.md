@@ -54,4 +54,4 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 - Mozilla
 - GRAME
 
-Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [mailto:musiquehacking2017@gmail.com](musiquehacking2017@gmail.com)
+Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
