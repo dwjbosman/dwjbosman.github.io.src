@@ -7,16 +7,15 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 ![MHD 2016 example]({filename}/images/musique_hacking.jpg)
 
+
 ## Planning
 
 - vendredi 10 novembre
-    - 12h-14h: kick-off, sponsors et outils (salle Stravinsky)
-    - 14h-16h: installation et création des équipes
-    - 16h-20h: session hacking
+    - 14h-17h: kick-off (présentation des sponsors et des outils (salle Stravinsky)
+    - 17h-18h: création des équipes et installation
+    - 18h-20h: session hacking
     - 20h : buffet (galerie)
     - 21h-24h: session hacking
-
-<br>
 
 - samedi 11 novembre
     - 0h-9h: session hacking
@@ -29,6 +28,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
     - 18h-19h30: concert improvisé tuilé (galerie)
     - 19h30-20h: awards
     - 19h30-20h30: rangement
+
 
 ## Moyens mis à disposition
 
@@ -54,8 +54,12 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 - Deezer
 - Mozilla
 - GRAME
+- Spotify
+- MusicBrainz
+- Arturia (à confirmer)
 
 Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
+
 
 ## Venue
 
