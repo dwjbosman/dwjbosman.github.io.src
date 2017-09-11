@@ -45,7 +45,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 20 places sur invitation et 30 places sur inscription libre en soumettant le formulaire suivant :
 
-[https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/prefill](https://docs.google.com/forms/d/1GVSNFlQ-O-T78DnXdbdQeUzd8uCgg86R0u2WhuTURNc/prefill)
+[https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 
 
 ## Partenaires
