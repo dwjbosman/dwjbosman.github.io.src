@@ -73,7 +73,7 @@ Toutes les informations relatives au colloque et au Music Hack Day seront mises 
 - Labex CAP
 - Deezer
 
-# Contacts
+# Contact
 
 [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
