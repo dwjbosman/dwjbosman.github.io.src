@@ -6,7 +6,7 @@ lang: fr
 Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, L'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles intéractions entre instruments, musiciens et réseaux.
 
 ![MHD IRCAM 2017]({filename}/images/music_hack_day-edit-1024.jpg)
-
+*photo (c) Emilie Zawadzki*
 
 ## Planning
 
