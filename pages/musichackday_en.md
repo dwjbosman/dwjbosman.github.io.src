@@ -5,31 +5,30 @@ lang: en
 
 Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, L'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles intéractions entre instruments, musiciens et réseaux.
 
-### Venez hacker l'IRCAM !
-
-![MHD 2017]({filename}/images/music_hack_day-edit-1024.jpg)
+![MHD IRCAM 2017]({filename}/images/music_hack_day-edit-1024.jpg)
 *photo &copy; Emilie Zawadzki*
 
 ## Planning
 
 - vendredi 10 novembre
-    - 14h-17h: kick-off (présentation des sponsors et des outils (salle Stravinsky)
-    - 17h-18h: création des équipes et installation
-    - 18h-20h: session hacking
+    - 14h-17h: kick-off, présentation des sponsors et des outils (salle Stravinsky)
+    - 17h-17h30:  création des équipes (salle Stravinsky)
+    - 17h30-18h : installation (studios et galerie)
+    - 18h-20h: session hacking (studios et galerie)
     - 20h : buffet (galerie)
-    - 21h-24h: session hacking
+    - 21h-24h: session hacking (studios et galerie)
 
 - samedi 11 novembre
-    - 0h-9h: session hacking
+    - 0h-9h: session hacking (studios et galerie)
     - 9h: petit déjeuner (galerie)
     - 10h: debriefing (studio 5)
-    - 10h-13h: session hacking
+    - 10h-13h: session hacking (studios et galerie)
     - 13h: buffet (galerie)
-    - 14h-16h: session hacking
+    - 14h-16h: session hacking (studios et galerie)
     - 16h-18h: présentations des projets + Q&A (galerie)
     - 18h-19h30: concert improvisé tuilé (galerie)
-    - 19h30-20h: awards
-    - 19h30-20h30: rangement
+    - 19h30-20h: awards (galerie)
+    - 20h-20h30: rangement (partout)
 
 
 ## Moyens mis à disposition
