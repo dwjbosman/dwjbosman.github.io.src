@@ -11,23 +11,24 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 ## Planning
 
 - vendredi 10 novembre
-    - 14h-17h: kick-off (présentation des sponsors et des outils (salle Stravinsky)
-    - 17h-18h: création des équipes et installation
-    - 18h-20h: session hacking
+    - 14h-17h: kick-off, présentation des sponsors et des outils (salle Stravinsky)
+    - 17h-17h30:  création des équipes (salle Stravinsky)
+    - 17h30-18h : installation (studios et galerie)
+    - 18h-20h: session hacking (studios et galerie)
     - 20h : buffet (galerie)
-    - 21h-24h: session hacking
+    - 21h-24h: session hacking (studios et galerie)
 
 - samedi 11 novembre
-    - 0h-9h: session hacking
+    - 0h-9h: session hacking (studios et galerie)
     - 9h: petit déjeuner (galerie)
     - 10h: debriefing (studio 5)
-    - 10h-13h: session hacking
+    - 10h-13h: session hacking (studios et galerie)
     - 13h: buffet (galerie)
-    - 14h-16h: session hacking
+    - 14h-16h: session hacking (studios et galerie)
     - 16h-18h: présentations des projets + Q&A (galerie)
     - 18h-19h30: concert improvisé tuilé (galerie)
-    - 19h30-20h: awards
-    - 19h30-20h30: rangement
+    - 19h30-20h: awards (galerie)
+    - 20h-20h30: rangement (partout)
 
 
 ## Moyens mis à disposition
@@ -54,8 +55,6 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 - Deezer
 - Mozilla
 - GRAME
-- Spotify
-- MusicBrainz
 - Arturia (à confirmer)
 
 Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
