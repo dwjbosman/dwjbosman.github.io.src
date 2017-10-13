@@ -15,6 +15,7 @@ Depuis le tournant du troisième millénaire, le code informatique et les instru
 
 Il s’agira donc de comprendre les formes que revêtent ces postures caractéristiques du hacking – tour à tour ludiques, transgressives ou optimisatrices – au sein des musiques d’aujourd’hui. Le colloque abordera ainsi les multiples formes de détournement ou de réappropriation qu’exercent les musiciens envers leur environnement matériel, la formation et la fédération de communautés musicales par le hacking ou encore l’influence de l’éthique « hacker » dans les pratiques musicales. Enfin, l’organisation d’un Music Hack Day en clôture du colloque viendra donner un aperçu concret de la vivacité et de la fécondité des approches qui nourrissent le monde du hacking musical.
 
+![Music and Hacking 2017]({filename}/images/photo_hack_1024.jpg)
 
 # Sujets
 

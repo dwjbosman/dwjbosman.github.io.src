@@ -15,6 +15,8 @@ Since the turn of the last century, computer coding and digital instruments cont
 
 The conference will focus on three general themes: organological hacking, creation and federation of musical communities through hacking, and the influence of hacker ethics on musical practices. At the end of the conference, a Music Hack Day will be organized on the premises of IRCAM, which will give us a chance to extend and test our reflections on musical hacking.
 
+![Music and Hacking 2017]({filename}/images/photo_hack_1024.jpg)
+
 # Topics
 
 - Invention and subversion of instruments
