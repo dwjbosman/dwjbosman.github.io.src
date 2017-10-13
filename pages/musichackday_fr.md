@@ -3,7 +3,9 @@ lang: fr
 
 ## 10-11 Novembre 2017 @ IRCAM, Paris
 
-Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, L'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles intéractions entre instruments, musiciens et réseaux.
+Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, L'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres en équipe ou en solitaire. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles interactions entre instruments, musiciens, communautés et réseaux.
+
+## Venez hacker l'IRCAM!
 
 ![MHD IRCAM 2017]({filename}/images/music_hack_day-edit-1024.jpg)
 *photo &copy; Emilie Zawadzki*
@@ -37,14 +39,16 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 - 1 salle de travail
 - 1 atelier (à confirmer)
 - 1 galerie ouverte et équipée
+- buffets, boissons, etc.
 - WiFi, ethernet
-- outils mécaniques, électroniques et informatiques
+- outils mécaniques, électroniques / informatiques (liste à venir)
+- nombreuses APIs (liste à venir)
 - badges d'entrée / sortie
 
 
 ## Participer
 
-20 places sur invitation et 30 places sur inscription libre en soumettant le formulaire suivant :
+Inscription libre dans la limite des 50 places disponibles en soumettant le formulaire suivant :
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 
