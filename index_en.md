@@ -39,6 +39,10 @@ The conference will focus on three general themes: organological hacking, creati
 
 Proposals for demos, workshops or performances will be taken into consideration for inclusion in the concluding Music Hack Day.
 
+# Program
+
+[Program PDF version]({filename}/doc/colloque_music_hacking_12_10.pdf)
+
 # Calendar
 
 Proposals (either in English or French) are due on May 15th, 2017, and should be sent to [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com). Authors will be notified of their participation on July 1st, 2017 at the latest. Proposals, in .doc format, should include a title and an abstract of approximately 500 words, the author’s name and institutional affiliation, as well as a brief biography.

@@ -39,6 +39,10 @@ Il s’agira donc de comprendre les formes que revêtent ces postures caractéri
 
 Enfin, dans le cadre du Music Hack Day qui se tiendra à l’IRCAM en clôture du colloque, les propositions de démos, workshops ou performances seront également examinées.
 
+# Programme
+
+[Program PDF version]({filename}/doc/colloque_music_hacking_12_10.pdf)
+
 # Calendrier
 
 Les propositions de communications devront être envoyées au plus tard le 15 mai 2017 à [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com) et la notification d’acceptation ou de rejet sera donnée aux auteurs le 1er juillet 2017 au plus tard. Les propositions comporteront un titre et un résumé d’environ 500 mots, le nom de l’auteur, son institution de rattachement et une brève biographie. Elles seront envoyées au format .doc.
