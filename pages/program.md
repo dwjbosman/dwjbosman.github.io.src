@@ -3,7 +3,7 @@ status: draft
 
 ### WEDNESDAY 8 NOVEMBER
 
-| Time | Title | _
+| Time | Title | 
 |:-- |:-- |:--
 | 9:30 - 10:00 | Registration – Coffee |
 | 10:00 - 10:30 | Plenary Welcome | _
