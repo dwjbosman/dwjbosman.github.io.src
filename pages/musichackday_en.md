@@ -12,9 +12,9 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
 ## Planning
 
 - friday 10 november
-    - 14h-17h: kick-off, presentation of sponsors and tools (salle Stravinsky)
-    - 17h-17h30:  tream building (salle Stravinsky)
-    - 17h30-18h : installation (studios et galerie)
+    - 14h-16h: kick-off, presentation of sponsors and tools (salle Stravinsky)
+    - 16h-17h:  tream building (salle Stravinsky)
+    - 17h-18h : installation (studios et galerie)
     - 18h-20h: hacking session (studios et galerie)
     - 20h : buffet (galerie)
     - 21h-24h: hacking session (studios et galerie)
@@ -25,12 +25,10 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
     - 10h: debriefing (studio 5)
     - 10h-13h: hacking session (studios et galerie)
     - 13h: lunch (outside)
-    - 14h-16h: hacking session (studios et galerie)
+    - 14h-16h: last hacking session (studios et galerie)
     - 16h-18h: presentations of the projects + Q&A (galerie)
-    - 18h-19h30: improvised concert (galerie)
-    - 19h30-20h: awards (galerie)
-    - 20h-20h30: cleanup (everywhere)
-
+    - 18h-19h: improvised concert (galerie)
+    - 19h-21h: awards + banquet (galerie)
 
 ## Available resources
 
