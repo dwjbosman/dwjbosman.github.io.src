@@ -8,7 +8,7 @@ category: about
 
 ## 8-10 Novembre 2017
 ### Musée du quai Branly – Jacques Chirac
-### Ircam – Centre Pompidou
+### Ircam -- Centre Pompidou
 
 Organisé conjointement par le musée du quai Branly et l’IRCAM, le colloque « Musique et hacking : Instruments, Communautés, Éthiques » vise à cerner les pratiques de musiciens et de techniciens s’impliquant dans des activités qui relèvent, explicitement ou implicitement, du hacking musical.
 Depuis le tournant du troisième millénaire, le code informatique et les instruments numériques ne cessent de transformer les pratiques musicales dans leurs dimensions esthétiques, ergonomiques, communicationnelles ou éthiques. Cette reconfiguration s’opère en partie sous les auspices de la notion de hacking. Si cette dernière renvoie initialement à un ensemble d’activités liées au monde de l’informatique, elle a progressivement infiltré et structuré d’innombrables champs, dont celui de la création artistique. Les valeurs véhiculées par le hacking prônent à la fois la réappropriation des objets techniques produits en série et la valorisation d’une forme de savoir-faire communautaire en libre accès, mais aussi le plaisir de la sérendipité, du détournement et de la manipulation. Elles sous-tendent en définitive une forme de contestation sociale discrète et éparse, en réponse à une culture commerciale et industrielle mondialisée souvent normalisante.
