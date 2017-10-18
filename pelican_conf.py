@@ -16,7 +16,7 @@ PATH = '/var/in'
 OUTPUT_PATH = '/var/out'
 STATIC_PATHS = ['doc', 'images']
 
-BANNER = '/images/photo_hack_1024.jpg'
+BANNER = '/images/photo_hack_1920.jpg'
 BANNER_SUBTITLE = 'Instruments, Communities, Values'
 BANNER_ALL_PAGES = True
 
