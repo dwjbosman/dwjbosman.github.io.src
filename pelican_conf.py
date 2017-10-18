@@ -16,6 +16,10 @@ PATH = '/var/in'
 OUTPUT_PATH = '/var/out'
 STATIC_PATHS = ['doc', 'images']
 
+BANNER = '/images/photo_hack_1024.jpg'
+BANNER_SUBTITLE = 'Instruments, Communities, Values'
+BANNER_ALL_PAGES = True
+
 TIMEZONE = 'Europe/Paris'
 #
 DEFAULT_LANG = 'en'
