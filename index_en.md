@@ -2,7 +2,8 @@ title: Music and hacking : Instruments, Communities, Values
 lang: en
 slug: index
 save_as: index.html
-category: about
+category: Home
+order: 1
 
 # International Conference
 
