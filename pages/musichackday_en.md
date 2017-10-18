@@ -3,56 +3,56 @@ lang: en
 
 ## 10-11 November 2017 @ IRCAM, Paris
 
-Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, L'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles intéractions entre instruments, musiciens et réseaux.
+In the continuity of the conference *Music and hacking : Instruments, communities and values*, [IRCAM](https://www.ircam.fr) organises a "Music Hack Day" of more than 24 hours inside the institute. More than 50 hackers are expected to create and hack various musical and sound devices. The session will focus on the complementarity between software and hardware systems in order to emerge new interations between instruments, musicians and networks.
 
 ![MHD IRCAM 2017]({filename}/images/music_hack_day-edit-1024.jpg)
 *photo &copy; Emilie Zawadzki*
 
 ## Planning
 
-- vendredi 10 novembre
-    - 14h-17h: kick-off, présentation des sponsors et des outils (salle Stravinsky)
-    - 17h-17h30:  création des équipes (salle Stravinsky)
+- friday 10 november
+    - 14h-17h: kick-off, presentation of sponsors and tools (salle Stravinsky)
+    - 17h-17h30:  tream building (salle Stravinsky)
     - 17h30-18h : installation (studios et galerie)
-    - 18h-20h: session hacking (studios et galerie)
+    - 18h-20h: hacking session (studios et galerie)
     - 20h : buffet (galerie)
-    - 21h-24h: session hacking (studios et galerie)
+    - 21h-24h: hacking session (studios et galerie)
 
-- samedi 11 novembre
-    - 0h-9h: session hacking (studios et galerie)
+- saturday 11 november
+    - 0h-9h: hacking session (studios et galerie)
     - 9h: petit déjeuner (galerie)
     - 10h: debriefing (studio 5)
-    - 10h-13h: session hacking (studios et galerie)
-    - 13h: buffet (galerie)
-    - 14h-16h: session hacking (studios et galerie)
-    - 16h-18h: présentations des projets + Q&A (galerie)
-    - 18h-19h30: concert improvisé tuilé (galerie)
+    - 10h-13h: hacking session (studios et galerie)
+    - 13h: lunch (outside)
+    - 14h-16h: hacking session (studios et galerie)
+    - 16h-18h: presentations of the projects + Q&A (galerie)
+    - 18h-19h30: improvised concert (galerie)
     - 19h30-20h: awards (galerie)
-    - 20h-20h30: rangement (partout)
+    - 20h-20h30: cleanup (everywhere)
 
 
-## Moyens mis à disposition
+## Available resources
 
 - 3 studios
-- 1 salle de travail
-- 1 atelier (à confirmer)
-- 1 galerie ouverte et équipée
+- 1 co-work room
+- 1 workshop (to be confirmed)
+- 1 galerie open and equiped with a sound system
 - WiFi, ethernet
-- outils mécaniques, électroniques et informatiques
-- badges d'entrée / sortie
+- mechanical, électronical and computer tools
+- in / out badges
 
 ## Tools
 
-*à venir*
+*to come*
 
-## Participer
+## Participate
 
-20 places sur invitation et 30 places sur inscription libre en soumettant le formulaire suivant :
+20 reserved places and 30 available on free booking using the following form:
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 
 
-## Partenaires
+## Partners
 
 - Deezer
 - Mozilla
@@ -60,11 +60,11 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 - Arturia (à confirmer)
 - IRCAM
 
-Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
+We are looking for other sponsors for this event. If you are a company or a public organization woirking in the musical world, don't hesitate to contact us by email: [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
 
 ## Venue
 
-Rendez-vous à l'IRCAM, 4 place Igor Stravinsky, 75004 Paris
+Rendez-vous at IRCAM, 4 place Igor Stravinsky, 75004 Paris
 
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.912432932615!2d2.3492199514773824!3d48.859880179186064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1c3dd0b877%3A0xe54b44663bd2e7ff!2sIrcam!5e0!3m2!1sfr!2sfr!4v1504602059757" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
