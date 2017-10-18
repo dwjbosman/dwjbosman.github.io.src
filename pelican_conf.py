@@ -4,10 +4,10 @@ from __future__ import unicode_literals
 
 SITENAME = "Music and Hacking 2017"
 SITEURL = 'http://hacking2017.ircam.fr'
-# AUTHOR = 'Guillaume Pellerin'
+AUTHOR = 'Guillaume Pellerin'
+
 # Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
-# SITEURL = 'http://yomix.org'
+RELATIVE_URLS = False
 THEME = '/srv/lib/pelican-themes/pelican-bootstrap3'
 BOOTSTRAP_THEME = 'united'
 # CUSTOM_CSS = 'themes/bootswatch/slate/slate/bootstrap.css'
