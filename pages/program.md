@@ -1,5 +1,5 @@
 title: Program
-status: draft
+status: hidden
 
 ### WEDNESDAY 8 NOVEMBER
 

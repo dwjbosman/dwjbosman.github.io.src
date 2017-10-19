@@ -20,6 +20,8 @@ BANNER = '/images/photo_hack_1920.jpg'
 BANNER_SUBTITLE = 'Instruments, Communities, Values'
 BANNER_ALL_PAGES = True
 
+DISPLAY_ARTICLE_INFO_ON_INDEX = False
+
 TIMEZONE = 'Europe/Paris'
 #
 DEFAULT_LANG = 'en'
