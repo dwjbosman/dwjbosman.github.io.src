@@ -25,7 +25,7 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
     - 10h-13h: hacking session (studios et galerie)
     - 13h: lunch (outside)
     - 14h-16h: last hacking session (studios et galerie)
-    - 16h-18h: presentations of the projects + Q&A (galerie)
+    - 16h-18h: public presentation of the projects + Q&A (galerie)
     - 18h-19h: improvised concert (galerie)
     - 19h-21h: banquet (galerie)
 
@@ -41,7 +41,7 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
 
 ## Participate
 
-Booking is now closed except for the public show event using the following form:
+Booking is now closed except for the public show event on nov. 11th 4pm using the following form:
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 

@@ -25,7 +25,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
     - 10h-12h30: session hacking (studios et galerie)
     - 12h30-14h: lunch libre
     - 14h-16h: session hacking (studios et galerie)
-    - 16h-18h: présentations des projets + Q&A (galerie)
+    - 16h-18h: présentation publique des projets + Q&A (galerie)
     - 18h-19h: concert improvisé tuilé (galerie)
     - 19h-21h: banquet (galerie)
 
@@ -43,7 +43,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 ## Participer
 
-Inscription close sauf pour la présentation publique en soumettant le formulaire suivant :
+Inscription close sauf pour la présentation publique du 11/11 1-h en soumettant le formulaire suivant :
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 
