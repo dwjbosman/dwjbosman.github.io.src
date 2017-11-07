@@ -1,4 +1,4 @@
-title: MusicHackDay @ IRCAM
+    title: MusicHackDay @ IRCAM
 lang: fr
 sortorder: 2
 
@@ -23,14 +23,14 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 - samedi 11 novembre
     - 0h-9h: session hacking (studios et galerie)
-    - 9h: petit déjeuner (galerie)
-    - 10h: debriefing (studio 5)
-    - 11h-13h: session hacking (studios et galerie)
-    - 13h: buffet (galerie)
+    - 8h: petit déjeuner (galerie)
+    - 9h-10h: debriefing (stravinsky)
+    - 10h-12h30: session hacking (studios et galerie)
+    - 12h30-14h: lunch libre
     - 14h-16h: session hacking (studios et galerie)
     - 16h-18h: présentations des projets + Q&A (galerie)
     - 18h-19h: concert improvisé tuilé (galerie)
-    - 19h-21h: awards + banquet (galerie)
+    - 19h-21h: banquet (galerie)
 
 ## Moyens mis à disposition
 

@@ -28,7 +28,7 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
     - 14h-16h: last hacking session (studios et galerie)
     - 16h-18h: presentations of the projects + Q&A (galerie)
     - 18h-19h: improvised concert (galerie)
-    - 19h-21h: awards + banquet (galerie)
+    - 19h-21h: banquet (galerie)
 
 ## Available resources
 
