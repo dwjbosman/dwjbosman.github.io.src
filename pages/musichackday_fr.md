@@ -31,16 +31,15 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 ## Moyens mis à disposition
 
-- 3 studios
+- 2 studios
 - 1 salle de travail
-- 1 atelier (à confirmer)
 - 1 galerie ouverte et équipée
-- buffets, boissons, etc.
+- 1 scène
+- buffets, boissons à volonté, etc.
 - WiFi, ethernet
 - outils mécaniques, électroniques / informatiques (liste à venir)
 - nombreuses APIs (liste à venir)
 - badges d'entrée / sortie
-
 
 ## Participer
 
@@ -51,11 +50,10 @@ Inscription libre dans la limite des 50 places disponibles en soumettant le form
 
 ## Partenaires
 
-- IRCAM
 - Deezer
 - Mozilla
 - GRAME
-- Arturia (à confirmer)
+- IRCAM
 
 Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 

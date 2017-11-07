@@ -31,17 +31,13 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
 
 ## Available resources
 
-- 3 studios
+- 2 studios
 - 1 co-work room
-- 1 workshop (to be confirmed)
 - 1 galerie open and equiped with a sound system
 - WiFi, ethernet
 - mechanical, électronical and computer tools
+- many software tools
 - in / out badges
-
-## Tools
-
-*to come*
 
 ## Participate
 
@@ -55,7 +51,6 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
 - Deezer
 - Mozilla
 - GRAME
-- Arturia (à confirmer)
 - IRCAM
 
 We are looking for other sponsors for this event. If you are a company or a public organization woirking in the musical world, don't hesitate to contact us by email: [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
