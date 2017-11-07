@@ -70,11 +70,11 @@ Proposals (either in English or French) are due on May 15th, 2017, and should be
 
 # Partners
 
-- Musée du Quai Branly
-- Ircam
-- CNAM
-- Labex CAP
-- Deezer
+![Musée du Quai Branly](http://www.quaibranly.fr/typo3conf/ext/mqb_base/Resources/Public/Montage/Desktop/img/logo.png)
+![Ircam](https://www.ircam.fr/media/uploads/images/logo/logo-ircam.png)
+![CNAM](http://www.cnam.fr/jsp/styles/img/logo_cnam_blanc_transp.png)
+![Labex CAP](http://labexcap.fr/wp-content/themes/labex-cap/img/logo-labex-cap.svg)
+![Deezer](https://e-cdns-files.dzcdn.net/cache/images/common/logos/deezer_hp.51c8087603572ee440e73719f69ff50d.png)
 
 # Contact
 
