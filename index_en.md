@@ -3,7 +3,6 @@ lang: en
 slug: index
 save_as: index.html
 category: Home
-sortorder: 1
 
 # International Conference
 

@@ -1,10 +1,7 @@
     title: MusicHackDay @ IRCAM
 lang: fr
-sortorder: 2
 
 ## 10-11 Novembre 2017 @ IRCAM, Paris
-
-### Venez hacker l'IRCAM !
 
 Dans la continuité du colloque *Musique et hacking : Instruments, communautés, éthiques*, l'[IRCAM](https://www.ircam.fr) organise un "Music Hack Day" de plus de 24h dans les murs de l'institut. Plus de 50 hackers sont attendus pour créer et détourner des dispositifs sonores et musicaux en tous genres en équipe ou en solitaire. L'accent sera mis sur la complémentarité logiciel / matériel pour faire émerger de nouvelles interactions entre instruments, musiciens, communautés et réseaux.
 

@@ -1,6 +1,5 @@
 title: MusicHackDay @ IRCAM
 lang: en
-sortorder: 2
 
 ## 10-11 November 2017 @ IRCAM, Paris
 

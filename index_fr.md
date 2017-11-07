@@ -3,7 +3,6 @@ lang: fr
 slug: index
 save_as: index.html
 category: Home
-sortorder: 1
 
 # Colloque international
 
