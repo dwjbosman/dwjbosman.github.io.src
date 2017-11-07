@@ -41,7 +41,7 @@ In the continuity of the conference *Music and hacking : Instruments, communitie
 
 ## Participate
 
-20 reserved places and 30 available on free booking using the following form:
+Booking is now closed except for the public show event using the following form:
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 

@@ -43,7 +43,7 @@ Dans la continuité du colloque *Musique et hacking : Instruments, communautés
 
 ## Participer
 
-Inscription libre dans la limite des 50 places disponibles en soumettant le formulaire suivant :
+Inscription close sauf pour la présentation publique en soumettant le formulaire suivant :
 
 [https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform](https://docs.google.com/forms/d/e/1FAIpQLSdLCrP5rxF_T26YatIBMXEzDFb3BCej2Q-YtfaQCgwxPbzXzA/viewform)
 
