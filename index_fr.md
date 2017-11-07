@@ -72,11 +72,11 @@ Toutes les informations relatives au colloque et au Music Hack Day seront mises 
 
 # Partenaires
 
-- Musée du Quai Branly
-- Ircam
-- CNAM
-- Labex CAP
-- Deezer
+<img alt="Musée du Quai Branly" src="http://www.quaibranly.fr/typo3conf/ext/mqb_base/Resources/Public/Montage/Desktop/img/logo.png" width="150px">
+<img alt="Ircam" src="https://www.ircam.fr/media/uploads/images/logo/logo-ircam.png" width="150px">
+<img alt="CNAM" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Logo_cnam.gif" width="150px">
+<img alt="Labex CAP" src="http://labexcap.fr/wp-content/themes/labex-cap/img/logo-labex-cap.svg" width="150px">
+<img alt="Deezer" src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Deezer_logo.png/640px-Deezer_logo.png" width="150px">
 
 # Contact
 

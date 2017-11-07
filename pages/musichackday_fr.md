@@ -50,10 +50,14 @@ Inscription close sauf pour la présentation publique du 11/11 1-h en soumettant
 
 ## Partenaires
 
-- Deezer
-- Mozilla
-- GRAME
-- IRCAM
+<img alt="Ircam" src="https://www.ircam.fr/media/uploads/images/logo/logo-ircam.png" width="150px">
+<img alt="Deezer" src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Deezer_logo.png/640px-Deezer_logo.png" width="150px">
+<img alt="Mozilla" src="https://www.underconsideration.com/brandnew/archives/mozilla_2017_logo.png" width="150px">
+<img alt="GRAME" src="http://media.digitalarti.com/files/101_Grame_Web.gif?1365073988" width="150px">
+<img alt="Labex CAP" src="http://labexcap.fr/wp-content/themes/labex-cap/img/logo-labex-cap.svg" width="150px">
+<img alt="CNAM" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Logo_cnam.gif" width="150px">
+<img alt="Musée du Quai Branly" src="http://www.quaibranly.fr/typo3conf/ext/mqb_base/Resources/Public/Montage/Desktop/img/logo.png" width="150px">
+
 
 Nous cherchons d'autres sponsors et partenaires pour l'événément. Si vous êtes une entreprise ou un association dans le domaine musical, n'hésitez pas à nous contacter par email : [musiquehacking2017@gmail.com](mailto:musiquehacking2017@gmail.com)
 
