@@ -70,15 +70,15 @@ Proposals (either in English or French) are due on May 15th, 2017, and should be
 
 # Partners
 
-![Musée du Quai Branly](http://www.quaibranly.fr/typo3conf/ext/mqb_base/Resources/Public/Montage/Desktop/img/logo.png)
+<img alt="Musée du Quai Branly" src="http://www.quaibranly.fr/typo3conf/ext/mqb_base/Resources/Public/Montage/Desktop/img/logo.png" width="50px">
 
-![Ircam](https://www.ircam.fr/media/uploads/images/logo/logo-ircam.png)
+<img alt="Ircam" src="https://www.ircam.fr/media/uploads/images/logo/logo-ircam.png" width="50px">
 
-![CNAM](http://www.cnam.fr/jsp/styles/img/logo_cnam_blanc_transp.png)
+<img alt="CNAM" src="http://www.cnam.fr/jsp/styles/img/logo_cnam_blanc_transp.png" width="50px">
 
-![Labex CAP](http://labexcap.fr/wp-content/themes/labex-cap/img/logo-labex-cap.svg)
+<img alt="Labex CAP" src="http://labexcap.fr/wp-content/themes/labex-cap/img/logo-labex-cap.svg" width="50px">
 
-![Deezer](https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Deezer_logo.png/640px-Deezer_logo.png)
+<img alt="Deezer" src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Deezer_logo.png/640px-Deezer_logo.png" width="50px">
 
 # Contact
 
