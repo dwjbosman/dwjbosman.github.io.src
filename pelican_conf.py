@@ -14,9 +14,11 @@ BOOTSTRAP_THEME = 'united'
 
 PATH = '/var/in'
 OUTPUT_PATH = '/var/out'
-STATIC_PATHS = ['doc', 'images']
+STATIC_PATHS = ['doc', 'images','articles','RNN_files']
 
 ARTICLE_PATHS = ['articles']
+ARTICLE_SAVE_AS = '{date:%Y}/{slug}.html'
+ARTICLE_URL = '{date:%Y}/{slug}.html'
 
 BANNER = '/images/photo_hack_1920.jpg'
 BANNER_SUBTITLE = 'Instruments, Communities, Values'
