@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-SITENAME = "Music and Hacking 2017"
-SITEURL = 'http://hacking2017.ircam.fr'
-AUTHOR = 'Guillaume Pellerin'
+SITENAME = "Dinne Bosman's proffesional blog"
+SITEURL = 'https://dwjbosman.github.io'
+AUTHOR = 'Dinne Bosman'
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = False
@@ -38,23 +38,20 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('Ircam', 'http://www.ircam.fr'),
-          ('Musée du Quai Branly', 'http://www.quaibranly.fr/'),
-          ('CNAM', 'http://www.cnam.fr'),
-          ('Labex CAP', 'http://www.quaibranly.fr/'),
-          ('Music Hack Day', 'http://new.musichackday.org/')
+LINKS =  (
+	 ('TFG', 'https://www.the-future-group.com/'),
           )
 
 # Social widget
-SOCIAL = (('Twitter', 'https://twitter.com/Ircam/'),
-          ('GitHub', 'https://github.com/Ircam-RnD/'),
+SOCIAL = (
+          ('GitHub', 'https://github.com/dwjbosman/'),
           )
 
-DISQUS_SITENAME='hacking2017'
-GITHUB_USER = 'hacking2017'
-TWITTER_CARDS = True
-TWITTER_USERNAME = 'musichacking17'
-TWITTER_WIDGET_ID = '516222825451888640'
+DISQUS_SITENAME='dwjbosman'
+GITHUB_USER = 'dwjbosman'
+TWITTER_CARDS = False
+#TWITTER_USERNAME = 'musichacking17'
+#TWITTER_WIDGET_ID = '516222825451888640'
 
 PLUGIN_PATHS = ['/srv/lib/pelican-plugins']
 PLUGINS = ['assets', 'i18n_subsites', 'jinja2content', 'sitemap', 'gallery',
@@ -119,7 +116,7 @@ MARKDOWN = {
 }
 
 I18N_SUBSITES = {
-    'fr': {
-        'SITENAME': 'Musique et hacking',
-        }
+#    'nl': {
+#        'SITENAME': 'Dinne Bosman'' werk blog',
+#        }
     }
