@@ -16,11 +16,14 @@ PATH = '/var/in'
 OUTPUT_PATH = '/var/out'
 STATIC_PATHS = ['doc', 'images']
 
+ARTICLE_PATHS = ['articles']
+
 BANNER = '/images/photo_hack_1920.jpg'
 BANNER_SUBTITLE = 'Instruments, Communities, Values'
 BANNER_ALL_PAGES = True
 
-DISPLAY_ARTICLE_INFO_ON_INDEX = False
+DISPLAY_ARTICLE_INFO_ON_INDEX = True
+#DISPLAY_PAGES_ON_MENU = True
 
 TIMEZONE = 'Europe/Paris'
 #
