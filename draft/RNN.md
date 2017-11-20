@@ -1,4 +1,30 @@
-Title: A notebook
+Title: LSTM neural network for sequence learning
+Date: 2017-11-19 22:00
+Tags: LSTM, artificial intelligence, jupyter, tensorflow
+Slug: My-first-LSTM
+Authors: Dinne Bosman
+Lang:en
+Summary: My first attempt at a LSTM for sequence prediction
+
+In 1996, during my last year in High School, I borrowed a book of a friend about neural networks. It explained how a two layer perceptron network could learn the XOR function. I tried implementing the formulas and was able to do the feed-forward calculations. The training algorithm however still eluded me. But forward calculations were already very exciting. I created a windows 95 screen save which whould fill the screen with the output of a randomized neural network. The output images we're very interesting. Especially when replacing the activation functions of the network by exotic ones such as sin(x), abs(x) etc. I even reimplemented the image generation algorithm on an Amiga 600. It took ages to fill a 320x200 image...
+
+At the time it seemed that Neural networks were just another statistical method to interpolate data. Furthermore limited training data and the problem of vanishing gradients limited their usefullnes. Fast forward to 2017. Massive amounts of training data and computing power are available. A number of relatively small improvements in the basic neural network algorithms have made it possible to train networks consisting of many more layers. These so-called deep neural networks have fueled progress and interest in Artificial Intelligence.
+
+One particular innovation that caught my attention is the LSTM neural network architecture. This architecture solves the issue of vanishing gradients. LSTM networks are especially suited to perform analysis of sequences and time series. Some interesting links:
+  * article about text generation kernel code
+  * fake news generator
+  * LSTM architecture
+  * Voice synthesis (non LSTM)
+  * Audio generation
+
+Especially the last topic was very inspiring. Think about the possibilites of voice synthesis and generating music!
+
+In this article I will discuss my experience using Tensor Flow and LSTM networks. I used the following documentation sources:
+  * Tensorflow (this is API reference documentation and will not help you understand how to apply LSTM networks)
+  * Keras LSTM example
+  * Tensorflow example
+ 
+The first test I wanted to implement is too see if I could implement a sine wave predictor. It's a limited example: The network is trained using mini-batches. Due to the periodic nature of the sine wave the train, dev, and test set overlap.
 
 ```python
 import numpy as np
