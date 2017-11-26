@@ -1,6 +1,7 @@
 ---
 title: "First Post"
 cover: "/logos/logo-1024.png"
+category: "blaat"
 tags:
 
     - github
