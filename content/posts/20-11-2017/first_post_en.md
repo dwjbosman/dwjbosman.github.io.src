@@ -1,10 +1,12 @@
-Title: First Post
-Date: 2017-11-20 20:00
-Tags: pelican, github
-Slug: fist-post
-Authors: Dinne Bosman
-Lang:en
-Summary: My first post
+---
+title: "First Post"
+cover: "/logos/logo-1024.png"
+tags:
+
+    - github
+    - blog
+date: 2017-11-20 20:00
+---
 
 ## First blog post
 
