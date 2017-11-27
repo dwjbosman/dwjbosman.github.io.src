@@ -48,6 +48,9 @@ export default class MainLayout extends React.Component {
         <div>
           <Helmet>
             <meta name="description" content={config.siteDescription} />
+	    // for plotly inside notebooks
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js" />
+
           </Helmet>
           {children()}
         </div>

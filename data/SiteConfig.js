@@ -10,7 +10,7 @@ module.exports = {
   siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "1825356251115265", // FB Application ID for using app insights
   siteGATrackingID: "UA-47311644-4", // Tracking code ID for google analytics.
-  disqusShortname: "https-vagr9k-github-io-gatsby-material-starter", // Disqus shortname.
+  disqusShortname: "https-dwjbosman-github-io-blog", // Disqus shortname.
   postDefaultCategoryID: "Tech", // Default category for posts.
   userName: "Dinne Bosman", // Username to display in the author segment.
   userTwitter: "", // Optionally renders "Follow Me" in the UserInfo segment.
@@ -25,17 +25,18 @@ module.exports = {
       url: "https://github.com/dwjbosman",
       iconClassName: "fa fa-github"
     }
-/**	,
+	,
     {
-      label: "Twitter",
-      url: "https://twitter.com/Vagr9K",
-      iconClassName: "fa fa-twitter"
-    },
+      label: "Linkedin",
+      url: "https://linked-in.com/dwjbosman",
+      iconClassName: "fa fa-linkedin"
+    }
+	,
     {
       label: "Email",
-      url: "mailto:vagr9k@gmail.com",
+      url: "mailto:dinne.bosman@the-future-group.com",
       iconClassName: "fa fa-envelope"
-    } **/
+    } 
   ],
   copyright: "Copyright © 2017. Dinne Bosman" // Copyright string for the footer of the website and RSS feed.
 };
