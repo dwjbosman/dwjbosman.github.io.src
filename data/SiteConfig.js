@@ -10,7 +10,7 @@ module.exports = {
   siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "1825356251115265", // FB Application ID for using app insights
   siteGATrackingID: "UA-47311644-4", // Tracking code ID for google analytics.
-  disqusShortname: "https-dwjbosman-github-io-blog", // Disqus shortname.
+  disqusShortname: "dwjbosman-github-io", // Disqus shortname.
   postDefaultCategoryID: "Tech", // Default category for posts.
   userName: "Dinne Bosman", // Username to display in the author segment.
   userTwitter: "", // Optionally renders "Follow Me" in the UserInfo segment.
@@ -28,7 +28,7 @@ module.exports = {
 	,
     {
       label: "Linkedin",
-      url: "https://linked-in.com/dwjbosman",
+      url: "https://www.linkedin.com/in/dwjbosman",
       iconClassName: "fa fa-linkedin"
     }
 	,
