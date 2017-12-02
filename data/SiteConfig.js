@@ -15,7 +15,7 @@ module.exports = {
   userName: "Dinne Bosman", // Username to display in the author segment.
   userTwitter: "", // Optionally renders "Follow Me" in the UserInfo segment.
   userLocation: "Utrecht Area, The Netherlands", // User location to display in the author segment.
-  userAvatar: "https://api.adorable.io/avatars/150/test.png", // User avatar to display in the author segment.
+  userAvatar: "/logos/dinne.jpg", // User avatar to display in the author segment.
   userDescription:
     "Some description. TODO", // User description to display in the author segment.
   // Links to social profiles/projects you want to display in the author segment/navigation bar.

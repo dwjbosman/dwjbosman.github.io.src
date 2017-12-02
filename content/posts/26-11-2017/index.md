@@ -10,6 +10,9 @@ tags:
 date: 2017-11-19 22:00
 ---
 
+<script>window.alert("hoi2");</script>
+<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
+
 In 1996, during my last year in High School, I borrowed a book of a friend about neural networks. It explained how a two layer perceptron network could learn the XOR function. Back then I tried implementing the formulas and was able to do the feed-forward calculations. The training algorithm however still eluded me. Being able to perform forward calculations was already very exciting. I created a windows 95 screen save which would fill the screen with the output of a randomized neural network. The output images we're very interesting. Especially when replacing the activation functions of the network by exotic ones such as sin(x), abs(x) etc. (Although I lost the source code, you can still download it [here](http://www.free-downloads-center.com/download/neural-screen-saver-v1-0-11252.html))
 
 At the time it seemed that Neural networks were just another statistical method to interpolate data. Furthermore limited training data and the problem of vanishing gradients limited their usefulness. Fast forward to 2017. Massive amounts of training data and computing power are available. A number of relatively small improvements in the basic neural network algorithms have made it possible to train networks consisting of many more layers. These so-called deep neural networks have fueled progress and interest in Artificial Intelligence development.
@@ -25,6 +28,7 @@ One particular innovation that caught my attention is the LSTM neural network ar
 
 In this first test I wanted to experience implementing a sine wave predictor. using Tensor Flow. It's a toy example. Due to the periodic nature of the sine wave the train, dev, and test set overlap. This limits the possibilities to check if the network can generailize.  
 
+This notebook can be [downloaded](https://raw.githubusercontent.com/dwjbosman/tensorflow-experiments/master/Sine_LSTM_batch_size.ipynb) from my git repository.
 
 ```python
 import plotly
@@ -37,7 +41,6 @@ import IPython.display
 ```
 
 
-<script>window.alert("hoi");</script>
 
 ## Training data
 The following cell generates the training data. I decided to add some noise to the sine wave which forces some regularization.     
