@@ -1,5 +1,5 @@
 ---
-title: "Real Time sound processing with Jupyter"
+title: "Real Time sound synthesis with Jupyter"
 cover: "/logos/logo-1024.png"
 category: "Jupyter"
 date: 2017-12-03 12:00
