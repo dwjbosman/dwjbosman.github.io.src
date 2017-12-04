@@ -14,6 +14,6 @@ develop:
 publish: build
 	cd public && git add * && git commit -am "publish" && git push
 
-serve:
+serve: build
 	docker run -it --privileged --rm -v $(shell pwd):/srv -w="/srv" -p="9000:9000" optimized/docker-gatsbyjs gatsby serve
 

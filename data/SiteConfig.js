@@ -30,6 +30,12 @@ module.exports = {
       label: "Linkedin",
       url: "https://www.linkedin.com/in/dwjbosman",
       iconClassName: "fa fa-linkedin"
+    }   
+	,
+    {
+      label: "Twitter",
+      url: "https://www.twitter.com/dwjbosman",
+      iconClassName: "fa fa-twitter"
     }
 	,
     {

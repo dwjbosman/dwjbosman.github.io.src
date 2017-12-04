@@ -1,13 +1,13 @@
 ---
 title: "LSTM neural network for sequence learning"
 cover: "/logos/logo-1024.png"
-category: "blaat"
+category: "Artificial Intelligence"
 tags: 
-    - LSTM, 
+    - LSTM 
     - Artificial Intelligence
     - Jupyter
     - Tensorflow
-date: 2017-11-19 22:00
+date: 2017-11-26 22:00
 ---
 
 <script>window.alert("hoi2");</script>
