@@ -41,16 +41,33 @@ export default class MainLayout extends React.Component {
     }
     return title;
   }
+  componentDidMount() {
+    //console.log("didmount3");
+    //console.log(window.jQuery);
+    window.scripts = window.jQuery.find('[data-my-script]'); 
+    //console.log(window.scripts);
+	
+	    window.scripts.forEach(function forEachScript(element) {
+	      //const script = $(this).text();
+	      const script = window.jQuery(element).text();
+	      //console.log("for each:"+script);	      
+	      window.eval(script);
+	    });
+    
+  }
+
   render() {
+    console.log("render");
     const { children } = this.props;
     return (
       <Navigation config={config} LocalTitle={this.getLocalTitle()}>
-        <div>
+        <div ref={contentElement => (this.contentElement = contentElement)}>
           <Helmet>
             <meta name="description" content={config.siteDescription} />
 	    // for plotly inside notebooks
             //	<script src="https://cdn.plot.ly/plotly-latest.min.js" />
             <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"/>
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"/>
 	  </Helmet>
           {children()}
         </div>
