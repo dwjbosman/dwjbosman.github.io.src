@@ -1,6 +1,6 @@
 ---
 title: "Generating text using an LSTM neural network"
-cover: "/logos/books.png"
+cover: "/logos/book-3010727_1280.jpg"
 category: "Artificial intelligence"
 tags:
 
