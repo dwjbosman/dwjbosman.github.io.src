@@ -51,7 +51,33 @@ Het was een prachtig idee, maar het was nooit en die minder honderd had hij een 
 
 The results are already quite nice. Especially the fact that the network is able to correctly use symbols like quotes. Also interesting are the fictional Dutch sounding words it sometimes uses.
 
-Using different priming sequences I hoped to provoke some more semantic understandable behaviour. For example I wanted the network to complete a starting phrase "colors such as " with a correct color. But I had no luck.  
+After another night of training the network generates the following text after xxxx iterations:
+
+Waarom ben ik de verschillende kleeden.
+
+	Hij had haar ging vastgemaakt.
+
+	Het was niets vast. Ik was even erover dat hij nu een voorbeeld was op de straat.
+
+	'Ik zei het niet.'
+
+	Hij stopte en duwde mijn hele slanke verdriet. Ik was een kronder tegenover het gebaar van het bootje.
+
+	Een stol voelde me naar hem gelukkig af en die ze over mijn huid volgde. 'Wat is het verbijstering,' voegde ik hem, toen ik hem nog niet was. 'Het was de kleine van de moesten op de vader, dat ik hier erop. Deze brandstelling heeft me natuurlijk ook meer tegen me eens van de kans van zijn gedoop, zo heen geen gedoe verschilte vingers dat ik niet missrook was. En heb ik hem onder die boot opgeslagen dat zij niet gelaten komt, want de strofe voor die verwachting van die mensen. Maar doel dat wat je helemaal niet was, zal ik die dagen op zijn bed van de bedenking, word je het nog een boek van de stoel te bennepte. Het werkte haar niet al die hoofden en daar had ik dit er nog mijn beslaten gehad. Hij keek hem over een vreemde van de grond toen ik nog niet zich vooral had. De brief van de broeder draaide me naar de stremen. Dan stond de kleine gloed voor haar.
+
+'Waarom zei jij nog niet.'
+
+'Je mag me niet mien herstelde boeken voordat door metaal van je mee gaat.'
+
+'Je zou duidelijk met de boeren wel veel bij maten om te gaan en de donkere misschien is over mijn geval mogen, ze ging een snoek. De moordenaar is,' zei hij.
+
+'Wat is de snel van mij.'
+
+De stuks voelde zijn schouder. 'Waarom werkte je nu niet maar nog wel goed?'
+
+'Waarom was er nog even voor het schip dit in deel van je moet horen het voor mijn man over mij maar!" vroeg hij. 'Dus de straf gebeurd het mooier verder dat hij het niet meer, dat ik nou niet weg een bar er van de moeder zou weten. De kamer vindt het deed. Help die nog maar om een van de vreemde sterm een goed gedachten gezien, hard om eens een blik. Ik begrijp niet dat het woonde vissen was, maar heeft een dag om me aan het sprakken te verslagen, meer maar nog niet meer te vrienden. 
+
+The grammar is getting a bit better. Also I can now see that there is a ebook about football in the training set :) Using different priming sequences I hoped to provoke some more semantic understandable behaviour. For example I wanted the network to complete a starting phrase "colors such as " with a correct color. But I had no luck get any particular result.  
 
 
 
