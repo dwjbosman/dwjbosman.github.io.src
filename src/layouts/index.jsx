@@ -44,16 +44,17 @@ export default class MainLayout extends React.Component {
   componentDidMount() {
     //console.log("didmount3");
     //console.log(window.jQuery);
-    window.scripts = window.jQuery.find('[data-my-script]'); 
-    //console.log(window.scripts);
-	
+    if (window.jQuery) {
+      window.scripts = window.jQuery.find('[data-my-script]'); 
+      //console.log(window.scripts);
+  	
 	    window.scripts.forEach(function forEachScript(element) {
 	      //const script = $(this).text();
 	      const script = window.jQuery(element).text();
 	      //console.log("for each:"+script);	      
 	      window.eval(script);
 	    });
-    
+    }
   }
 
   render() {

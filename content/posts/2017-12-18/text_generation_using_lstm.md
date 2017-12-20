@@ -29,7 +29,7 @@ My laptops GTX-1060 GPU is able to process about 0.6 batches per second. After 4
 python3 sample.py --converter_path bigtextfile/converter.pkl --checkpoint_path bigtextfile/model/ --max_length 2000  --lstm_size=150 --num_layers=6 --start_string="Het was een prachtig idee, "
 
 
-Het was een prachtig idee, maar het was nooit en die minder honderd had hij een keurige gedachte dat hij natuurlijk het enige want ze keek om een gedachte te versloten.'
+<pre style='white-space:pre-wrap; word-wrap:break-word;color:green'>Het was een prachtig idee, maar het was nooit en die minder honderd had hij een keurige gedachte dat hij natuurlijk het enige want ze keek om een gedachte te versloten.'
 
 	'Ik ben een schilderen. Het zou niet zo vinden.'
 
@@ -48,6 +48,7 @@ Het was een prachtig idee, maar het was nooit en die minder honderd had hij een 
 	'Ik?' room ik terriel me naar boven.
 
 	Dan geven ik niet meer daar van haar ontdikte. Dat is niet alleen dat de stadper op zijn gezond bloedend was. Ik bedoel het nooit. Ik was een vriendelijk tijd dat ik nog meer 
+</pre>
 
 The results are already quite nice. Especially the fact that the network is able to correctly use symbols like quotes. Also interesting are the fictional Dutch sounding words it sometimes uses.
 
