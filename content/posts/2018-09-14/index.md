@@ -234,7 +234,7 @@ Some things I noticed while experimenting with VHDL 2008 and Xilinx Vivado:
   * Eventhough simulation is running fine the synthesized result can still be wrong.
   * The Cypress CS4344 datasheet's I2S waveform specification is not very clear. It does not show that the last bit of the previous sample is clocked in at the first rising SCLK after LRCK phase change.
 
-The files are available on my github page. Version Control with Vivado is not trivial. I used [this approach](https://github.com/barbedo/vivado-git) to handle version control.
+The files are available on [github](https://github.com/dwjbosman/I2S_sender). Version Control with Vivado is not trivial. I used [this approach](https://github.com/barbedo/vivado-git) to handle version control.
 
 
 
