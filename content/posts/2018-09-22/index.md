@@ -16,7 +16,7 @@ As a starting point I use this [VHDL sine generator]() sub component. This gener
 The additive synthesis engine which is to be developed needs to be able to control the frequency of the oscillator. I am not sure yet on the required frequency resolution. I will pick a reasonable number and keep the formulas general so that the value can be easily changed later. The challenge in the development of this oscillator is to implement the following features:
 
   * Configurable design parameter 'frequency resolution', default value 0.01 Hz
-  * Real time configurable parameter 'frequency', value between 1 and 20000 Hz
+  * Real time configurable parameter 'frequency', value between 1 Hz and half the sample rate. 
   * No floating point
   * No general divisions
   * Where possible use bit shifts to do multiplication / division.
@@ -36,16 +36,17 @@ Step 3 has to be performed whenever the frequency is changed while the design is
     target_frequency_resolution = 0.01 Hz
     
     Sample Rate:          
-    sample_rate = 48000 Hz
-    
+    sample_rate       = 48000 Hz
+    max_frequency     = sample_rate / 2    
+    nax_frequency    -> 24000 Hz
     Phase space size:
-    phase_space_size  = sample_rate/target_frequency_resolution 
+    phase_space_size  = sample_rate / target_frequency_resolution 
     phase_space_size -> 4800000
 
 The sine generator subcomponent requires the phase space to be a power of two. As 'P' is the minimum required phase space size it is required to round up.
 
     Power of 2 phase space size: 
-    power2_phase_space_bits =  ceiling(log(phase_space_size)/log(2))      
+    power2_phase_space_bits =  ceiling(log(phase_space_size) / log(2))      
     power2_phase_space_bits -> 23 bits
     power2_phase_space_size -> 2^23 -> 8388608
 
@@ -63,9 +64,11 @@ The reciprocal of the frequency resolution is the phase step. At each played bac
     Phase step:
     phase_step  = 1 / quantized_frequency_resolution
     phase_step -> 174.7626666667
+    phase_step_bits = log2(phase_step)
+    phase_step_bits = 7.449 bits
     assert: sample_rate * phase_step == power2_phase_space_size
 
-The phase step needs to be rounded to a power of two. It is possible to round down if the resulting frequency resolution is still above the target. If not round up:
+The phase step needs to be rounded to a power of two so that it can be easily used in integer division and multiplication. It is possible to round down if the resulting frequency resolution is still above the target. If not round up:
 
     power2_phase_step_bits =  floor(log(phase_step)/log(2))      
     power2_phase_step_bits -> 7 bits
@@ -77,21 +80,34 @@ The phase step needs to be rounded to a power of two. It is possible to round do
     power2_phase_step      -> 256
     frequency resolution would be: 1/256 -> 0.00390625
 
-With 7 bits the frequency resolution is still above the target. When specifying the frequency of the oscillator, the frequency in Hz is multiplied by 128. Eg. to get 440 Hz, the frequency parameter of the osccillator will be set to 440*128 = 56320.  
+With 7 bits the frequency resolution is still above the target. At run-time the frequency of the oscillator can be set by as an integer value by multiplying the target frequency with the scaling factor. Eg. to get 440 Hz, the frequency parameter of the osccillator will be set to 440*128 = 56320.  
    
-The combination of the sample_rate and power2_phase_space_size values imply a non-integer phase_step value. The phase_step value needs to be scaled up to keep accuracy. The scaling amount seems to be:
+The combination of the sample_rate and power2_phase_space_size values imply a non-integer phase_step value (174.76...). The phase_step value needs to be scaled up to keep accuracy when using it in division. To determine the number of bits in the scaling factor first the determine the maximum error introduced by quantisation. 
 
-    power2_phase_space_bits   -> 23 bits
-    power2_phase_step_bits    -> 7 bits
-    phase_step_scaling_bits    = power2_phase_space_bits - power2_phase_step_bits
-    phase_step_scaling_bits   -> 16 bits
-    phase_step_scaling_factor  = 2 ^ phase_step_scaling_bits
-    phase_step_scaling_factor -> 65536
-    
-    phase_step                -> 174.7626666667
-  
-    scaled_phase_step          = truncate( phase_step_scaling_factor * phase_step)
-    scaled_phase_step         -> 11453246
+    scaled_phase_step          = trunc(phase_step * phase_step_scaling_factor)
+    quantised_phase_step_error = phase_step - scaled_phase_step / phase_step_scaling_factor 
+    maximum_phase_error        = maximum_frequency * quantised_phase_step_error
+
+This maximum_error must be below 1. So the quantised_phase_step_error must be:
+
+    max_quantised_phase_step_error       = 1 / maximum_frequency
+    max_quantised_phase_step_error      -> 0.00004166...
+    max_quantised_phase_step_error_bits -> 14.5507... bits
+
+This implies the required number of bits in the phase step scaling factor:
+
+    scaled_phase_step               = trunc(phase_step * phase_step_scaling_factor)
+    scaled_phase_step_bits          = ceiling( phase_step_bits + max_quantised_phase_step_error_bits)
+    scaled_phase_step_bits         -> 22
+    phase_step_scaling_factor_bits  = ceiling ( max_quantised_phase_step_error_bits ) 
+    phase_step_scaling_factor_bits -> 15
+    phase_step_scaling_factor      -> 2^15 -> 32768
+    scaled_phase_step              -> 5726623
+
+At the maximum frequency of 24000 Hz this gives a phase error of:
+
+    maximum_frequency *  ........
+
 
 ## Run time parameters
 
