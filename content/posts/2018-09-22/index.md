@@ -88,25 +88,46 @@ The combination of the sample_rate and power2_phase_space_size values imply a no
     quantised_phase_step_error = phase_step - scaled_phase_step / phase_step_scaling_factor 
     maximum_phase_error        = maximum_frequency * quantised_phase_step_error
 
-This maximum_error must be below 1. So the quantised_phase_step_error must be:
+This maximum_error must be below 1. So the quantised_phase_step_error must be lower then:
 
     max_quantised_phase_step_error       = 1 / maximum_frequency
     max_quantised_phase_step_error      -> 0.00004166...
     max_quantised_phase_step_error_bits -> 14.5507... bits
 
-This implies the required number of bits in the phase step scaling factor:
+This implies the required number of bits in the scaled phase step:
 
-    scaled_phase_step               = trunc(phase_step * phase_step_scaling_factor)
     scaled_phase_step_bits          = ceiling( phase_step_bits + max_quantised_phase_step_error_bits)
     scaled_phase_step_bits         -> 22
+
+For the phase step scaling factor there are two options. Choose the lowest number of bits that still results in an error lower than one.
+
     phase_step_scaling_factor_bits  = ceiling ( max_quantised_phase_step_error_bits ) 
     phase_step_scaling_factor_bits -> 15
     phase_step_scaling_factor      -> 2^15 -> 32768
+    scaled_phase_step               = trunc(phase_step * phase_step_scaling_factor)
     scaled_phase_step              -> 5726623
 
-At the maximum frequency of 24000 Hz this gives a phase error of:
+    phase_step_error  = phase_step - scaled_phase_step / phase_step_scaling_factor 
+    phase_step_error -> 0.000001871744786
 
-    maximum_frequency *  ........
+    max_error         = maximum_frequency * phase_step_error 
+    max_error        -> 0.04492187486 must be <1
+
+Or
+
+    phase_step_scaling_factor_bits  = floor ( max_quantised_phase_step_error_bits ) 
+    phase_step_scaling_factor_bits -> 14
+    phase_step_scaling_factor      -> 2^14 -> 16384
+    scaled_phase_step               = trunc(phase_step * phase_step_scaling_factor)
+    scaled_phase_step              -> 2863311
+
+    phase_step_error  = phase_step - scaled_phase_step / phase_step_scaling_factor 
+    phase_step_error -> 0.00003238932291
+
+    max_error         = maximum_frequency * phase_step_error 
+    max_error        -> 0.7773437499 must be <1
+
+So 14 bits can be used for the phase step scaling factor.
 
 
 ## Run time parameters
@@ -128,14 +149,14 @@ or rewritten:
 The integer version of phase_step_fp consists of phase_step_decimal and phase_step_numerator. Phase_step_decimal will give the decimal part (in the example 76895) while the fraction (0.57333...) will be specified as a numerator, divisor pair (a rational number). The decimal part is calculated as follows:
 
     scaled_phase  = frequency_scaled * scaled_phase_step
-    scaled_phase -> 645046814720
+    scaled_phase -> 161264538831
     
     decimal_divider_bits  = power2_phase_step_bits + phase_step_scaling_bits
-    decimal_divider_bits -> 23
+    decimal_divider_bits -> 21
     phase_step_decimal    = shift_right ( scaled_phase, decimal_deivider_bits)
     phase_step_decimal   -> 76896
 
-As a check the phase_step_decimal is indeed equal to the decimal part of phase_step_fp. 
+Generally the phase_step_decimal will equal the decimal part of the phase_step_fp. In corner cases when the fractional part of phase_step_fp is near zero the decimal part will be off by one. For example with a scaled frequency of 440573 (3441.97 Hz) the actual phase step will be 601529.0027. However the quantised phase step will be floor(601528.8912) = 601528 which is off by one. 
 
 Now the fractional part is calculated as a rational value. The value consists of a numerator and divisor.  Recall the calculation of phase_step_fp:
 
@@ -146,28 +167,45 @@ This value can be converted to a rational number:
     phase_step_divisor  = sample_rate
     phase_step_divisor -> 48000
 
-    using the integer frequency_scaled in stead of the floating point frequency:
+    using frequency_scaled (an integer value) instead of the floating point frequency:
 
     phase_step_numerator_incl_decimal  = ( power2_phase_space_size * frequency_scaled ) / power2_phase_step
     phase_step_numerator_incl_decimal  = shift_right ( power2_phase_space_size * frequency_scaled, power2_phase_step_bits)
     phase_step_numerator_incl_decimal -> 3691053056
 
-As phase_step_fp is larger then one the numerator is larger then the divisor. To get the fractional part without the decimal part the decimal value is subtracted:
+The fact that phase_step_fp is larger than one implies that the numerator is larger than the divisor. To get the fractional part without the decimal part the decimal value is subtracted:
     
     phase_step_numerator  = phase_step_numerator_incl_decimal - phase_step_decimal * sample_rate
     phase_step_numerator -> 45056
 
-Lastly assert that the numerator is indeed equal to the fractional part of phase_step_fp:
+Assert that the rational number is indeed the fractional part of phase_step_fp:
 
     phase_step_fp -> 76896.93867
     phase_step_numerator / phase_step_divisor -> 0.93867
 
-The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1On5RydeTHjTQGgfvHI6CXL8H8/edit?usp=sharing)  calculations in this section can also be found on Google sheets
+In the earlier described corner cases it could be that the numerator is still larger than the divider after subtraction of the decimal part. It will however always be smaller than 2 * divider. So when the numerator is larger than the divider it is possible to simply subtract the divider once to get the numerator corresponding to the fractional part. In that case the phase_step_decimal value is increased by one.
 
-# Implementation
+The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1On5RydeTHjTQGgfvHI6CXL8H8/edit?usp=sharing)  calculations in this section can also be found on Google sheets.
 
+# VHDL Design
 
-The implementation will use the calculated values as follows: 
+A sine wave can have its own amplitude, phase offset and frequency. The frequency is stored as a decimal, fractional pair. The oscillator state contains the current decimal phase and current fractional phase. The design uses two entities:
+## Phase Step Calculator
+
+Input is a scaled frequency. Output is the decimal phase step and fractional phase step.
+
+The phase step calculator is designed separate from the sine generator itself. In the future multiple sine generators will read their paremeters from a RAM. The phase step calculator will write its results to the RAM.
+
+## Sine generator
+
+The sine generator uses TODO as a sub component to calculate the sine values given a phase value. It's input will be amplitude, phase offset, decimal phase step and fractional phase step. Its output will be a sine sample.
+
+The implementation will use the decimal phase step and fractional phase step values as follows: 
   * Each sample the phase will be increased with the decimal part: phase_step_decimal
-  * Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor value the phase will be advanced by one and the counter is decreased by the divisor.
+  * Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor (the sample rate) value then the phase will be advanced by one and the counter is decreased by the divisor.
+
+#Implementation
+
+
+
 
