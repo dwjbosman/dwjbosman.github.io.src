@@ -9,28 +9,30 @@ tags:
 date: 2018-09-22 22:00
 ---
 
-In my last article an VHDL I2S transmitter was presented which allows one to playback arbitrary wave data. Eventually the goal is to develop an additive synthesis engine. The next step involves being able to generate a sine wave.
+In my last [article](https://dwjbosman.github.io/vhdl-i-2-s-transmitter) a VHDL I2S transmitter was presented which allows one to playback arbitrary wave data. Eventually the goal is to develop an additive synthesis engine. In this article the goal is being able to generate a sine wave.
 
-As a starting point I use this [VHDL sine generator]() sub component. This generator is nicely parametrized. You can specify the number of bits in the output resolution as well as the phase input.
+As a starting point I use this [VHDL sine generator](https://github.com/jorisvr/vhdl_sincos_gen) sub component. This generator is nicely parametrized. You can specify the number of bits in the output resolution as well as the phase input.
 
 The additive synthesis engine which is to be developed needs to be able to control the frequency of the oscillator. I am not sure yet on the required frequency resolution. I will pick a reasonable number and keep the formulas general so that the value can be easily changed later. The challenge in the development of this oscillator is to implement the following features:
 
-  * Configurable design parameter 'frequency resolution', default value 0.01 Hz
+  * Configurable design parameter 'frequency resolution' which allows specifying how accurate the frequency can be controlled.
   * Real time configurable parameter 'frequency', value between 1 Hz and half the sample rate. 
   * No floating point
   * No general divisions
   * Where possible use bit shifts to do multiplication / division.
 
-# Theory
+# Phase step
 
-The sine wave generator subcomponent has two design parameters:
+## Theory
+
+The used sine wave generator sub component has two design parameters:
   1. Amplitude resolution: 24 bit
   2. Phase space size. This value has to be a power of two and determines the phase resolution as well as frequency resolution. Given a target frequency resolution the minimum required phase space bit width can be determined. 
   3. Each sample a small step will be made to advance the phase of the sine. This phase step is a rational number and can be represented by a numerator and divisor. The algorithm will calculate the divisor and numeator.
 
-Step 3 has to be performed whenever the frequency is changed while the design is 'running'. Step 2 has to be performed design-time. The next steps calculate the static design-time parameters.
+Step three has to be performed whenever the frequency is changed while the design is 'running'. Step two can be performed design-time. The next steps calculate the static design-time parameters. In the formulas below I use '->' to show its value given a sample rate and target frequency resolution.
 
-## Design time constants
+### Design time constants
 
     Frequency resolution: 
     target_frequency_resolution = 0.01 Hz
@@ -130,7 +132,7 @@ Or
 So 14 bits can be used for the phase step scaling factor.
 
 
-## Run time parameters
+### Run time parameters
 
 Let's say the frequency to generate is 440.0078125 Hz. Then the input scaled frequency would be:
 
@@ -189,23 +191,94 @@ The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1
 
 # VHDL Design
 
-A sine wave can have its own amplitude, phase offset and frequency. The frequency is stored as a decimal, fractional pair. The oscillator state contains the current decimal phase and current fractional phase. The design uses two entities:
-## Phase Step Calculator
+In this article I focus on generating a single sine wave. The following will be tested:
 
-Input is a scaled frequency. Output is the decimal phase step and fractional phase step.
+  * Setting the sine generator to a certain frequency.
+  * Updating the frequency : This should not introduce noticable audio 'glitches'.
 
-The phase step calculator is designed separate from the sine generator itself. In the future multiple sine generators will read their paremeters from a RAM. The phase step calculator will write its results to the RAM.
+## Interface
 
-## Sine generator
+The sine wave generator has the following interface:
 
-The sine generator uses TODO as a sub component to calculate the sine values given a phase value. It's input will be amplitude, phase offset, decimal phase step and fractional phase step. Its output will be a sine sample.
+        entity sine_wave is
+            Port ( resetn : std_logic;
+                   MCLK_in : in std_logic; -- Master clock of the I2S Sender
+                   
+                   freq_in_ce: in std_logic; -- if '1' freq_in will be sampled on rising edge
+                   freq_in: in frequency_t; -- the scaled frequency of the sine
 
-The implementation will use the decimal phase step and fractional phase step values as follows: 
-  * Each sample the phase will be increased with the decimal part: phase_step_decimal
-  * Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor (the sample rate) value then the phase will be advanced by one and the counter is decreased by the divisor.
+                   wave_out : out sample_t -- the generated output samples
+                   );
+        end sine_wave;
 
-#Implementation
+## Architecture
+
+The architecture consists of the sincos generator sub component and three processes:
+  * Calculating the sample clock. Each tick the sine phase will need to be updated.
+  * Accepting new frequency updates and update the phase step value. Calculating the phase step value is accomplished through a procedure
+
+    procedure Calculate_Phase_Step(
+        constant frequency_scaled: in frequency_t;
+        variable phase_step: out phase_step_t) 
+
+  * Generate sine samples by advancing the phase with the phase step. The phase value is presented to the sincos generator sub component. Updating the phase is again accomplished with a procedure. The implementation will use the decimal phase step and fractional phase step values. Each sample the phase will be increased with the decimal part: phase_step_decimal. Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor (the sample rate) value the phase will be advanced by one and the counter is decreased by the divisor.
+
+    type phase_step_t is record 
+        decimal : phase_step_decimal_t;
+        fraction : phase_step_fraction_t; -- fractional / sample_rate
+    end record;
+    
+    type phase_state_t is record
+        step : phase_step_t;
+        -- the decimal part, added each step
+        current: phase_t; 
+        -- the fractional part, if it overflows (above sample_rate)
+        -- then the it is reset and current is increased by one
+        current_fraction: phase_fraction_t; 
 
 
+    procedure Advance_Phase(
+        variable phase: inout phase_state_t)
+
+## Testing
+
+Two testbenches have been setup.
+
+### Testing phase step calculation.
+
+The 'sine_sim' tests the calculation of the design time constants and calculating the phase step decimal and fractional values. This is fairly simple: 
+  1. calculate the real phase step using standard floating point arithmatic.
+  2. calculate the same value using the phase step calculation algorithm.
+  3. compare the values: if the difference is too large report an error.
+
+The phase step will be added to the phase each time a sample is generated. A test is performed to check that the phase is updated correctly:
+  1. Advance the phase a number of times.
+  2. Update a version of the phase given the phase step as a floating point value.
+  3. Update a version of the phase given the phase step as a decimal and fractional part.
+  4. Each iteration compare if the difference between both both version of the phase is small.
+  
+### Testing the sine wave generator
+
+The simulation sets up a sine wave generator and configures its frequency to 440 Hz. The output samples are shown in Vivado's wave view. You can configure the way a signal is presented in the wave view. By showing the wave output as an analog signal with radix 'signed decimal' a nice sine wave is readily visible. Two markers were added to check the frequency of the sine wave. The check indeed shows that the sine wave has a frequency of 440 Hz.
+
+![440 Hz sine wave](doc_resources/sine_440.png "440 Hz sine wave")
+
+# Final thoughts
+
+  * It would be interesting to check if the fixed point value types in VHDL 2008 could simpliy things. Getting the fixed point package working in Vivado seemed a hassle.
+  * In VHDL setting a constant to a value given a condition is not straight forward. You can use a function to return a value based on a condition and use that function to set the constant:
+
+     function sel(Cond: BOOLEAN; If_True, If_False: real) return real is
+       begin
+           if (Cond = TRUE) then
+               return(If_True);
+           else
+               return(If_False);
+           end if;
+       end function sel; 
+
+     constant X : real := sel( TRUE, 1.0, 2.0); -- will set X to 1.0 
+
+The VHDL code can be found in the 'oscillator' branch of the [i2s_sender](https://github.com/dwjbosman/I2S_sender) repository.
 
 
