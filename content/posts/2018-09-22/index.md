@@ -1,7 +1,7 @@
 ---
 title: "VHDL sine wave oscillator"
-cover: "/logos/wave.jpg"
-category: "Hardware"
+cover: "doc_resources/header.jpg"
+category: "FPGA"
 tags: 
     - VHDL
       FPGA
@@ -15,7 +15,7 @@ As a starting point I use this [VHDL sine generator](https://github.com/jorisvr/
 
 The additive synthesis engine which is to be developed needs to be able to control the frequency of the oscillator. I am not sure yet on the required frequency resolution. I will pick a reasonable number and keep the formulas general so that the value can be easily changed later. The challenge in the development of this oscillator is to implement the following features:
 
-  * Configurable design parameter 'frequency resolution' which allows specifying how accurate the frequency can be controlled.
+  * Configurable design parameter 'frequency resolution' which allows specifying how precisely the frequency can be controlled.
   * Real time configurable parameter 'frequency', value between 1 Hz and half the sample rate. 
   * No floating point
   * No general divisions
@@ -28,7 +28,7 @@ The additive synthesis engine which is to be developed needs to be able to contr
 The used sine wave generator sub component has two design parameters:
   1. Amplitude resolution: 24 bit
   2. Phase space size. This value has to be a power of two and determines the phase resolution as well as frequency resolution. Given a target frequency resolution the minimum required phase space bit width can be determined. 
-  3. Each sample a small step will be made to advance the phase of the sine. This phase step is a rational number and can be represented by a numerator and divisor. The algorithm will calculate the divisor and numeator.
+  3. Each sample a small step will be made to advance the phase of the sine. This phase step is a rational number and can be represented by a numerator and divisor. The algorithm will calculate the divisor and numerator.
 
 Step three has to be performed whenever the frequency is changed while the design is 'running'. Step two can be performed design-time. The next steps calculate the static design-time parameters. In the formulas below I use '->' to show its value given a sample rate and target frequency resolution.
 
@@ -45,7 +45,7 @@ Step three has to be performed whenever the frequency is changed while the desig
     phase_space_size  = sample_rate / target_frequency_resolution 
     phase_space_size -> 4800000
 
-The sine generator subcomponent requires the phase space to be a power of two. As 'P' is the minimum required phase space size it is required to round up.
+The sine generator sub component requires the phase space to be a power of two. As 'P' is the minimum required phase space size it is required to round up.
 
     Power of 2 phase space size: 
     power2_phase_space_bits =  ceiling(log(phase_space_size) / log(2))      
@@ -82,15 +82,15 @@ The phase step needs to be rounded to a power of two so that it can be easily us
     power2_phase_step      -> 256
     frequency resolution would be: 1/256 -> 0.00390625
 
-With 7 bits the frequency resolution is still above the target. At run-time the frequency of the oscillator can be set by as an integer value by multiplying the target frequency with the scaling factor. Eg. to get 440 Hz, the frequency parameter of the osccillator will be set to 440*128 = 56320.  
-   
-The combination of the sample_rate and power2_phase_space_size values imply a non-integer phase_step value (174.76...). The phase_step value needs to be scaled up to keep accuracy when using it in division. To determine the number of bits in the scaling factor first the determine the maximum error introduced by quantisation. 
+With 7 bits the frequency resolution is still above the target. At run-time the frequency of the oscillator can be set by as an integer value by multiplying the target frequency with the scaling factor. For example to get 440 Hz, the frequency parameter of the oscillator will be set to 440 * 128 = 56320.
+
+The combinations of the sample\_rate and power2\_phase\_space\_size vales imply a non-integer phase\_step value (174.76...). The phase\_step value needs to be scaled up to keep accuracy when using it in division. To determine the number of bits in the scaling factor first the determine the maximum error introduced by quantisation. 
 
     scaled_phase_step          = trunc(phase_step * phase_step_scaling_factor)
     quantised_phase_step_error = phase_step - scaled_phase_step / phase_step_scaling_factor 
     maximum_phase_error        = maximum_frequency * quantised_phase_step_error
 
-This maximum_error must be below 1. So the quantised_phase_step_error must be lower then:
+This maximum\_error must be below 1. So the quantised\_phase\_step\_error must be lower then:
 
     max_quantised_phase_step_error       = 1 / maximum_frequency
     max_quantised_phase_step_error      -> 0.00004166...
@@ -139,7 +139,7 @@ Let's say the frequency to generate is 440.0078125 Hz. Then the input scaled fre
     frequency_scaled = frequency * power2_phase_step
     frequency_scaled -> 56321
 
-If it would be possible to use floating point arithmatic the phase step would be:
+If it would be possible to use floating point arithmetic the phase step would be:
 
     phase_step_fp  = ( power2_phase_space_size / sample_rate ) * frequency
 
@@ -148,7 +148,7 @@ or rewritten:
     phase_step_fp -> ( power2_phase_space_size * frequency ) / sample_rate
     phase_step_fp -> 76896.93867
 
-The integer version of phase_step_fp consists of phase_step_decimal and phase_step_numerator. Phase_step_decimal will give the decimal part (in the example 76895) while the fraction (0.57333...) will be specified as a numerator, divisor pair (a rational number). The decimal part is calculated as follows:
+The integer version of phase\_step\_fp consists of phase\_step\_decimal and phase\_step\_numerator. Phase\_step\_decimal will give the decimal part (in the example 76895) while the fraction (0.57333...) will be specified as a numerator, divisor pair (a rational number). The decimal part is calculated as follows:
 
     scaled_phase  = frequency_scaled * scaled_phase_step
     scaled_phase -> 161264538831
@@ -158,9 +158,9 @@ The integer version of phase_step_fp consists of phase_step_decimal and phase_st
     phase_step_decimal    = shift_right ( scaled_phase, decimal_deivider_bits)
     phase_step_decimal   -> 76896
 
-Generally the phase_step_decimal will equal the decimal part of the phase_step_fp. In corner cases when the fractional part of phase_step_fp is near zero the decimal part will be off by one. For example with a scaled frequency of 440573 (3441.97 Hz) the actual phase step will be 601529.0027. However the quantised phase step will be floor(601528.8912) = 601528 which is off by one. 
+Generally the phase\_step\_decimal will equal the decimal part of the phase\_step\_fp. In corner cases when the fractional part of phase\_step\_fp is near zero the decimal part will be off by one. For example with a scaled frequency of 440573 (3441.97 Hz) the actual phase step will be 601529.0027. However the quantised phase step will be floor(601528.8912) = 601528 which is off by one. 
 
-Now the fractional part is calculated as a rational value. The value consists of a numerator and divisor.  Recall the calculation of phase_step_fp:
+Now the fractional part is calculated as a rational value. The value consists of a numerator and divisor.  Recall the calculation of phase\_step\_fp:
 
     phase_step_fp -> ( power2_phase_space_size * frequency ) / sample_rate
 
@@ -175,17 +175,17 @@ This value can be converted to a rational number:
     phase_step_numerator_incl_decimal  = shift_right ( power2_phase_space_size * frequency_scaled, power2_phase_step_bits)
     phase_step_numerator_incl_decimal -> 3691053056
 
-The fact that phase_step_fp is larger than one implies that the numerator is larger than the divisor. To get the fractional part without the decimal part the decimal value is subtracted:
+The fact that phase\_step\_fp is larger than one implies that the numerator is larger than the divisor. To get the fractional part without the decimal part the decimal value is subtracted:
     
     phase_step_numerator  = phase_step_numerator_incl_decimal - phase_step_decimal * sample_rate
     phase_step_numerator -> 45056
 
-Assert that the rational number is indeed the fractional part of phase_step_fp:
+Assert that the rational number is indeed the fractional part of phase\_step\_fp:
 
     phase_step_fp -> 76896.93867
     phase_step_numerator / phase_step_divisor -> 0.93867
 
-In the earlier described corner cases it could be that the numerator is still larger than the divider after subtraction of the decimal part. It will however always be smaller than 2 * divider. So when the numerator is larger than the divider it is possible to simply subtract the divider once to get the numerator corresponding to the fractional part. In that case the phase_step_decimal value is increased by one.
+In the earlier described corner cases it could be that the numerator is still larger than the divider after subtraction of the decimal part. It will however always be smaller than 2 * divider. So when the numerator is larger than the divider it is possible to simply subtract the divider once to get the numerator corresponding to the fractional part. In that case the phase\_step\_decimal value is increased by one.
 
 The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1On5RydeTHjTQGgfvHI6CXL8H8/edit?usp=sharing)  calculations in this section can also be found on Google sheets.
 
@@ -194,7 +194,9 @@ The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1
 In this article I focus on generating a single sine wave. The following will be tested:
 
   * Setting the sine generator to a certain frequency.
-  * Updating the frequency : This should not introduce noticable audio 'glitches'.
+  * Updating the frequency : This should not introduce noticeable audio 'glitches'.
+
+The top level design simply connects an oscillator (the sine\_wave component) to the I2S\_sender. Two buttons enable toggling sine wave frequency. The sine\_wave component takes a frequency as its input and presents the sine wave samples at its output.
 
 ## Interface
 
@@ -246,8 +248,8 @@ Two testbenches have been setup.
 
 ### Testing phase step calculation.
 
-The 'sine_sim' tests the calculation of the design time constants and calculating the phase step decimal and fractional values. This is fairly simple: 
-  1. calculate the real phase step using standard floating point arithmatic.
+The 'sine\_sim' tests the calculation of the design time constants and calculating the phase step decimal and fractional values. This is fairly simple: 
+  1. calculate the real phase step using standard floating point arithmetic.
   2. calculate the same value using the phase step calculation algorithm.
   3. compare the values: if the difference is too large report an error.
 
@@ -265,7 +267,11 @@ The simulation sets up a sine wave generator and configures its frequency to 440
 
 # Final thoughts
 
-  * It would be interesting to check if the fixed point value types in VHDL 2008 could simpliy things. Getting the fixed point package working in Vivado seemed a hassle.
+  * It would be interesting to check if the fixed point value types in VHDL 2008 could simplify things. Getting the fixed point package working in Vivado seemed a hassle.
+  * Using an embedded bit scope (Xilinx ila) really helped in finding a bug in the i2s\_sender. It was simulating correctly, but synthesized with an error. Using an ila is most easy when signals to be debugged get an attribute 'mark\_debug'. I was able to enable and disable debugging using a generic variable:
+
+    attribute mark_debug of signal_name : signal is boolean'image(debug_generic_var)
+
   * In VHDL setting a constant to a value given a condition is not straight forward. You can use a function to return a value based on a condition and use that function to set the constant:
 
      function sel(Cond: BOOLEAN; If_True, If_False: real) return real is
@@ -278,7 +284,7 @@ The simulation sets up a sine wave generator and configures its frequency to 440
        end function sel; 
 
      constant X : real := sel( TRUE, 1.0, 2.0); -- will set X to 1.0 
-
-The VHDL code can be found in the 'oscillator' branch of the [i2s_sender](https://github.com/dwjbosman/I2S_sender) repository.
+   
+The VHDL code can be found in the [i2s\_sender](https://github.com/dwjbosman/I2S_sender) repository.
 
 
