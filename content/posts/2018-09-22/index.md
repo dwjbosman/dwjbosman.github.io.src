@@ -45,7 +45,7 @@ Step three has to be performed whenever the frequency is changed while the desig
     phase_space_size  = sample_rate / target_frequency_resolution 
     phase_space_size -> 4800000
 
-The sine generator sub component requires the phase space to be a power of two. As 'P' is the minimum required phase space size it is required to round up.
+The sine generator sub component requires the phase space to be a power of two. As phase\_space\_size is the minimum required phase space size it is required to round up to the nearest power of two.
 
     Power of 2 phase space size: 
     power2_phase_space_bits =  ceiling(log(phase_space_size) / log(2))      
