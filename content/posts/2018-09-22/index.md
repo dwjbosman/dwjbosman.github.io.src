@@ -223,7 +223,7 @@ The architecture consists of the sincos generator sub component and three proces
             constant frequency_scaled: in frequency_t;
             variable phase_step: out phase_step_t) 
 
-  * Generate sine samples by advancing the phase with the phase step. The phase value is presented to the sincos generator sub component. Updating the phase is again accomplished with a procedure. The implementation will use the decimal phase step and fractional phase step values. Each sample the phase will be increased with the decimal part: phase_step_decimal. Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor (the sample rate) value the phase will be advanced by one and the counter is decreased by the divisor.
+  * Generate sine samples by advancing the phase with the phase step. The phase value is presented to the sincos generator sub component. Updating the phase is again accomplished with a procedure. The implementation will use the decimal phase step and fractional phase step values. Each sample the phase will be increased with the decimal part: phase\_step\_decimal. Each sample the phase\_step\_numerator will be added to a counter. When the counter value is above the phase\_step\_divisor (the sample rate) value the phase will be advanced by one and the counter is decreased by the divisor.
 
         type phase_step_t is record 
             decimal : phase_step_decimal_t;
