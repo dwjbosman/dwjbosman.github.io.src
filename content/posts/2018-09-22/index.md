@@ -148,7 +148,7 @@ or rewritten:
     phase_step_fp -> ( power2_phase_space_size * frequency ) / sample_rate
     phase_step_fp -> 76896.93867
 
-The integer version of phase\_step\_fp consists of phase\_step\_decimal and phase\_step\_numerator. Phase\_step\_decimal will give the decimal part (in the example 76895) while the fraction (0.57333...) will be specified as a numerator, divisor pair (a rational number). The decimal part is calculated as follows:
+The integer version of phase\_step\_fp consists is a ration value consisting of phase\_step\_decimal and phase\_step\_numerator. Phase\_step\_decimal will give the decimal part (in the example 76895) while the fraction (0.57333...). The decimal part is calculated as follows:
 
     scaled_phase  = frequency_scaled * scaled_phase_step
     scaled_phase -> 161264538831
