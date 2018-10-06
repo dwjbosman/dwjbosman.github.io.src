@@ -139,7 +139,7 @@ Let's say the frequency to generate is 440.0078125 Hz. Then the input scaled fre
     frequency_scaled = frequency * power2_phase_step
     frequency_scaled -> 56321
 
-If it would be possible to use floating point arithmetic the phase step would be:
+If it would be possible to use floating point arithmetic then the phase step would be:
 
     phase_step_fp  = ( power2_phase_space_size / sample_rate ) * frequency
 
