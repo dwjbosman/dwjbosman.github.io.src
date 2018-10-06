@@ -176,7 +176,7 @@ This value can be converted to a rational number:
     phase_step_numerator_incl_decimal -> 3691053056
 
 The fact that phase\_step\_fp is larger than one implies that the numerator is larger than the divisor. To get the fractional part without the decimal part the decimal value is subtracted:
-    
+
     phase_step_numerator  = phase_step_numerator_incl_decimal - phase_step_decimal * sample_rate
     phase_step_numerator -> 45056
 
