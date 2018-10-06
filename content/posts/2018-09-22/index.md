@@ -1,6 +1,6 @@
 ---
 title: "VHDL sine wave oscillator"
-cover: "doc_resources/header.jpg"
+cover: "/logos/sine-article.jpg"
 category: "FPGA"
 tags: 
     - VHDL
@@ -202,16 +202,16 @@ The top level design simply connects an oscillator (the sine\_wave component) to
 
 The sine wave generator has the following interface:
 
-        entity sine_wave is
-            Port ( resetn : std_logic;
-                   MCLK_in : in std_logic; -- Master clock of the I2S Sender
-                   
-                   freq_in_ce: in std_logic; -- if '1' freq_in will be sampled on rising edge
-                   freq_in: in frequency_t; -- the scaled frequency of the sine
+    entity sine_wave is
+        Port ( resetn : std_logic;
+               MCLK_in : in std_logic; -- Master clock of the I2S Sender
+               
+               freq_in_ce: in std_logic; -- if '1' freq_in will be sampled on rising edge
+               freq_in: in frequency_t; -- the scaled frequency of the sine
 
-                   wave_out : out sample_t -- the generated output samples
-                   );
-        end sine_wave;
+               wave_out : out sample_t -- the generated output samples
+               );
+    end sine_wave;
 
 ## Architecture
 
@@ -219,28 +219,28 @@ The architecture consists of the sincos generator sub component and three proces
   * Calculating the sample clock. Each tick the sine phase will need to be updated.
   * Accepting new frequency updates and update the phase step value. Calculating the phase step value is accomplished through a procedure
 
-    procedure Calculate_Phase_Step(
-        constant frequency_scaled: in frequency_t;
-        variable phase_step: out phase_step_t) 
+        procedure Calculate_Phase_Step(
+            constant frequency_scaled: in frequency_t;
+            variable phase_step: out phase_step_t) 
 
   * Generate sine samples by advancing the phase with the phase step. The phase value is presented to the sincos generator sub component. Updating the phase is again accomplished with a procedure. The implementation will use the decimal phase step and fractional phase step values. Each sample the phase will be increased with the decimal part: phase_step_decimal. Each sample the phase_step_numerator will be added to a counter. When the counter value is above the phase_step_divisor (the sample rate) value the phase will be advanced by one and the counter is decreased by the divisor.
 
-    type phase_step_t is record 
-        decimal : phase_step_decimal_t;
-        fraction : phase_step_fraction_t; -- fractional / sample_rate
-    end record;
-    
-    type phase_state_t is record
-        step : phase_step_t;
-        -- the decimal part, added each step
-        current: phase_t; 
-        -- the fractional part, if it overflows (above sample_rate)
-        -- then the it is reset and current is increased by one
-        current_fraction: phase_fraction_t; 
-
-
-    procedure Advance_Phase(
-        variable phase: inout phase_state_t)
+        type phase_step_t is record 
+            decimal : phase_step_decimal_t;
+            fraction : phase_step_fraction_t; -- fractional / sample_rate
+        end record;
+        
+        type phase_state_t is record
+            step : phase_step_t;
+            -- the decimal part, added each step
+            current: phase_t; 
+            -- the fractional part, if it overflows (above sample_rate)
+            -- then the it is reset and current is increased by one
+            current_fraction: phase_fraction_t; 
+        end record;
+                
+        procedure Advance_Phase(
+            variable phase: inout phase_state_t)
 
 ## Testing
 
@@ -268,23 +268,23 @@ The simulation sets up a sine wave generator and configures its frequency to 440
 # Final thoughts
 
   * It would be interesting to check if the fixed point value types in VHDL 2008 could simplify things. Getting the fixed point package working in Vivado seemed a hassle.
-  * Using an embedded bit scope (Xilinx ila) really helped in finding a bug in the i2s\_sender. It was simulating correctly, but synthesized with an error. Using an ila is most easy when signals to be debugged get an attribute 'mark\_debug'. I was able to enable and disable debugging using a generic variable:
+  * Using an embedded bit scope (Xilinx ila) helped in finding a bug in the i2s\_sender. It was simulating correctly, but synthesized with an bug. One of the steps setting up an ila is marking signals to be debugged with an attribute 'mark\_debug'. I was able to enable and disable debugging using a generic variable:
 
-    attribute mark_debug of signal_name : signal is boolean'image(debug_generic_var)
+        attribute mark_debug of signal_name : signal is boolean'image(debug_generic_var)
 
   * In VHDL setting a constant to a value given a condition is not straight forward. You can use a function to return a value based on a condition and use that function to set the constant:
 
-     function sel(Cond: BOOLEAN; If_True, If_False: real) return real is
-       begin
+        function sel(Cond: BOOLEAN; If_True, If_False: real) return real is
+        begin
            if (Cond = TRUE) then
                return(If_True);
            else
                return(If_False);
            end if;
-       end function sel; 
+        end function sel; 
 
-     constant X : real := sel( TRUE, 1.0, 2.0); -- will set X to 1.0 
-   
+        constant X : real := sel( TRUE, 1.0, 2.0); -- will set X to 1.0 
+
 The VHDL code can be found in the [i2s\_sender](https://github.com/dwjbosman/I2S_sender) repository.
 
 

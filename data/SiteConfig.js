@@ -1,6 +1,6 @@
 module.exports = {
   blogPostDir: "posts", // The name of directory that contains your posts.
-  siteTitle: "Dinne's professional blog", // Site title.
+  siteTitle: "Dinne's blog", // Site title.
   siteTitleAlt: "Blog about software development", // Alternative site title for SEO.
   siteLogo: "/logos/logo-1024.png", // Logo used for SEO and manifest.
   siteUrl: "https://dwjbosman.github.io", // Domain of your website without pathPrefix.
