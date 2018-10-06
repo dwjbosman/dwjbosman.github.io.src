@@ -82,7 +82,7 @@ The phase step needs to be rounded to a power of two so that it can be easily us
     power2_phase_step      -> 256
     frequency resolution would be: 1/256 -> 0.00390625
 
-With 7 bits the frequency resolution is still above the target. At run-time the frequency of the oscillator can be set by as an integer value by multiplying the target frequency with the scaling factor. For example to get 440 Hz, the frequency parameter of the oscillator will be set to 440 * 128 = 56320.
+With 7 bits the frequency resolution is still above the target. At run-time the frequency of the oscillator can be set as an integer value by multiplying the target frequency with the scaling factor. For example to get 440 Hz, the frequency parameter of the oscillator will be set to 440 * 128 = 56320.
 
 The combinations of the sample\_rate and power2\_phase\_space\_size vales imply a non-integer phase\_step value (174.76...). The phase\_step value needs to be scaled up to keep accuracy when using it in division. To determine the number of bits in the scaling factor first the determine the maximum error introduced by quantisation. 
 
@@ -90,7 +90,7 @@ The combinations of the sample\_rate and power2\_phase\_space\_size vales imply 
     quantised_phase_step_error = phase_step - scaled_phase_step / phase_step_scaling_factor 
     maximum_phase_error        = maximum_frequency * quantised_phase_step_error
 
-This maximum\_error must be below 1. So the quantised\_phase\_step\_error must be lower then:
+This maximum\_error must be below 1. So the quantised\_phase\_step\_error must be lower than:
 
     max_quantised_phase_step_error       = 1 / maximum_frequency
     max_quantised_phase_step_error      -> 0.00004166...
