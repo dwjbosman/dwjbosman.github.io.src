@@ -68,14 +68,16 @@ A green box will appear containg a link to "Run block automation". Clicking this
 
 The block design will now contain a Microblaze, Local memory, Processor System Reset, Interrupt controller (and concat block), Clocking wizard, AXI interconnect.
 
+  7. Later another Processor System Reset block will be added. Rename the existing one to "cpu\_sys\_reset".
+
 ##Clocking wizard
 
 Double click the "clocking wizard" to customize it:
   1. Add two extra output clocks besides the existing 100 MHz clock: 200 MHz and 50 MHz. 
   2. Also on the XXX page choose the reset type: active low
   3. Finish the wizard and right click the XXX port. Select ake inputs external. A new external input will be created. Rename it to "CLK100MHZ"
-  3. Right click the XXX port. Select ake inputs external. A new external input will be created. Rename it to "reset\_n"
-
+  3. Right click the "resetn" port. Select make inputs external. A new external input will be created. Rename it to "reset\_n"
+  4. Connect the "reset\_n" port to the  "ext\_reset\_n" port of the Processir Stsrem Reset block.
 These clocks are generated using the FPGA's built in MMCM XXX which can be thought of as a kind of PLL. The 200 MHz will be used for the DDR2 controller, the 50 MHz for the Quad SPI Flash and external Ethernet LANXXX chip. The reset button in on the Nexys4 DDR will output a '0' when pressed. To use this button for resetting the various IP blocks every reset input port has to be configured as "active low". Renaming the ports is required to match the physical pin constraints in the XDC file. Add the following rows to the XDC file:
 
   set\_property -dict {PACKAGE\_PIN E3 IOSTANDARD LVCMOS33} [get\_ports CLK100MHZ]
@@ -220,7 +222,7 @@ Connec the Quad SPI block as follows:
   2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
   5. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ext\_spi\_clk" pin.
-  6. Right click the "QSPI" XXX port, make it external and rename to "QSP_FLASH".
+  6. Right click the "SPI\_0" port, make it external and rename to "QSPI\_FLASH".
   7. Add the following pin constraints to the XDC file:
 
         set\_property -dict {PACKAGE\_PIN K17 IOSTANDARD LVCMOS33} [get\_ports QSPI\_FLASH\_io0\_io]
@@ -235,8 +237,46 @@ Connec the Quad SPI block as follows:
 
 The Memory Interface Generator (MIG7) is used to create a DDR2 controller for XXX RAM chip on the Nexys4 DDR board. The Microblaze will use a bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
 
-  1.
-  2.
+1. Next
+2. Next
+3. Select Pin compat FPGA xc7a100ti-csg324
+4. Controller type: DDR2
+5. Controller options:
+  5.1. Clock period 3077
+  5.2. Memory part MT47H64M16HR-25E
+  5.3. Datawidth 16
+  5.4. Ordering Normal
+6. AXI Parameter
+  1. Data width: 128, narrow burst support 1
+7. Memory Options - Clock 0 will be set 100Mhz later on, RTT-ODT: 50 ohms
+8. FPGA options  
+System clock: no buffer
+Reference clock: no buffer
+System reset pol: act low
+Internal vref
+9. Extended FPGA options: Internal termination impedance 50 omhs
+10. IO Planning: Fixed pinout
+11. Pin selections, type pin numbers, click validate. do not scroll!, als refer to xdc below
+12. System signals: no connect
+13. summary
+14. simulation options, accept, pcb information, next, design notes, generate
+
+Add another "Processor System Reset", rename FPGA_sys_reset
+
+Connect
+M06_AXI -> S_AXI
+reset_n -> sys_rst
+clk_out1 -> sys_clk_i (100mhz)
+clk_out2 -> clk_ref_i (200mhz)
+DDR2 make external, rename DDR2
+ui_clk_sync_rst -> ext_reset_in
+ui_clk -> slowest_sync_clk
+ui_clk -> aclk1 (smartconnect)
+mmcm_locked -> dcm_locked
+int_calib_complete -> not con
+peripheral_aresetn -> aresetn
+
+
 
 Now add a second Processor System Reset. This is required because the Processor System Reset will run in the DDR2 ui\_clock domain. Connect the blocks.
   1.
@@ -305,6 +345,12 @@ In some articles it is specified that one should not use a clocking wizard gener
 ##Address map
 
 The connected AXI devices are either memory type devices or memory mapped IO devices. We have to specify the Microblaze memory map so that the AXI devices can be accessed by the bootloader and user application.
+
+Click the address editor tab.
+
+Right click Data area, unmapped slaves,  ethernetlite,gpio, uartlite, timer, quad spi, mig7 -> assign address
+for instructions keep only local memory and mig7
+
 
 
 #Commit the block design to version control
