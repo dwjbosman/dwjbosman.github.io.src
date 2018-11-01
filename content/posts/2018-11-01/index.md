@@ -153,7 +153,7 @@ The interrupt controller signals the Microblaze once an external event needs to 
   7. Connect the "processor system reset" output port "mb\_reset" to the processor\_rst input.
   8. Connect the axi bus "s\_axi" input to the "M02\_axi" output of the AXI SmartConnect.
 
-Note that the intr input is initially displayed as intr[0:0]. This will update automatically once the design is validated.
+Note that the intr input is initially displayed as intr[0:0]. This will update automatically to intr[0:1] once the design is validated.
 
 ##AXI Timer
 
@@ -164,55 +164,64 @@ Connect the block:
   1. Connect the "M03\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
   2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
+  4. Connect the interrupt XXX pin to "in0" of the Concat block (which is connected to the interrupt controller).
 
 ##AXI Ethernetlite
 
-The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the LwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a socalled MII interface. The Nexys4 DDR contains a LANXXX chip which already implements part of this interface. That chip presents a socalled reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert.
+The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the LwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LANXXX chip which already implements part of this interface. That chip presents a socalled reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
 
-add Ethernet PHY MII to Reduced MII
+Configure the AXI Ethernetlite block:
+  1. Enable Internal Loopback
 
-ethernetlite config: ena internal loopback
+Create two external output ports:
+  1. Create an output port "ETH\_RST\_N" of type 'other'.
+  2. Create an output port "ETH\_CLK" of type 'clock'.
 
-connect
-M04_AXI -> S_AXI
-MII -> MII
-create output port ETH_RST_N
-create output port ETH_CLK
-click MII port on ethernetlit open
-    connect phy_rst_n -> rst_n rmii
-    connect phy_rst_n -> ETH_RST_N (outp)
-connect ref_clk -> out3 (50 mhz) and ETH_CLK
-Close MII port
-
-TODO update remove rtl (MDIO, RMI_PHY_M, ETH_RST_N, ETH_CLK)
-
-6. Add the following contraints to the XDC file:
+Connect the blocks:
+  1. Connect the "M04\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
+  2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
+  3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
+  4. Connect the interrupt XXX pin to "in1" of the Concat block (which is connected to the interrupt controller).
+  5. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ref\_clk" pin.
+  6. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ETH\_CLK" external pin.
+  7. Connect the Ethernetlite port "MII" to the "MII" port of the MII\_to\_RMII block.
+  8. Right click the "MDIO" port, make it external. Rename it to "MDIO"
+  9. Right click the "RMII\_PHY\_M" port, make it external. Rename to "RMII\_PHY\_M".
+  9. Expand the "MII" port of the Ethernetlite device.
+     9.1 Connect the "phy_rst_n" pin of the MII bus to the "rst_n_rmii" of the MII\_to\_RMII block.
+     9.2 Connect the "phy_rst_n" pin of the MII bus to the "ETH_RST_N" external pin.
+     9.3 Collapse the "MII" port.
+  10. Add the following contraints to the XDC file:
 `
-        set\_property -dict {PACKAGE\_PIN C9 IOSTANDARD LVCMOS33} [get\_ports mdio\_rtl\_mdc]
-        set\_property -dict {PACKAGE\_PIN A9 IOSTANDARD LVCMOS33} [get\_ports mdio\_rtl\_mdio\_io]
-        set\_property -dict {PACKAGE\_PIN B3 IOSTANDARD LVCMOS33} [get\_ports eth\_resetn]
-        set\_property -dict {PACKAGE\_PIN D9 IOSTANDARD LVCMOS33} [get\_ports rmii\_trl\_crs\_dv]
-        set\_property -dict {PACKAGE\_PIN C10 IOSTANDARD LVCMOS33} [get\_ports rmii\_trl\_rx\_er]
-        set\_property -dict {PACKAGE\_PIN C11 IOSTANDARD LVCMOS33} [get\_ports {rmii\_trl\_rxd[0]}]
-        set\_property -dict {PACKAGE\_PIN D10 IOSTANDARD LVCMOS33} [get\_ports {rmii\_trl\_rxd[1]}]
-        set\_property -dict {PACKAGE\_PIN B9 IOSTANDARD LVCMOS33} [get\_ports rmii\_trl\_tx\_en]
-        set\_property -dict {PACKAGE\_PIN A10 IOSTANDARD LVCMOS33} [get\_ports {rmii\_trl\_txd[0]}]
-        set\_property -dict {PACKAGE\_PIN A8 IOSTANDARD LVCMOS33} [get\_ports {rmii\_trl\_txd[1]}]
-        set\_property -dict {PACKAGE\_PIN D5 IOSTANDARD LVCMOS33} [get\_ports eth\_ref\_clk]
+        set\_property -dict {PACKAGE\_PIN C9 IOSTANDARD LVCMOS33} [get\_ports mdio\_mdc]
+        set\_property -dict {PACKAGE\_PIN A9 IOSTANDARD LVCMOS33} [get\_ports mdio\_mdio\_io]
+        set\_property -dict {PACKAGE\_PIN B3 IOSTANDARD LVCMOS33} [get\_ports eth\_rst_n]
+        set\_property -dict {PACKAGE\_PIN D9 IOSTANDARD LVCMOS33} [get\_ports rmii_phy_m\_crs\_dv]
+        set\_property -dict {PACKAGE\_PIN C10 IOSTANDARD LVCMOS33} [get\_ports rmii_phy_m\_rx\_er]
+        set\_property -dict {PACKAGE\_PIN C11 IOSTANDARD LVCMOS33} [get\_ports {rmii_phy_m\_rxd[0]}]
+        set\_property -dict {PACKAGE\_PIN D10 IOSTANDARD LVCMOS33} [get\_ports {rmii_phy_m\_rxd[1]}]
+        set\_property -dict {PACKAGE\_PIN B9 IOSTANDARD LVCMOS33} [get\_ports rmii_phy_m\_tx\_en]
+        set\_property -dict {PACKAGE\_PIN A10 IOSTANDARD LVCMOS33} [get\_ports {rmii_phy_m\_txd[0]}]
+        set\_property -dict {PACKAGE\_PIN A8 IOSTANDARD LVCMOS33} [get\_ports {rmii_phy_m\_txd[1]}]
+        set\_property -dict {PACKAGE\_PIN D5 IOSTANDARD LVCMOS33} [get\_ports eth\_clk]
         #set\_property -dict { PACKAGE\_PIN B8    IOSTANDARD LVCMOS33 } [get\_ports { ETH\_INTN }]; #IO\_L12P\_T1\_MRCC\_16 Sch=eth\_intn
 
-In most tutorials the 50MHz clock is used to drive the LANxxx chip. According to some recomendations the  MII\_to\_RMII block introduces a clock delay. Ideally the clocking wizard should be used to create two 50 MHz clocks, one with a phase delay. The undelayed clock is connected to the MII\_to\_RMII block. The delayed clock is connected to the LANxxx chip. Furthermore there is a discussion if the LANxxx can be clocked using a generated 50MHz clock as there the clock jitter would be outside the LANxxx requirements.  
+In most tutorials the 50MHz clock is used to drive the LANxxx chip and the MII\_to\_RMII block. According to some recomendations the  MII\_to\_RMII block introduces a clock delay. Ideally the clocking wizard should be used to create two 50 MHz clocks, one with a phase delay. The undelayed clock is connected to the MII\_to\_RMII block. The delayed clock is connected to the LANxxx chip. Furthermore there is a discussion if the LANxxx can be clocked used a synthesized 50MHz clock as there the clock jitter would be outside the LANxxx requirements.  
 
 ##AXI Quad SPI
 
-The Quad SPI component is connected to the external Quad SPI Flash. It allowes the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash.
+The Quad SPI component is connected to the external Quad SPI Flash (A Spansion XXX). It allowes the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash. Add a Quad SPI IP block and configure it:
 
-config: select mode:quad, slave dev:spansion
+  1. Select mode: quad
+  2. Select the Spansion slave device.
 
-connect ext_spi_clk to 50mhz
-make external SPI_0, rename QSPI_FLASH
-
-6. Add the following pin constraints to the XDC file:
+Connec the Quad SPI block as follows:
+  1. Connect the "M05\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
+  2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
+  3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
+  5. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ext\_spi\_clk" pin.
+  6. Right click the "QSPI" XXX port, make it external and rename to "QSP_FLASH".
+  7. Add the following pin constraints to the XDC file:
 
         set\_property -dict {PACKAGE\_PIN K17 IOSTANDARD LVCMOS33} [get\_ports QSPI\_FLASH\_io0\_io]
         set\_property -dict {PACKAGE\_PIN K18 IOSTANDARD LVCMOS33} [get\_ports QSPI\_FLASH\_io1\_io]
@@ -224,7 +233,7 @@ make external SPI_0, rename QSPI_FLASH
 
 ##AXI DDR2 controller
 
-The Memory Interface Generator (MIG7) is used to create a DDR2 controller for the Nexys4 DDR board. The Microblaze will use a bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
+The Memory Interface Generator (MIG7) is used to create a DDR2 controller for XXX RAM chip on the Nexys4 DDR board. The Microblaze will use a bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
 
   1.
   2.
