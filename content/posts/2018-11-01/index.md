@@ -344,19 +344,6 @@ The connected AXI devices are either memory type devices or memory mapped IO dev
   1. Right click Data area, unmapped slaves. For each of the following devices select assign address: ethernetlite, gpio, uartlite, timer, quad spi, mig7.
   2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and click "exclude". TODO
 
-#Commit the block design to version control
-
-Store the current version of the  block design inside version control:
-  1. git add src/blockdesign/mb\_design/\*
-  2. git commit -am "Half way through block design"
-
-#Synthesize
-
-Right click "mb_design" in the sources pane. Click "generate HDL wrapper", select "Let Vivado manage wrapper..."
-
-Click "Run synthesis" in the "Flow Navigator".
-Click "Run implementation" ....
-
 #XDC pin constraints
 
 The XDC file specifies constraints on the physical FPGA pins. Digilent provides a XDC file for the Nexys4 DDR. This file is adapted to map the input and output ports of the block design to physical pins. The [XDC constraints file] is based upon a reference of Digilent. When the block design is completed and synthesized you can run the "get\_ports" command in the tcl window. The names of all the different block design input and output pins will then be displayed. These names have to be added to the XDC file. So if you run get\_ports and "OUTPUT\_X" is displayed then the XDC should contain a row (change the IOStandard and PACKAGE\_PIN to suit your needs):
@@ -368,15 +355,31 @@ set\_property CFGBVS VCCO [current\_design]
 set\_property CONFIG\_VOLTAGE 3.3 [current\_design]
 
 
+#Synthesize
+
+Right click "mb\_design" in the sources pane. Click "generate HDL wrapper", select "Let Vivado manage wrapper..."
+
+Click "Run synthesis" in the "Flow Navigator".
+Click "Run implementation" ....
+
+Click "Open implemented design" and select the IO ports tab. If the XDC contains no errors. It should look like the following screenshot.
+
 #Generate bit file
 
 Later on the FPGA bit stream will be flashed on the Quad SPI Flash device. In order to reduce the size of the bit stream and speed up booting the bit stream can be compressed. Turn compression on by adding this to the XDC file.
 
+Open the tools -> settings menu. Select bit stream options under project settings. Tick the "-bin\_file" option. Open "additional settings" and tick "enable compression". A constraint will be added automatically to the XDC file:
+
 set\_property BITSTREAM.GENERAL.COMPRESS TRUE [current\_design]
 
-set other bit stream config TODO
-
 Run the bit stream generator.
+
+#Commit the block design to version control
+
+Store the current version of the  block design inside version control:
+  1. git add src/blockdesign/mb\_design/\*
+  2. check with git status that no files under src are "untracked". If needed use "git add" to add remaining untracked files under src. Do not add these folders: basic_microblaze.cache/, basic_microblaze.hw/, basic_microblaze.runs/, basic_microblaze.xpr
+  3. git commit -am "Block design done"
 
 #SDK, software development
 
