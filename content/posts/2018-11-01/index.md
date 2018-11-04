@@ -32,9 +32,11 @@ After completing the wizard, open the tcl tab and type the following commands:
 
   1. go to your project dir: cd /home/<username>/Xilinx/projects/basic\_microblaze/
   2. create a src and blockdesign dir. The src directory will contain all the files that are under version control: exec mkdir -p src/blockdesign
-  3. create a directory of the vhdl files: exec mkdir -p src/design
-  4. initialize the repository: git init
-  5. apply first commit: git commit -am "first commit" 
+  3. create a directory for vhdl files: exec mkdir -p src/design
+  4. create a folder for the SDK (C sources): exec mkdir -p src/sdk/workspace
+  5. create a folder for the SDK hardware definition: exec mkdir -p src/sdk/hardware
+  6. initialize the repository: git init
+  7. apply first commit: git commit -am "first commit" 
 
 
 ## Create constraints file (XDC)
@@ -378,49 +380,61 @@ Run the bit stream generator.
 
 Store the current version of the  block design inside version control:
   1. git add src/blockdesign/mb\_design/\*
-  2. check with git status that no files under src are "untracked". If needed use "git add" to add remaining untracked files under src. Do not add these folders: basic_microblaze.cache/, basic_microblaze.hw/, basic_microblaze.runs/, basic_microblaze.xpr
+  2. check with git status that no files under src are "untracked". If needed use "git add" to add remaining untracked files under src. Do not add these folders: basici\_microblaze.cache/, basic\_microblaze.hw/, basic\_microblaze.runs/, basic\_microblaze.xpr
   3. git commit -am "Block design done"
 
 #SDK, software development
 
+First export the hardware definition. Select the File menu -> export -> export hardware. Enable "include bit stream". Choose the sdk/hardware folder.
+
 Click launch "SDK" from the project menu. Vivado will start the SDK which is the Eclipse C/C++ development IDE.
 
-## Create bootloader
+## Create bootloader and BSP.
 
-Create a new project. Select the "SREC SPI bootloader" template. Select create BSP.
+Create a new "Application project" named "Bootloader". In the "Target software" pane select "Create new" board support package. Name the BSP "Bootloader\_bsp". Click "next" and select the "SREC SPI bootloader" template. Click "Finish".
 
-Set VERBOSE enabled, this will cause the bootloader to print messages while the bootloading is in progress. The print commands unfortunately slow down the bootloading. Change this:
+### Configure Bootloader BSP
 
-.....
+Open the Bootloader\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Click "Regenerate BSP sources". The BSP needs to fit in the Microblaze local memory. We need to get rid of the drivers which are not used. Select "drivers" in the navigation tree view. Deselect ethernetlite, gpio, timer, interrupt (intc), local memory, mig7. Click "Ok" and regenerate the sources.
 
-to
+### Configure Bootloader
+
+Open the "Bootloader" project and edit the "blconfig.h" file. The bootloader needs to know the address in SPI flash where the user application resides. Remove the warning and change the "FLASH\_IMAGE\_BASEADDR" to 0x003D0900. Select the linker "ldscript.ld" file. Set the stack size to 0x50. If all is well the Bootloader should compile without errors now.
+
+In bootloader.c check that SPI\_DEVICE\_ID is set to XPAR\_SPI\_0\_DEVICE\_ID. The warning line above it can then be removed.
+
+In bootloader.c the VERBOSE flag should be defined (by default). This will cause the bootloader to print messages while the bootloading is in progress. The print commands unfortunately slow down the bootloading. A small modification helps. Replace the contents of the function "display\_progress" by:
 
     print(".")
 
-This will speedup things while still giving some insight in the bootloading progress. The bootloader needs to know the address in SPI flash where the user application resides. Set
+This will speedup things while still giving some insight in the bootloading progress. 
 
-TODO to TODO
+### Programming the FPGA
 
+In this step the hardware design including bootloader will be programmed into flash such that the FPGA loads it everytime it boots. Configure the SPI jumper on the Nexys4 DDR development kit. This allows the FPGA to lood its bit file from the SPI flash. The FPGA bit file contains the configuration of the FPGA including initial contents of the Microblaze local BRAM.  Next connect the Nexys4 DDR board via the JTAG usb. Start a serial ternminal (eg. gtkterm) and select the port (eg. /dev/ttyUSB1) and set the baudrate to 38400 (as configured in the UARTlite blockdesign).
 
-## Programming the FPGA
+Run the program FPGA command from the Xilinx menu. Select the bootloader.elf file in stead of "bootloop". Selecting "program" will generate a download.bit file in the "mb\_design\_wrapper\_hw\_platform\_0" project. 
 
-Select the SPI jumper on the Nexys4 DDR. This allows the FPGA to lood its bit file from the SPI flash. The FPGA bit file contains the configuration of the FPGA including initial contents of the Microblaze local BRAM. To be able to update the software of the Microblaze without changing the FPGA bit file. 
+After the programming completes, in the serial terminal you should see the bootloader starting (and failing).
 
-The FPGA bit stream is loaded from the external SPI Flash. Turn on bit file compression to speed up the startup time of the FPGA and to save space on the SPI Flash. After compression a large part of the SPI Flash is left unused. In this part of the flash the application software for the Microblaze can be stored. The application is stored in SREC format in the Flash. A SPI Flash SREC bootloader is run on the Microblaze and integrated in the FPGA bit file which loads after FPGA configuration. The bootloader copies the user application from Flash to the DDR2 ram and then starts it.
+### Flashing the FPGA bitstream.
 
-Next connect the Nexys4 DDR board via the JTAG usb. Start a serial ternminal (eg. gtkterm) and select the port (eg. /dev/ttyUSB1) and set the baudrate to 38400 (as configured in the UARTlite blockdesign).
+Next click the "Program Flash" menu item in the Xilinx menu. As "image file" select the download.bit file. The offset should be 0. The flash type is "s25fl128sxxxxx0-spi-x1\_x2\_x4". Check "verify after flash". And finish by clicking "Program".
 
-
-Run the program FPGA command from the Xilinx menu. In the serial terminal you should see the bootloader starting (and failing).
-
-##Flashimg the FPGA bitstream.
-
-Run the "program FPGA" command from the Xilinx menu. Next run Program Flash from the Xilinx menu. Select the flash memory part: TODO and address 0x0. Select download.bit from TODO. After flashing you can restart the Nexys4 DDR by pressing the "prog" button. Again the bootloader should start and fail. Note that even though the FPGA load its bit file from flash it can still be programmed as usual using JTAG.
-
+After flashing you can restart the Nexys4 DDR by pressing the "prog" button. Again the bootloader should start and fail. Note that even though the FPGA load its bit file from flash it can still be programmed as usual using JTAG.
 
 ## Create user application
 
-Create a new project. Select the "Peripheral test template". 
+Create a new project, named TestApp. Select Create new board support package named "TestApp\_bsp". Click next and select the "Peripheral tests" template.
+
+### Configure TestApp BSP
+
+Open the TestApp\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Enable "xilisf" and "lwip202" in the suported libraries pane. Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Select lwip202 in the navigation tree and 
+
+Click "Regenerate BSP sources". 
+
+### Configure the TestApp
+
 
 ## Flashing the user application
 
@@ -456,4 +470,6 @@ The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1
 
 The VHDL code can be found in the [i2s\_sender](https://github.com/dwjbosman/I2S\_sender) repository.
 
+
+TODO block design: spi set to winbond, ram size mb.
 
