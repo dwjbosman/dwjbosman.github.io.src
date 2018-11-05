@@ -3,19 +3,21 @@ title: "Basic Microblaze with bootloader setup"
 cover: "/logos/block-design-article.png"
 category: "FPGA"
 tags: 
-    - VHDL
+    - Microblaze
       FPGA
       SDK
 date: 2018-11-01 09:00
 ---
 
-In my last [article](https://dwjbosman.github.io/...) a VHDL Sine oscillator was presented. Eventually the goal is to develop an additive synthesis engine. In this article a small step is taken by being able to run C/C++ code on a Microblaze processor.
+# Introduction & Goals
+
+In my last [article](https://dwjbosman.github.io/vhdl-sine-wave-oscillator) a VHDL Sine oscillator was presented. Eventually the goal is to develop an additive synthesis engine. In this article a small step is taken by being able to run C/C++ code on a Microblaze processor. 
 
 There are quite a number of tutorials about setting up a Microblaze processor. Unfortunately most of these tutorials are either out of date or they are lacking some essential information. Especially most tutorials don't describe the 'why' question. This article shows how to get a Microblaze running on a Nexys4 DDR development kit including the following:
 
-  * Use of the XX MB DDR2 ram chip
+  * Use the large DDR2 ram for custom user application.
   * UART support for debugging
-  * Ethernet support for lwIP stack
+  * Ethernet (lite) support for lwIP stack
   * SPI flash support for bootloading from flash.
   * Use of AXI GPIO for simple LED control
  
@@ -41,7 +43,7 @@ After Vivado starts click the 'create project' button.
 ![Select Nexys4 DDR](resources/005_vivado_select_nexys4_ddr.png "Select Nexys4 DDR")
   * Project Summary
 ![Project summary](resources/006_vivado_project_summery.png "Project summary")
-  * Vivado IDE is opened
+  * The Vivado IDE is opened
 ![Basc Vivado IDE](resources/007_vivado_ide.png "Vivado IDE")
 
 
@@ -119,8 +121,8 @@ l![Microblaze customize general](resources/013_microblaze_customize_general.png 
 Double click the "clocking wizard" to customize it:
   1. On the clock options page select "single ended clock capability" for the row "primary".
   2. On the output clocks page:
-    2.1. Add two extra output clocks besides the existing 100 MHz clock: 200 MHz and 50 MHz. 
-    2.2 Also on the this page choose the reset type: active low
+    1. Add two extra output clocks besides the existing 100 MHz clock: 200 MHz and 50 MHz. 
+    2. Also on the this page choose the reset type: active low
   3. Finish the wizard and right click the "clk\_in1" port. Select ake inputs external. A new external input will be created. Rename it to "CLK100MHZ"
   3. Right click the "resetn" port. Select make inputs external. A new external input will be created. Rename it to "reset\_n"
   4. Connect the "reset\_n" port to the  "ext\_reset\_n" port of the Processor System Reset block.
@@ -230,6 +232,8 @@ Connect the block:
 
 ##AXI Ethernetlite
 
+Note: at this point actual use of the lwIP stack has not been tested yet.
+
 The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the lwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LAN8720A chip which already implements part of this interface. That chip presents a so called reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
 
 Configure the AXI Ethernetlite block:
@@ -249,12 +253,12 @@ Connect the blocks:
   7. Connect the Ethernetlite port "MII" to the "MII" port of the MII\_to\_RMII block.
   8. Right click the "MDIO" port, make it external. Rename it to "MDIO"
   9. Right click the "RMII\_PHY\_M" port, make it external. Rename to "RMII\_PHY\_M".
-  9. Expand the "MII" port of the Ethernetlite device.
-     9.1 Connect the "phy_rst_n" pin of the MII bus to the "rst_n_rmii" of the MII\_to\_RMII block.
-     9.2 Connect the "phy_rst_n" pin of the MII bus to the "ETH_RST_N" external pin.
-     9.3 Collapse the "MII" port.
-  10. Add the following constraints to the XDC file:
-`
+  10. Expand the "MII" port of the Ethernetlite device.
+    1. Connect the "phy\_rst\_n" pin of the MII bus to the "rst\_n\_rmii" of the MII\_to\_RMII block.
+    2. Connect the "phy\_rst\_n" pin of the MII bus to the "ETH\_RST\_N" external pin.
+    3. Collapse the "MII" port.
+  11. Add the following constraints to the XDC file:
+
         set\_property -dict {PACKAGE\_PIN C9 IOSTANDARD LVCMOS33} [get\_ports MDIO\_mdc]
         set\_property -dict {PACKAGE\_PIN A9 IOSTANDARD LVCMOS33} [get\_ports MDIO\_mdio\_io]
         set\_property -dict {PACKAGE\_PIN B3 IOSTANDARD LVCMOS33} [get\_ports ETH\_RST_N]
@@ -269,6 +273,7 @@ Connect the blocks:
         #set\_property -dict { PACKAGE\_PIN B8    IOSTANDARD LVCMOS33 } [get\_ports { ETH\_INTN }]; #IO\_L12P\_T1\_MRCC\_16 Sch=eth\_intn
 
 In most tutorials the 50MHz clock is used to drive the LANxxx chip and the MII\_to\_RMII block. According to some recommendations the  MII\_to\_RMII block introduces a clock delay. Ideally the clocking wizard should be used to create two 50 MHz clocks, one with a phase delay. The un-delayed clock is connected to the MII\_to\_RMII block. The delayed clock is connected to the LANxxx chip. Furthermore there is a discussion if the LANxxx can be clocked used a synthesized 50MHz clock as there the clock jitter would be outside the LANxxx requirements.  
+
 
 ##AXI Quad SPI
 
@@ -302,20 +307,20 @@ The Memory Interface Generator (MIG7) is used to create a DDR2 controller for th
   3. Select the pin compatible FPGA. The Nexys4 DDR uses the xc7a100ti-csg324.
   4. Choose DDR2 as controller type.
   5. On the "Controller options" page select:
-    5.1. Clock period: 3077
-    5.2. Memory part: MT47H64M16HR-25E
-    5.3. Datawidth: 16 bits
-    5.4. Ordering: Normal
+    1. Clock period: 3077
+    2. Memory part: MT47H64M16HR-25E
+    3. Datawidth: 16 bits
+    4. Ordering: Normal
   6. On the "AXI Parameter" page configure the AXI interface:
-    6.1. Data width: 128
-    6.2. Enable narrow burst support (set to one).
+    1. Data width: 128
+    2. Enable narrow burst support (set to one).
   7. On the "Memory Options" page choose:
-     7.1. Set the "input clock period" to 100 MHz. If this setting is missing chances are that you run across a bug in the Memory Interface Generator (MIG7). When running Vivado 2018.2 from Ubuntu use the right locale settings. Restart Vivado from the terminal and first execute: export LC_NUMERIC=en_US.utf8
-     7.2.  RTT-ODT to be 50 ohms. 
+    1. Set the "input clock period" to 100 MHz. If this setting is missing chances are that you run across a bug in the Memory Interface Generator (MIG7). When running Vivado 2018.2 from Ubuntu use the right locale settings. Restart Vivado from the terminal and first execute: export LC_NUMERIC=en_US.utf8
+    2.  RTT-ODT to be 50 ohms. 
   8. On the "FPGA options" page:
-    8.1. select "no buffer" for both system clock and reference clock. "no buffer" means that we can connect clocks generated by the clocking wizard.
-    8.2. Set the system reset polarity to active low.
-    8.3. Enable usage of "Internal vref".
+    1. select "no buffer" for both system clock and reference clock. "no buffer" means that we can connect clocks generated by the clocking wizard.
+    2. Set the system reset polarity to active low.
+    3. Enable usage of "Internal vref".
   9. On the "Extended FPGA options" choose the Internal termination impedance to be 50 omhs.
   10. On the "IO Planning" page select fixed pin out as we want to connect the controller to the external RAM chip.
   11. On the "Pin selection" page, type the pin numbers, next click validate. Refer to the XDC constraints below for the actual pin values. The pin selection page does not fit on one page, and you have to scroll to get to all the pins. Be care full when scrolling: scrolling when the mouse is above a pin selection drop down changes the pin!
@@ -400,29 +405,31 @@ In some articles it is specified that one should not use a clocking wizard gener
 
 The connected AXI devices are either memory type devices or memory mapped IO devices. We have to specify the Microblaze memory map so that the AXI devices can be accessed by the bootloader and user application. Click the address editor tab.
   1. Right click Data area, unmapped slaves. For each of the following devices select assign address: ethernetlite, gpio, uartlite, timer, quad spi, mig7.
-  2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and rigth click "exclude". 
+  2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and right click "exclude". 
 
 Check that the Microblaze local memory sections for both data and instructions are at least 32 kB.
 
 #XDC pin constraints
 
-The XDC file specifies constraints on the physical FPGA pins. Digilent provides a XDC file for the Nexys4 DDR. This file is adapted to map the input and output ports of the block design to physical pins. The [XDC constraints file] is based upon a reference of Digilent. When the block design is completed and synthesized you can run the "get\_ports" command in the tcl window. The names of all the different block design input and output pins will then be displayed. These names have to be added to the XDC file. So if you run get\_ports and "OUTPUT\_X" is displayed then the XDC should contain a row (change the IOStandard and PACKAGE\_PIN to suit your needs):
+The XDC file specifies constraints on the physical FPGA pins. Digilent provides a [XDC file for the Nexys4 DDR](https://github.com/Digilent/digilent-xdc/blob/master/Nexys-4-DDR-Master.xdc). In this tutorial the individual pin constraints are listed with each IP block. Refer to the previous sections. In general a pin constraint is defined as follows:
 
-set\_property -dict {PACKAGE\_PIN K17 IOSTANDARD LVCMOS33} [get\_ports OUTPUT\_X]
+        set\_property -dict {PACKAGE\_PIN K17 IOSTANDARD LVCMOS33} [get\_ports OUTPUT\_X]
+
+It was not always easy to determine the port name (eg. OUTPUT\_X) by examining the block design visually. When the block design is completed and synthesized you can run the "get\_ports" command in the TCL window. The names of all the different block design input and output pins will then be displayed. These names can then be added to the XDC file. 
 
 Some additional constraints are required to get rid of a warning:
-set\_property CFGBVS VCCO [current\_design]
-set\_property CONFIG\_VOLTAGE 3.3 [current\_design]
 
+        set\_property CFGBVS VCCO [current\_design]
+        set\_property CONFIG\_VOLTAGE 3.3 [current\_design]
 
 #Synthesize
 
-Right click "mb\_design" in the sources pane. Click "generate HDL wrapper", select "Let Vivado manage wrapper..."
+  1. Right click "mb\_design" in the sources pane. Click "generate HDL wrapper", select "Let Vivado manage wrapper..."
+  2. Click "Run synthesis" in the "Flow Navigator".
+  3. Click "Run implementation"
+  4. Click "Open implemented design" and select the IO ports tab. If the XDC contains no errors. It should look like the following screenshot:
 
-Click "Run synthesis" in the "Flow Navigator".
-Click "Run implementation" ....
-
-Click "Open implemented design" and select the IO ports tab. If the XDC contains no errors. It should look like the following screenshot.
+TODO
 
 #Generate bit file
 
@@ -430,7 +437,7 @@ Later on the FPGA bit stream will be flashed on the Quad SPI Flash device. In or
 
 Open the tools -> settings menu. Select bit stream options under project settings. Tick the "-bin\_file" option. Open "additional settings" and tick "enable compression". A constraint will be added automatically to the XDC file:
 
-set\_property BITSTREAM.GENERAL.COMPRESS TRUE [current\_design]
+        set\_property BITSTREAM.GENERAL.COMPRESS TRUE [current\_design]
 
 Run the bit stream generator.
 
