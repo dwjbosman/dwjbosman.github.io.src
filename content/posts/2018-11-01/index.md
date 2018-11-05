@@ -15,14 +15,13 @@ In my last [article](https://dwjbosman.github.io/vhdl-sine-wave-oscillator) a VH
 
 There are quite a number of tutorials about setting up a Microblaze processor. Unfortunately most of these tutorials are either out of date or they are lacking some essential information. Especially most tutorials don't describe the 'why' question. This article shows how to get a Microblaze running on a Nexys4 DDR development kit including the following:
 
-  * Use the large DDR2 ram for custom user application.
+  * Run the user application from the on board DDR2 ram.
   * UART support for debugging
   * Ethernet (lite) support for lwIP stack
   * SPI flash support for bootloading from flash.
   * Use of AXI GPIO for simple LED control
  
 I started following [Microblaze server](https://reference.digilentinc.com/learn/programmable-logic/tutorials/nexys-4-ddr-getting-started-with-microblaze-servers/start) tutorial from Digilent. It misses some information in the block design to complete Ethernet and DDR2 configuration. I used this [MIG7](https://www.instructables.com/id/Configuring-the-MIG-7-Series-to-Use-the-DDR-Memory/) tutorial to implement the DDR2 ram. Lastly I followed this tutorial on [Bootloading](https://reference.digilentinc.com/learn/programmable-logic/tutorials/htsspisf/start) to implement the bootloader.
-
 
 # Create the project
 
