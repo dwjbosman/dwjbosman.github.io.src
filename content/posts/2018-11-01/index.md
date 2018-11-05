@@ -24,13 +24,13 @@ I started following [this]() tutorial from Digilent. It misses some information 
 
 # Create the project
 
-First set up the project. Add this [Vivado TCL script] to your start up scripts. The script will create a project TCL file every time 'git commit' is invoked. The tcl project file will contain relative paths which allows your project to be stored in a version control system. After Vivado starts click the 'create project' button.
+First set up the project. Add this [Vivado TCL script] to your start up scripts. The script will create a project TCL file every time 'git commit' is invoked. The TCL project file will contain relative paths which allows your project to be stored in a version control system. After Vivado starts click the 'create project' button.
 
 ##Initializing version control (git)
 
-After completing the wizard, open the tcl tab and type the following commands:
+After completing the wizard, open the TCL tab and type the following commands:
 
-  1. go to your project dir: cd /home/<username>/Xilinx/projects/basic\_microblaze/
+  1. go to your project folder: cd /home/<username>/Xilinx/projects/basic\_microblaze/
   2. create a src and blockdesign dir. The src directory will contain all the files that are under version control: exec mkdir -p src/blockdesign
   3. create a directory for vhdl files: exec mkdir -p src/design
   4. create a folder for the SDK (C sources): exec mkdir -p src/sdk/workspace
@@ -41,7 +41,7 @@ After completing the wizard, open the tcl tab and type the following commands:
 
 ## Create constraints file (XDC)
 
-Add the empty XDC in the  project folder: /home/<username>/Xilinx/projects/basic\_microblaze/src/design/design.xdc. In the tcl window run
+Add the empty XDC in the  project folder: .../basic\_microblaze/src/design/design.xdc. In the TCL window run
 git add src/design/design.xdc
 
 #Create the block design
@@ -90,12 +90,12 @@ These clocks are generated using the FPGA's built in MMCM TODO which can be thou
 
 ##AXI SmartConnect
 
-In a first attempt I added a DDR2 controller. The 'run block automation' reappeared. After running it an "Axi SmartConnect" appeared. I wondered why this was a different component comparing it to the "Axi interconnect" created by the Microblaze Block Automation. The documentation notes that both "Axi Smartconnect"  and "Axi interconnect" have similar functionality and that "Axi Smartconnect" supersedes "Axi interconnect". In all the exampples I saw using Microblaze and DDR RAM there were two "Axi interconnect/smartconnect" blocks. In this design I will use one to keep things simple. Have to check later how this impacts performance.
+In a first attempt I added a DDR2 controller. The 'run block automation' reappeared. After running it an "AXI SmartConnect" appeared. I wondered why this was a different component comparing it to the "AXI interconnect" created by the Microblaze Block Automation. The documentation notes that both "Axi SmartConnect"  and "Axi interconnect" have similar functionality and that "Axi SmartConnect" supersedes "Axi interconnect". In all the examples I saw using Microblaze and DDR RAM there were two "Axi interconnect/smartconnect" blocks. In this design I will use one to keep things simple. Have to check later how this impacts performance.
 
-  1. Delete the existing "Axi interconnect"
-  2. Add an "Axi Smartconnect"
+  1. Delete the existing "AXI interconnect"
+  2. Add an "AXI SmartConnect"
 
-Double click the "Axi Smartconnect" it to customize:
+Double click the "AXI SmartConnect" it to customize:
   1. Select the number of slaves: 3
   2. Select the number of masters: 7
   3. Select the number of clocks: 2
@@ -106,7 +106,7 @@ Connect the block:
   2. Connect the "clockin wizard" 100Mhz clock (clk\_out1) to the aclk pin.
   3. Connect the "processor system reset" output port "interconnect\_aresetn" to the resetn input
 
-The AXI Smartconnect is configures such that all the memory interfacing (including IO mapped peripherals) runs through it. Two clocks are required because the DDR2 controller is part of a different clock domain.
+The AXI SmartConnect is configures such that all the memory interfacing (including IO mapped peripherals) runs through it. Two clocks are required because the DDR2 controller is part of a different clock domain.
 
 ##AXI GPIO
 
@@ -118,8 +118,8 @@ The AXI GPIO IP block is used to control general purpose input/output pins. In o
   4. Finish the wizard and right click the GPIO port. Select make external. A new external output will be created. Rename it to "GPIO"
 
 Connect the block:
-  1. Connect the M00\_AXI of the "Axi Smartconnect" to the S\_AXI input.
-  2. Connect the "clockin wizard" 100Mhz clock (clk\_out1) to the s\_axi\_aclk pin.
+  1. Connect the M00\_AXI of the "AXI SmartConnect" to the S\_AXI input.
+  2. Connect the "clocking wizard" 100Mhz clock (clk\_out1) to the s\_axi\_aclk pin.
   3. Connect the "processor system reset" output port "peripheral\_aresetn" to the s\_axi\_aresetn input
   4. Add the following rows to the XDC file:
 
@@ -136,11 +136,11 @@ The AXI UARTlite IP block allows the processor to communicate via serial port to
   2. Finish the wizard and right click the UART port. Select make external. A new external output will be created. Rename it to "UART"
 
 Connect the block:
-  1. Connect the M01\_AXI of the "Axi Smartconnect" to the S\_AXI input.
-  2. Connect the "clockin wizard" 100Mhz clock (clk\_out1) to the s\_axi\_aclk pin.
+  1. Connect the M01\_AXI of the "AXI SmartConnect" to the S\_AXI input.
+  2. Connect the "clocking wizard" 100Mhz clock (clk\_out1) to the s\_axi\_aclk pin.
   3. Connect the "processor system reset" output port "peripheral\_aresetn" to the s\_axi\_aresetn input
   4. The interrupt pin is not connected.
-  5. Add the follwing pin constraints to the XDC file:
+  5. Add the following pin constraints to the XDC file:
 
   set\_property -dict {PACKAGE\_PIN D4 IOSTANDARD LVCMOS33} [get\_ports UART\_txd]
   set\_property -dict {PACKAGE\_PIN C4 IOSTANDARD LVCMOS33} [get\_ports UART\_rxd]
@@ -153,7 +153,7 @@ The interrupt controller signals the Microblaze once an external event needs to 
   1. Add a Concat block if it is not already connected to the interrupt controller.
   2. Connect "dout" of the Concat block to intr of the interrupt controller
   3. Connect "interrupt" output of the Interrupt Controller to the Microblaze "interrupt" input.
-  4. Connect the "clockin wizard" 100Mhz clock (clk\_out1) to the "s\_axi\_aclk" pin.
+  4. Connect the "clocking wizard" 100Mhz clock (clk\_out1) to the "s\_axi\_aclk" pin.
   5. Connect the "processor system reset" output port "peripheral\_aresetn" to the s\_axi\_aresetn input
   6. Connect the "processor\_clk" input to "s\_axi\_aclk".
   7. Connect the "processor system reset" output port "mb\_reset" to the processor\_rst input.
@@ -167,14 +167,14 @@ The Timer component implements a programmable timer. Add an AXI Time IP block. C
   1. The Default settings should be ok.
 
 Connect the block:
-  1. Connect the "M03\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
-  2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
+  1. Connect the "M03\_AXI" of the AXI SmartConnect to the "S\_AXI" input.
+  2. Connect the Clocking Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
   4. Connect the interrupt TODO pin to "in0" of the Concat block (which is connected to the interrupt controller).
 
 ##AXI Ethernetlite
 
-The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the LwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LANTODO chip which already implements part of this interface. That chip presents a socalled reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
+The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the lwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LANTODO chip which already implements part of this interface. That chip presents a so called reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
 
 Configure the AXI Ethernetlite block:
   1. Enable Internal Loopback
@@ -184,12 +184,12 @@ Create two external output ports:
   2. Create an output port "ETH\_CLK" of type 'clock'.
 
 Connect the blocks:
-  1. Connect the "M04\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
-  2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
+  1. Connect the "M04\_AXI" of the AXI SmartConnect to the "S\_AXI" input.
+  2. Connect the Clocking Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
   4. Connect the interrupt TODO pin to "in1" of the Concat block (which is connected to the interrupt controller).
-  5. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ref\_clk" pin.
-  6. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ETH\_CLK" external pin.
+  5. Connect the Clocking Wizard "clk\_out3" (50Mhz clock) to the "ref\_clk" pin.
+  6. Connect the Clocking Wizard "clk\_out3" (50Mhz clock) to the "ETH\_CLK" external pin.
   7. Connect the Ethernetlite port "MII" to the "MII" port of the MII\_to\_RMII block.
   8. Right click the "MDIO" port, make it external. Rename it to "MDIO"
   9. Right click the "RMII\_PHY\_M" port, make it external. Rename to "RMII\_PHY\_M".
@@ -197,7 +197,7 @@ Connect the blocks:
      9.1 Connect the "phy_rst_n" pin of the MII bus to the "rst_n_rmii" of the MII\_to\_RMII block.
      9.2 Connect the "phy_rst_n" pin of the MII bus to the "ETH_RST_N" external pin.
      9.3 Collapse the "MII" port.
-  10. Add the following contraints to the XDC file:
+  10. Add the following constraints to the XDC file:
 `
         set\_property -dict {PACKAGE\_PIN C9 IOSTANDARD LVCMOS33} [get\_ports MDIO\_mdc]
         set\_property -dict {PACKAGE\_PIN A9 IOSTANDARD LVCMOS33} [get\_ports MDIO\_mdio\_io]
@@ -212,20 +212,20 @@ Connect the blocks:
         set\_property -dict {PACKAGE\_PIN D5 IOSTANDARD LVCMOS33} [get\_ports ETH\_CLK]
         #set\_property -dict { PACKAGE\_PIN B8    IOSTANDARD LVCMOS33 } [get\_ports { ETH\_INTN }]; #IO\_L12P\_T1\_MRCC\_16 Sch=eth\_intn
 
-In most tutorials the 50MHz clock is used to drive the LANxxx chip and the MII\_to\_RMII block. According to some recomendations the  MII\_to\_RMII block introduces a clock delay. Ideally the clocking wizard should be used to create two 50 MHz clocks, one with a phase delay. The undelayed clock is connected to the MII\_to\_RMII block. The delayed clock is connected to the LANxxx chip. Furthermore there is a discussion if the LANxxx can be clocked used a synthesized 50MHz clock as there the clock jitter would be outside the LANxxx requirements.  
+In most tutorials the 50MHz clock is used to drive the LANxxx chip and the MII\_to\_RMII block. According to some recommendations the  MII\_to\_RMII block introduces a clock delay. Ideally the clocking wizard should be used to create two 50 MHz clocks, one with a phase delay. The un-delayed clock is connected to the MII\_to\_RMII block. The delayed clock is connected to the LANxxx chip. Furthermore there is a discussion if the LANxxx can be clocked used a synthesized 50MHz clock as there the clock jitter would be outside the LANxxx requirements.  
 
 ##AXI Quad SPI
 
-The Quad SPI component is connected to the external Quad SPI Flash (A Spansion TODO). It allowes the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash. Add a Quad SPI IP block and configure it:
+The Quad SPI component is connected to the external Quad SPI Flash (A Spansion TODO). It allows the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash. Add a Quad SPI IP block and configure it:
 
   1. Select mode: quad
   2. Select the Spansion slave device.
 
-Connec the Quad SPI block as follows:
-  1. Connect the "M05\_AXI" of the Axi Smartconnect to the "S\_AXI" input.
-  2. Connect the Clockin Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
+Connect the Quad SPI block as follows:
+  1. Connect the "M05\_AXI" of the AXI SmartConnect to the "S\_AXI" input.
+  2. Connect the Clocking Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
-  5. Connect the Clockin Wizard "clk\_out3" (50Mhz clock) to the "ext\_spi\_clk" pin.
+  5. Connect the Clocking Wizard "clk\_out3" (50Mhz clock) to the "ext\_spi\_clk" pin.
   6. Right click the "SPI\_0" port, make it external and rename to "QSPI\_FLASH".
   7. Add the following pin constraints to the XDC file:
 
@@ -241,7 +241,7 @@ Connec the Quad SPI block as follows:
 
 The Memory Interface Generator (MIG7) is used to create a DDR2 controller for TODO RAM chip on the Nexys4 DDR board. The Microblaze will use a BRAM based bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
 
-  1. At this introductin page click Next.
+  1. At this introduction page click Next.
   2. Again click next.
   3. Select the pin compatible FPGA. The Nexys4 DDR uses the xc7a100ti-csg324.
   4. Choose DDR2 as controller type.
@@ -261,8 +261,8 @@ The Memory Interface Generator (MIG7) is used to create a DDR2 controller for TO
     8.2. Set the system reset polarity to active low.
     8.3. Enable usage of "Internal vref".
   9. On the "Extended FPGA options" choose the Internal termination impedance to be 50 omhs.
-  10. On the "IO Planning" page select fixed pinout as we want to connect the controller to the external RAM chip.
-  11. On the "Pin selection" page, type the pin numbers, next click validate. Refer to the XDC constraints below for the actual pin values. The pin selection page does not fit on one page, and you have to scroll to get to all the pins. Becarefull when scrolling: scrolling when the mouse is above a pin selection drop down changes the pin!
+  10. On the "IO Planning" page select fixed pin out as we want to connect the controller to the external RAM chip.
+  11. On the "Pin selection" page, type the pin numbers, next click validate. Refer to the XDC constraints below for the actual pin values. The pin selection page does not fit on one page, and you have to scroll to get to all the pins. Be care full when scrolling: scrolling when the mouse is above a pin selection drop down changes the pin!
   12. On the "System signals" do not select anything.
   13. Verify that the summary report is similar to the screenshot.
   14. The last pages "simulation options:": accept, "pcb information": next, "design notes": generate.
@@ -277,7 +277,7 @@ Connect the DDR RAM controller:
   5. Right click the DDR controller "DDR2" pin and make it external. Rename the external pin to "DDR2".
   6. Connect the DDR controller "ui\_clk\_sync\_rst" to the "ext\_reset\_in" of the FPGA\_sys\_reset block.
   7. Connect the DDR controller "ui\_clk" clock to the "slowest\_sync\_clk" of the FPGA\_sys\_reset block.
-  8. Connect this clock also to the "aclk1" pin of the AXI Smartconnect.
+  8. Connect this clock also to the "aclk1" pin of the AXI SmartConnect.
   9. Connect the "mmcm\_locked" of the DDR Controller to the  "dcm\_locked" pin of the FPGA\_sys\_reset block.
   10. The DDR Controller pin "int\_calib\_complete" is left unconnected.
   11. Connect the FPGA\_sys\_reset pin "peripheral\_aresetn" to the DDR controller "aresetn" pin TODO. 
@@ -346,6 +346,8 @@ The connected AXI devices are either memory type devices or memory mapped IO dev
   1. Right click Data area, unmapped slaves. For each of the following devices select assign address: ethernetlite, gpio, uartlite, timer, quad spi, mig7.
   2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and click "exclude". TODO
 
+Check that the Microblaze local memory sections for both data and instructions are at least 32 kB.
+
 #XDC pin constraints
 
 The XDC file specifies constraints on the physical FPGA pins. Digilent provides a XDC file for the Nexys4 DDR. This file is adapted to map the input and output ports of the block design to physical pins. The [XDC constraints file] is based upon a reference of Digilent. When the block design is completed and synthesized you can run the "get\_ports" command in the tcl window. The names of all the different block design input and output pins will then be displayed. These names have to be added to the XDC file. So if you run get\_ports and "OUTPUT\_X" is displayed then the XDC should contain a row (change the IOStandard and PACKAGE\_PIN to suit your needs):
@@ -385,43 +387,43 @@ Store the current version of the  block design inside version control:
 
 #SDK, software development
 
-First export the hardware definition. Select the File menu -> export -> export hardware. Enable "include bit stream". Choose the sdk/hardware folder.
+First export the hardware definition. Select the File menu -> export -> export hardware. Enable "include bit stream". Choose the src/sdk/hardware folder.
 
-Click launch "SDK" from the project menu. Vivado will start the SDK which is the Eclipse C/C++ development IDE.
-
+Click launch "SDK" from the project menu. Choose the relevant src/sdk/workspace folder for as workspace. Vivado will start the SDK which is the Eclipse C/C++ development IDE. The workspace will contain the hardware definition "mb\_design\_wrapper....". Click the "system.hdf" file and check that the memory map is correct.
+ 
 ## Create bootloader and BSP.
 
 Create a new "Application project" named "Bootloader". In the "Target software" pane select "Create new" board support package. Name the BSP "Bootloader\_bsp". Click "next" and select the "SREC SPI bootloader" template. Click "Finish".
 
 ### Configure Bootloader BSP
 
-Open the Bootloader\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Click "Regenerate BSP sources". The BSP needs to fit in the Microblaze local memory. We need to get rid of the drivers which are not used. Select "drivers" in the navigation tree view. Deselect ethernetlite, gpio, timer, interrupt (intc), local memory, mig7. Click "Ok" and regenerate the sources.
+Open the Bootloader\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Click "Regenerate BSP sources". 
 
 ### Configure Bootloader
 
-Open the "Bootloader" project and edit the "blconfig.h" file. The bootloader needs to know the address in SPI flash where the user application resides. Remove the warning and change the "FLASH\_IMAGE\_BASEADDR" to 0x003D0900. Select the linker "ldscript.ld" file. Set the stack size to 0x50. If all is well the Bootloader should compile without errors now.
+Open the "Bootloader" project and edit the "blconfig.h" file. The bootloader needs to know the address in SPI flash where the user application resides. Remove the warning and change the "FLASH\_IMAGE\_BASEADDR" to 0x003D0900. Select the linker "ldscript.ld" file. Set the stack size to 0x200. Check that all segments are assigned to BRAM local memory (and not the external DDR RAM as this memory will receive the user application loaded from the Flash memory). 
 
 In bootloader.c check that SPI\_DEVICE\_ID is set to XPAR\_SPI\_0\_DEVICE\_ID. The warning line above it can then be removed.
 
-In bootloader.c the VERBOSE flag should be defined (by default). This will cause the bootloader to print messages while the bootloading is in progress. The print commands unfortunately slow down the bootloading. A small modification helps. Replace the contents of the function "display\_progress" by:
+In bootloader.c the VERBOSE flag should be defined (by default). This will cause the bootloader to print messages while the bootloading is in progress. The print output will be streamed over the UARTlite interface. The print commands unfortunately slow down the bootloading. A small modification helps. Replace the contents of the function "display\_progress" by:
 
     print(".")
 
-This will speedup things while still giving some insight in the bootloading progress. 
+This will speedup things while still giving some insight in the bootloading progress. After saving Eclipse will rebuild the Bootloader. If all is well the Bootloader should compile without errors now.
 
 ### Programming the FPGA
 
-In this step the hardware design including bootloader will be programmed into flash such that the FPGA loads it everytime it boots. Configure the SPI jumper on the Nexys4 DDR development kit. This allows the FPGA to lood its bit file from the SPI flash. The FPGA bit file contains the configuration of the FPGA including initial contents of the Microblaze local BRAM.  Next connect the Nexys4 DDR board via the JTAG usb. Start a serial ternminal (eg. gtkterm) and select the port (eg. /dev/ttyUSB1) and set the baudrate to 38400 (as configured in the UARTlite blockdesign).
+In this step the hardware design including bootloader will be programmed into flash such that the FPGA loads it every time it boots. Configure the SPI jumper on the Nexys4 DDR development kit. This allows the FPGA to load its bit file from the SPI flash. The FPGA bit file contains the configuration of the FPGA including initial contents of the Microblaze local BRAM.  Next connect the Nexys4 DDR board via the JTAG usb connector. Start a serial terminal (eg. gtkterm) and select the port (eg. /dev/ttyUSB1) and set the baud rate to 38400 (as configured in the UARTlite block design).
 
-Run the program FPGA command from the Xilinx menu. Select the bootloader.elf file in stead of "bootloop". Selecting "program" will generate a download.bit file in the "mb\_design\_wrapper\_hw\_platform\_0" project. 
+Run the program FPGA command from the Xilinx menu. Select the bootloader.elf file (in the Bootloader/Debug project) in stead of "bootloop". Selecting "program" will generate a download.bit file in the "mb\_design\_wrapper\_hw\_platform\_0" project. 
 
 After the programming completes, in the serial terminal you should see the bootloader starting (and failing).
 
 ### Flashing the FPGA bitstream.
 
-Next click the "Program Flash" menu item in the Xilinx menu. As "image file" select the download.bit file. The offset should be 0. The flash type is "s25fl128sxxxxx0-spi-x1\_x2\_x4". Check "verify after flash". And finish by clicking "Program".
+Next click the "Program Flash" menu item in the Xilinx menu. Select the download.bit files as "image file". The offset should be 0. The flash type is "s25fl128sxxxxx0-spi-x1\_x2\_x4". Check "verify after flash". And finish by clicking "Program".
 
-After flashing you can restart the Nexys4 DDR by pressing the "prog" button. Again the bootloader should start and fail. Note that even though the FPGA load its bit file from flash it can still be programmed as usual using JTAG.
+After flashing you can restart the Nexys4 DDR by pressing the "prog" button. Again the bootloader should start and fail. Note that while the FPGA can load its bit file from flash it can also still be programmed as usual using JTAG.
 
 ## Create user application
 
@@ -429,71 +431,63 @@ Create a new project, named TestApp. Select Create new board support package nam
 
 ### Configure TestApp BSP
 
-Open the TestApp\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Enable "xilisf" and "lwip202" in the suported libraries pane. Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Select lwip202 in the navigation tree and 
+Open the TestApp\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Enable "xilisf" and "lwip202" in the supported libraries pane. Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). S
 
-Click "Regenerate BSP sources". 
+Click "Regenerate BSP sources". Probably the build will fail. There is a bug in Vivado 2018.2 lwip202, it does not define some xadapter code required to compile using EthernetLite. There is a [patch]() available. The patch has been applied manually in the example repository. Be care full not to regenerate the BSP sources as this will remove the patch.
+
+The changes can be viewed by looking at this diff: git diff 69b53308d4d4690ab77b53d72262df3ee429e0b d45cd8645e9563a86cef6648e0a15483d39f63f9 '*.c'
 
 ### Configure the TestApp
 
+The peripherial test application does not need any configuring.
 
-## Flashing the user application
+### Flashing the user application
 
-Run the "Flash TODO" command. Select generate SREC, select the user application elf file.  Select the flash memory part TODO and address TODO (should be the same as the address set in the bootloader).
+Run the "Flash TODO" command. Select generate SREC, select the user application elf file. 
+Click the "Program Flash" menu item in the Xilinx menu. Select the TestApp.elf file "image file". The offset should be 0x003D0900 (as configured in the bootloader). The flash type is "s25fl128sxxxxx0-spi-x1\_x2\_x4". Tick "convert elf file to bootable SREC...". Check "verify after flash". And finish by clicking "Program".
 
-Reset the Nexys4 DDR by pressing the "prog" button. The bootloader should start loading and eventually run the user application. The user application will print various test messages. The RGB LED connected to the GPIO should react to one of the tests.
+Reset the Nexys4 DDR by pressing the "prog" button. The bootloader should start loading and eventually run the user application. The user application will print various test messages. The RGB LED connected to the GPIO should react to one of the tests. The last tests will test the Ethernetlite interface (you'll see the Ethernet LEDs blinking twice).
 
-## Microblaze Debug Module (MDM)
+## Committing the SDK code
 
-## Processor System Reset
+First add .gitignore files to a number of folders to ignore logging files:
 
-There are two CPU reset blocks. One is controls the Microblaze and other 100 MHz clock domain components. The other controls the reset of the DDR2 Ram controller and is part of the user\_clock (output of the DDR2 controller) domain.
+  src/sdk/workspace/Bootloader_bsp/.gitignore:
+  *.o
+  *.a
+  
+  src/sdk/workspace/TestApp_bsp/.gitignore:
+  *.o
+  *.a
+  
+  src/sdk/workspace/mb_design_wrapper_hw_platform_0/.gitignore:
+  cache
+  
+  src/sdk/workspace/.metadata/.gitignore:
+  *.log
+  .lock
+  
+  src/sdk/.gitignore:
+  *.jou
+  *.log
 
-## Connecting the IP blocks
+  git add src/sdk/hardware/mb\_design\_wrapper.hdf
+  git add src/sdk/workspace/Bootloader
+  git add src/sdk/workspace/Bootloader\_bsp
+  git add src/sdk/workspace/TestApp
+  git add src/sdk/workspace/TestApp\_bsp
+  git add src/sdk/workspace/mb\_design\_wrapper\_hw\_platform\_0
+  git add src/sdk/workpace/.metadata
 
-## Constraints (XDC) file
+  git commit --message "Added bootloader and test application with patched lwip202"
 
-The Digilent xdc file for the Nexys4 DDR does not contain the pinout of the DDR2 RAM. 
+# Conclusion
 
-## Bootloader
+  1. Creating the basic Microblaze architecture running requires many configuration steps. While writing this tutorial I had one working reference project and created a new project describing each step. The first time I ended up with a bootloader that did not fit in the BRAM. Somehow, somewhere the Microblaze cache size was set to 16 kB, instead of the required 32 kB. I suspect the block automation step to be the culprit. Luckily by checking the linker script in the SDK this was easy to find and correct.
+  2. When working in Linux check your Locale settings as described in the tutorial. If set wrongly the MIG7 wizard will not snow essential settings.
+  3. The Eclipse SDK crashed a few times resulting in a locked SDK which could not be restarted. Remove .lock files from the .metadata in src/sdk/workspace to get it working again. 
 
-
-  1. Launch the SDK
-  2. Create a project with template "SPI SREC Bootloader"
-    2.1. Set the TODO address
-    2.2. Set the ....
-  3. 
-
-
-
-The sine [phase step](https://docs.google.com/spreadsheets/d/1zl4uNqo22D30khxiX1On5RydeTHjTQGgfvHI6CXL8H8/edit?usp=sharing)  calculations in this section can also be found on Google sheets.
-
-
-The VHDL code can be found in the [i2s\_sender](https://github.com/dwjbosman/I2S\_sender) repository.
+The VHDL code can be found in the [Basic\_microblaze](https://github.com/dwjbosman/basic\_microblaze) repository.
 
 
-TODO block design: spi set to winbond, ram size mb.
-git add src/sdk/hardware/mb_design_wrapper.hdf
-git add src/sdk/workspace/Bootloader
 
-add .gitignore to Bootloader_bsp
-*.o
-*.a
-
-git add Bootloader_bsp
-git add TestApp
-
-mb_design_wrapper_hw_platform_0/.gitignore
-cache
-
-add .gitignore to TestApp_bsp
-*.o
-*.a
-git add TesTestApp
-
-.metadata/.gitignore
-*.log
-.lock
-
-sdk/.gitignore
-*.jou
-*.log
