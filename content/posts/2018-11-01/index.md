@@ -19,12 +19,23 @@ There are quite a number of tutorials about setting up a Microblaze processor. U
   * SPI flash support for bootloading from flash.
   * Use of AXI GPIO for simple LED control
  
-I started following [this]() tutorial from Digilent. It misses some information in the block design to complete Ethernet and DDR2 configuration. I used this [MIG7]() tutorial to implement the DDR2 ram. Lastly I followed this tutorial on [Bootloading]() to implement the bootloader.
+I started following [Microblaze server](https://reference.digilentinc.com/learn/programmable-logic/tutorials/nexys-4-ddr-getting-started-with-microblaze-servers/start) tutorial from Digilent. It misses some information in the block design to complete Ethernet and DDR2 configuration. I used this [MIG7](https://www.instructables.com/id/Configuring-the-MIG-7-Series-to-Use-the-DDR-Memory/) tutorial to implement the DDR2 ram. Lastly I followed this tutorial on [Bootloading](https://reference.digilentinc.com/learn/programmable-logic/tutorials/htsspisf/start) to implement the bootloader.
 
 
 # Create the project
 
-First set up the project. Add this [Vivado TCL script] to your start up scripts. The script will create a project TCL file every time 'git commit' is invoked. The TCL project file will contain relative paths which allows your project to be stored in a version control system. After Vivado starts click the 'create project' button.
+  * First set up the project. Add this [Vivado TCL script](https://github.com/dwjbosman/I2S_sender) to your start up scripts. The script will create a project TCL file every time 'git commit' is invoked. The TCL project file will contain relative paths which allows your project to be stored in a version control system. 
+  * Download and install the [Nexys4 DDR board](https://github.com/Digilent/vivado-boards.git) files.
+
+After Vivado starts click the 'create project' button.
+
+![Start vivado](doc_resources/001_start_vivado.png "Start vivado")
+![Create project](doc_resources/002_vidado_create_project.png "Create project")
+![Choose RTL project](004_vivado_rtl_project.png "Choose RTL project")
+![Select Nexys4 DDR](005_vivado_select_nexys4_ddr.png "Select Nexys4 DDR")
+![Project summary](006_vivado_project_summery.png "Project summary")
+![Basc Vivado IDE](007_vivado_ide.png "Vivado IDE")
+
 
 ##Initializing version control (git)
 
@@ -78,11 +89,11 @@ Double click the "clocking wizard" to customize it:
   1. On the clock options page select "single ended clock capability" for the row "primary".
   2. On the output clocks page:
     2.1. Add two extra output clocks besides the existing 100 MHz clock: 200 MHz and 50 MHz. 
-    2.2 Also on the TODO page choose the reset type: active low
+    2.2 Also on the this page choose the reset type: active low
   3. Finish the wizard and right click the "clk\_in1" port. Select ake inputs external. A new external input will be created. Rename it to "CLK100MHZ"
   3. Right click the "resetn" port. Select make inputs external. A new external input will be created. Rename it to "reset\_n"
   4. Connect the "reset\_n" port to the  "ext\_reset\_n" port of the Processor System Reset block.
-These clocks are generated using the FPGA's built in MMCM TODO which can be thought of as a kind of PLL. The 200 MHz will be used for the DDR2 controller, the 50 MHz for the Quad SPI Flash and external Ethernet LANTODO chip. The reset button in on the Nexys4 DDR will output a '0' when pressed. To use this button for resetting the various IP blocks every reset input port has to be configured as "active low". Renaming the ports is required to match the physical pin constraints in the XDC file. Add the following rows to the XDC file:
+These clocks are generated using the FPGA's built in MMCM which can be thought of as a kind of PLL. The 200 MHz will be used for the DDR2 controller, the 50 MHz for the Quad SPI Flash and external Ethernet LAN8720A chip. The reset button in on the Nexys4 DDR will output a '0' when pressed. To use this button for resetting the various IP blocks every reset input port has to be configured as "active low". Renaming the ports is required to match the physical pin constraints in the XDC file. Add the following rows to the XDC file:
 
   set\_property -dict {PACKAGE\_PIN E3 IOSTANDARD LVCMOS33} [get\_ports CLK100MHZ]
   create\_clock -period 10.000 -name sys\_clk\_pin -waveform {0.000 5.000} -add [get\_ports CLK100MHZ]
@@ -170,11 +181,11 @@ Connect the block:
   1. Connect the "M03\_AXI" of the AXI SmartConnect to the "S\_AXI" input.
   2. Connect the Clocking Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
-  4. Connect the interrupt TODO pin to "in0" of the Concat block (which is connected to the interrupt controller).
+  4. Connect the interrupt pin to "in0" of the Concat block (which is connected to the interrupt controller).
 
 ##AXI Ethernetlite
 
-The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the lwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LANTODO chip which already implements part of this interface. That chip presents a so called reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
+The Ethernetlite component presents a memory mapped ethernet device to the Microblaze. In the C user application running on the Microblaze the lwIP stack will be used to connect to the Internet.  The Ethernetlite component presents a MII interface. The Nexys4 DDR contains a LAN8720A chip which already implements part of this interface. That chip presents a so called reduced MII interface. Xilinx has a MII\_to\_RMII IP block available to convert. Add both the "AXI Ethernetlite" and "Ethernet PHY MII to Reduced MII" to the block design.
 
 Configure the AXI Ethernetlite block:
   1. Enable Internal Loopback
@@ -187,7 +198,7 @@ Connect the blocks:
   1. Connect the "M04\_AXI" of the AXI SmartConnect to the "S\_AXI" input.
   2. Connect the Clocking Wizard "clk\_out1" (100Mhz clock) to the "s\_axi\_aclk" pin.
   3. Connect the Processor System Reset output port "peripheral\_aresetn" to the "s\_axi\_aresetn" input.
-  4. Connect the interrupt TODO pin to "in1" of the Concat block (which is connected to the interrupt controller).
+  4. Connect the interrupt "ip2intc\_irpt" pin to "in1" of the Concat block (which is connected to the interrupt controller).
   5. Connect the Clocking Wizard "clk\_out3" (50Mhz clock) to the "ref\_clk" pin.
   6. Connect the Clocking Wizard "clk\_out3" (50Mhz clock) to the "ETH\_CLK" external pin.
   7. Connect the Ethernetlite port "MII" to the "MII" port of the MII\_to\_RMII block.
@@ -216,7 +227,7 @@ In most tutorials the 50MHz clock is used to drive the LANxxx chip and the MII\_
 
 ##AXI Quad SPI
 
-The Quad SPI component is connected to the external Quad SPI Flash (A Spansion TODO). It allows the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash. Add a Quad SPI IP block and configure it:
+The Quad SPI component is connected to the external Quad SPI Flash (A Spansion S25FL128S). It allows the FPGA to retrieve its bit stream from the Flash chip. Furthermore the Microblaze will be able to boot the user application from flash. Add a Quad SPI IP block and configure it:
 
   1. Select mode: quad
   2. Select the Spansion slave device.
@@ -239,7 +250,7 @@ Connect the Quad SPI block as follows:
 
 ##AXI DDR2 controller
 
-The Memory Interface Generator (MIG7) is used to create a DDR2 controller for TODO RAM chip on the Nexys4 DDR board. The Microblaze will use a BRAM based bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
+The Memory Interface Generator (MIG7) is used to create a DDR2 controller for the Micron MT47H64M16HR-25:H RAM chip on the Nexys4 DDR board. The Microblaze will use a BRAM based bootloader to copy the user application from Flash to DDR2 Ram. The DDR2 controller requires very precise timing parameters. These are specified in the [DDR2 RAM tutorial](). Add a MIG7 component and double click to configure:
 
   1. At this introduction page click Next.
   2. Again click next.
@@ -255,7 +266,7 @@ The Memory Interface Generator (MIG7) is used to create a DDR2 controller for TO
     6.2. Enable narrow burst support (set to one).
   7. On the "Memory Options" page choose:
      7.1. Set the "input clock period" to 100 MHz. If this setting is missing chances are that you run across a bug in the Memory Interface Generator (MIG7). When running Vivado 2018.2 from Ubuntu use the right locale settings. Restart Vivado from the terminal and first execute: export LC_NUMERIC=en_US.utf8
-     7.2.  RTT-ODT to be 50 ohms. Note that the generated clock section is empty. This is updated automatically during validation TODO of the design to include a 100 MHz based upon incomming clock.
+     7.2.  RTT-ODT to be 50 ohms. 
   8. On the "FPGA options" page:
     8.1. select "no buffer" for both system clock and reference clock. "no buffer" means that we can connect clocks generated by the clocking wizard.
     8.2. Set the system reset polarity to active low.
@@ -280,7 +291,7 @@ Connect the DDR RAM controller:
   8. Connect this clock also to the "aclk1" pin of the AXI SmartConnect.
   9. Connect the "mmcm\_locked" of the DDR Controller to the  "dcm\_locked" pin of the FPGA\_sys\_reset block.
   10. The DDR Controller pin "int\_calib\_complete" is left unconnected.
-  11. Connect the FPGA\_sys\_reset pin "peripheral\_aresetn" to the DDR controller "aresetn" pin TODO. 
+  11. Connect the FPGA\_sys\_reset pin "peripheral\_aresetn" to the DDR controller "aresetn" pin. 
 
 In some articles it is specified that one should not use a clocking wizard generated clock connected to the DDR controller as it would have too much jitter. In spite of this advice I have used the 200 MHz output of the clock wizard. The following pin constraints are required connecting the DDR RAM chip.
 
@@ -344,7 +355,7 @@ In some articles it is specified that one should not use a clocking wizard gener
 
 The connected AXI devices are either memory type devices or memory mapped IO devices. We have to specify the Microblaze memory map so that the AXI devices can be accessed by the bootloader and user application. Click the address editor tab.
   1. Right click Data area, unmapped slaves. For each of the following devices select assign address: ethernetlite, gpio, uartlite, timer, quad spi, mig7.
-  2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and click "exclude". TODO
+  2. The  "Instructions" mapped devices should only contain the local memory and the mig7 device. Select any other mapped devices and rigth click "exclude". 
 
 Check that the Microblaze local memory sections for both data and instructions are at least 32 kB.
 
@@ -443,7 +454,6 @@ The peripherial test application does not need any configuring.
 
 ### Flashing the user application
 
-Run the "Flash TODO" command. Select generate SREC, select the user application elf file. 
 Click the "Program Flash" menu item in the Xilinx menu. Select the TestApp.elf file "image file". The offset should be 0x003D0900 (as configured in the bootloader). The flash type is "s25fl128sxxxxx0-spi-x1\_x2\_x4". Tick "convert elf file to bootable SREC...". Check "verify after flash". And finish by clicking "Program".
 
 Reset the Nexys4 DDR by pressing the "prog" button. The bootloader should start loading and eventually run the user application. The user application will print various test messages. The RGB LED connected to the GPIO should react to one of the tests. The last tests will test the Ethernetlite interface (you'll see the Ethernet LEDs blinking twice).
