@@ -472,4 +472,28 @@ The VHDL code can be found in the [i2s\_sender](https://github.com/dwjbosman/I2S
 
 
 TODO block design: spi set to winbond, ram size mb.
+git add src/sdk/hardware/mb_design_wrapper.hdf
+git add src/sdk/workspace/Bootloader
 
+add .gitignore to Bootloader_bsp
+*.o
+*.a
+
+git add Bootloader_bsp
+git add TestApp
+
+mb_design_wrapper_hw_platform_0/.gitignore
+cache
+
+add .gitignore to TestApp_bsp
+*.o
+*.a
+git add TesTestApp
+
+.metadata/.gitignore
+*.log
+.lock
+
+sdk/.gitignore
+*.jou
+*.log
