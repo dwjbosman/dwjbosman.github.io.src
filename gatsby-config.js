@@ -33,9 +33,19 @@ module.exports = {
           {
             resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 1200
+              maxWidth: 1200,
+              showCaptions: true
             }
           },
+                {
+                  resolve: 'gatsby-remark-toc',
+                  options: {
+                    header: 'Table of Contents', // the custom header text
+                    include: [
+                      'content/posts/2018-11-01/*.md' // an include glob to match against
+                    ]
+                  }
+                },
           {
             resolve: "gatsby-remark-responsive-iframe"
           },
@@ -45,6 +55,9 @@ module.exports = {
         ]
       }
     },
+
+
+
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {
@@ -85,6 +98,7 @@ module.exports = {
         ]
       }
     },
+
     "gatsby-plugin-offline",
     {
       resolve: "gatsby-plugin-feed",

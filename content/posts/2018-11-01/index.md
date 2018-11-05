@@ -1,6 +1,6 @@
 ---
 title: "Basic Microblaze with bootloader setup"
-cover: "/logos/sine-article.jpg"
+cover: "/logos/block-design-article.png"
 category: "FPGA"
 tags: 
     - VHDL
@@ -29,12 +29,20 @@ I started following [Microblaze server](https://reference.digilentinc.com/learn/
 
 After Vivado starts click the 'create project' button.
 
-![Start vivado](doc_resources/001_start_vivado.png "Start vivado")
-![Create project](doc_resources/002_vidado_create_project.png "Create project")
-![Choose RTL project](004_vivado_rtl_project.png "Choose RTL project")
-![Select Nexys4 DDR](005_vivado_select_nexys4_ddr.png "Select Nexys4 DDR")
-![Project summary](006_vivado_project_summery.png "Project summary")
-![Basc Vivado IDE](007_vivado_ide.png "Vivado IDE")
+##Screenshots:
+
+  * Start Vivado:
+![Start vivado](resources/001_start_vivado.png "Start vivado")
+  * Create project
+![Create project](resources/002_vidado_create_project.png "Create project")
+  * Choose RTL project
+![Choose RTL project](resources/004_vivado_rtl_project.png "Choose RTL project")
+  *Select Nexys 4 DDR
+![Select Nexys4 DDR](resources/005_vivado_select_nexys4_ddr.png "Select Nexys4 DDR")
+  * Project Summary
+![Project summary](resources/006_vivado_project_summery.png "Project summary")
+  * Vivado IDE is opened
+![Basc Vivado IDE](resources/007_vivado_ide.png "Vivado IDE")
 
 
 ##Initializing version control (git)
@@ -52,7 +60,7 @@ After completing the wizard, open the TCL tab and type the following commands:
 
 ## Create constraints file (XDC)
 
-Add the empty XDC in the  project folder: .../basic\_microblaze/src/design/design.xdc. In the TCL window run
+Add an empty XDC in the  project folder: .../basic\_microblaze/src/design/design.xdc. In the TCL window run
 git add src/design/design.xdc
 
 #Create the block design
@@ -61,6 +69,10 @@ First step is to specify the architecture of the synthesized FPGA hardware block
 
 Add the block design in the  project folder: /home/<username>/Xilinx/projects/basic\_microblaze/src/blockdesign
 
+  * Create the block design:
+![Create Block Design](resources/010_create_block_design.png "Create Block Design")
+  * The Block Design window:
+![Block Design Window](resources/011_vivado_block_design_window.png "Block Design Window")
 
 ##Microblaze
 
@@ -83,6 +95,25 @@ The block design will now contain a Microblaze, Local memory, Processor System R
 
   7. Later another Processor System Reset block will be added. Rename the existing one to "cpu\_sys\_reset".
 
+###Screenshots
+
+  * Add Microblaze
+![Add Microblaze](resources/012_add_microblaze.png "Add Microblaze")
+  * Microblaze customize genera
+l![Microblaze customize general](resources/013_microblaze_customize_general.png "Microblaze customize general")
+  * Microblaze customize instructions 
+![Microblaze customize instructions](resources/014_microblaze_customize_instructions.png "Microblaze customize instructions") 
+  * Microblaze customize cache 
+![Microblaze customize cache](resources/015_microblaze_customize_cache.png "Microblaze customize cache") 
+  * Microblaze customize debug 
+![Microblaze customize debug](resources/016_microblaze_customize_debug.png "Microblaze customize debug") 
+  * Microblaze customize bus
+![Microblaze customize bus](resources/017_microblaze_customize_bus.png "Microblaze customize bus") 
+  * Microblaze block automation 
+![Microblaze block automation](resources/018_microblaze_run_block_automation.png "Microblaze block automation") 
+  * Microblaze block design result 
+![Microblaze block design result](resources/019_microblaze_blockauto_result.png "Microblaze block design result") 
+
 ##Clocking wizard
 
 Double click the "clocking wizard" to customize it:
@@ -95,9 +126,23 @@ Double click the "clocking wizard" to customize it:
   4. Connect the "reset\_n" port to the  "ext\_reset\_n" port of the Processor System Reset block.
 These clocks are generated using the FPGA's built in MMCM which can be thought of as a kind of PLL. The 200 MHz will be used for the DDR2 controller, the 50 MHz for the Quad SPI Flash and external Ethernet LAN8720A chip. The reset button in on the Nexys4 DDR will output a '0' when pressed. To use this button for resetting the various IP blocks every reset input port has to be configured as "active low". Renaming the ports is required to match the physical pin constraints in the XDC file. Add the following rows to the XDC file:
 
-  set\_property -dict {PACKAGE\_PIN E3 IOSTANDARD LVCMOS33} [get\_ports CLK100MHZ]
-  create\_clock -period 10.000 -name sys\_clk\_pin -waveform {0.000 5.000} -add [get\_ports CLK100MHZ]
-  set\_property -dict {PACKAGE\_PIN C12 IOSTANDARD LVCMOS33} [get\_ports reset\_n]
+    set\_property -dict {PACKAGE\_PIN E3 IOSTANDARD LVCMOS33} [get\_ports CLK100MHZ]
+    create\_clock -period 10.000 -name sys\_clk\_pin -waveform {0.000 5.000} -add [get\_ports CLK100MHZ]
+    set\_property -dict {PACKAGE\_PIN C12 IOSTANDARD LVCMOS33} [get\_ports reset\_n]
+
+###Screenshots
+
+  * Add clocking wizard 
+![Add clocking wizard](resources/020_add_clocking_wizard.png "Add clocking wizard")
+  * Options page 1
+![Clocking wizard options](resources/021_clocking_wizard_options.png "Clocking wizard options")
+  * Clocking wizard output options
+![Clocking wizard output options](resources/022_clocking_wizard_output.png "Clocking wizard output options")
+  * Updated block design
+![Clocking wizard integrated](resources/023_block_design_incl_clocking_wizard.png "Clocking wizard integrated")
+  * Make ports external 
+![Clocking wizard external port](resources/024_external_clocking_ports.png "Clocking wizard external port")
+
 
 ##AXI SmartConnect
 
@@ -134,9 +179,9 @@ Connect the block:
   3. Connect the "processor system reset" output port "peripheral\_aresetn" to the s\_axi\_aresetn input
   4. Add the following rows to the XDC file:
 
-  set\_property -dict {PACKAGE\_PIN G14 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[0]}]
-  set\_property -dict {PACKAGE\_PIN R11 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[1]}]
-  set\_property -dict {PACKAGE\_PIN N16 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[2]}]
+        set\_property -dict {PACKAGE\_PIN G14 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[0]}]
+        set\_property -dict {PACKAGE\_PIN R11 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[1]}]
+        set\_property -dict {PACKAGE\_PIN N16 IOSTANDARD LVCMOS33} [get\_ports {GPIO\_tri\_o[2]}]
 
 The GPIO width is chosen to 3 to be able to control the Red, Green and Blue channel of the RGB LED. THe output is renamed to "GPIO" so that physical pin constraints can be configured (later on) in the XDC file.
 
@@ -153,8 +198,8 @@ Connect the block:
   4. The interrupt pin is not connected.
   5. Add the following pin constraints to the XDC file:
 
-  set\_property -dict {PACKAGE\_PIN D4 IOSTANDARD LVCMOS33} [get\_ports UART\_txd]
-  set\_property -dict {PACKAGE\_PIN C4 IOSTANDARD LVCMOS33} [get\_ports UART\_rxd]
+        set\_property -dict {PACKAGE\_PIN D4 IOSTANDARD LVCMOS33} [get\_ports UART\_txd]
+        set\_property -dict {PACKAGE\_PIN C4 IOSTANDARD LVCMOS33} [get\_ports UART\_rxd]
 
 The serial port is accessible via USB. It uses the same USB port which is also used for JTAG and FPGA/Microblaze programming.
 
@@ -446,7 +491,8 @@ Open the TestApp\_bsp project and open "system.mss". Click "Modify this BSP's Se
 
 Click "Regenerate BSP sources". Probably the build will fail. There is a bug in Vivado 2018.2 lwip202, it does not define some xadapter code required to compile using EthernetLite. There is a [patch]() available. The patch has been applied manually in the example repository. Be care full not to regenerate the BSP sources as this will remove the patch.
 
-The changes can be viewed by looking at this diff: git diff 69b53308d4d4690ab77b53d72262df3ee429e0b d45cd8645e9563a86cef6648e0a15483d39f63f9 '*.c'
+The changes can be viewed by looking at this diff: 
+    git diff 69b53308d4d4690ab77b53d72262df3ee429e0b d45cd8645e9563a86cef6648e0a15483d39f63f9 '*.c'
 
 ### Configure the TestApp
 
@@ -462,34 +508,35 @@ Reset the Nexys4 DDR by pressing the "prog" button. The bootloader should start 
 
 First add .gitignore files to a number of folders to ignore logging files:
 
-  src/sdk/workspace/Bootloader_bsp/.gitignore:
-  *.o
-  *.a
-  
-  src/sdk/workspace/TestApp_bsp/.gitignore:
-  *.o
-  *.a
-  
-  src/sdk/workspace/mb_design_wrapper_hw_platform_0/.gitignore:
-  cache
-  
-  src/sdk/workspace/.metadata/.gitignore:
-  *.log
-  .lock
-  
-  src/sdk/.gitignore:
-  *.jou
-  *.log
+        src/sdk/workspace/Bootloader_bsp/.gitignore:
+        *.o
+        *.a
 
-  git add src/sdk/hardware/mb\_design\_wrapper.hdf
-  git add src/sdk/workspace/Bootloader
-  git add src/sdk/workspace/Bootloader\_bsp
-  git add src/sdk/workspace/TestApp
-  git add src/sdk/workspace/TestApp\_bsp
-  git add src/sdk/workspace/mb\_design\_wrapper\_hw\_platform\_0
-  git add src/sdk/workpace/.metadata
+        src/sdk/workspace/TestApp_bsp/.gitignore:
+        *.o
+        *.a
 
-  git commit --message "Added bootloader and test application with patched lwip202"
+        src/sdk/workspace/mb_design_wrapper_hw_platform_0/.gitignore:
+        cache
+
+        src/sdk/workspace/.metadata/.gitignore:
+        *.log
+        .lock
+
+        src/sdk/.gitignore:
+        *.jou
+        *.log
+
+
+        git add src/sdk/hardware/mb\_design\_wrapper.hdf
+        git add src/sdk/workspace/Bootloader
+        git add src/sdk/workspace/Bootloader\_bsp
+        git add src/sdk/workspace/TestApp
+        git add src/sdk/workspace/TestApp\_bsp
+        git add src/sdk/workspace/mb\_design\_wrapper\_hw\_platform\_0
+        git add src/sdk/workpace/.metadata
+
+        git commit --message "Added bootloader and test application with patched lwip202"
 
 # Conclusion
 

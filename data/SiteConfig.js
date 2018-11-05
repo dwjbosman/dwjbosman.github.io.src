@@ -9,7 +9,7 @@ module.exports = {
   siteDescription: "A Blog about interesting software algorithms.", // Website description used for RSS feeds/meta description tag.
   siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "1825356251115265", // FB Application ID for using app insights
-  siteGATrackingID: "UA-47311644-4", // Tracking code ID for google analytics.
+  siteGATrackingID: "UA-110475271-1", // Tracking code ID for google analytics.
   disqusShortname: "dwjbosman-github-io", // Disqus shortname.
   postDefaultCategoryID: "Tech", // Default category for posts.
   userName: "Dinne Bosman", // Username to display in the author segment.
