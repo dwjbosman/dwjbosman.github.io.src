@@ -333,11 +333,11 @@ Connect the Quad SPI block as follows:
         set\_property -dict {PACKAGE\_PIN L14 IOSTANDARD LVCMOS33} [get\_ports QSPI\_FLASH\_io2\_io]
         set\_property -dict {PACKAGE\_PIN M14 IOSTANDARD LVCMOS33} [get\_ports QSPI\_FLASH\_io3\_io]
         set\_property -dict {PACKAGE\_PIN L13 IOSTANDARD LVCMOS33} [get\_ports {QSPI\_FLASH\_ss\_io[0]}]
-  *
-![](040_quad_spi_config.png "")
-  *
-![](041_connect_quad_spi.png "")
-
+  
+  * Configure Quad SPI IP block 
+![Configure Quad SPI IP block](040_quad_spi_config.png "Configure Quad SPI IP block")
+  * Connect the Quad SPI IP block
+![Connect the Quad SPI IP block](041_connect_quad_spi.png "Connect the Quad SPI IP block")
 
 ## 3.10. AXI DDR2 controller
 
@@ -456,24 +456,24 @@ In some articles it is specified that one should not use a clocking wizard gener
 ![MIG7 Controller options](046_MIG_Controller_Options.png "MIG7 Controller options")
   * MIG7 AXI Parameters 
 ![MIG7 AXI Parameters](047_MIG_AXI_Parameter.png "MIG7 AXI Parameters")
-  *  
-![](048_MIG_Memory_Options.png "")
-  *  
-![](049_MIG_FPGA_Options.png "")
-  *  
-![](050_MIG_Extended_FPGA_Options.png "")
-  *  
-![](051_MIG_IO_Planning.png "")
-  *  
-![](052_MIG_Pin_Selection_1.png "")
-  *  
-![](053_MIG_Pin_Selection_2.png "")
-  *  
-![](054_MIG_System_Signals.png "")
-  *  
-![](055_MIG_Summary.png "")
-  *  
-![](056_Memory_Interface_Generator_connections.png "")
+  * MIG7 Memory options  
+![MIG7 Memory options](048_MIG_Memory_Options.png "MIG7 Memory options")
+  * MIG7 FPGA options 
+![MIG7 FPGA options](049_MIG_FPGA_Options.png "MIG7 FPGA options")
+  * Extended FPGA options page 
+![MIG7 Extended FPGA options page](050_MIG_Extended_FPGA_Options.png "MIG7 Extended FPGA options page")
+  * Memory Controller IO Planning page
+![MIG7 Memory controller IO Planning](051_MIG_IO_Planning.png "MIG7 Memory controller IO planning")
+  * MIG7 Pin selection page  
+![MIG7 Pin selection page ](052_MIG_Pin_Selection_1.png "MIG7 Pin selection page ")
+  * MIG7 Pin selection page 2 
+![MIG7 Pin selection page 2](053_MIG_Pin_Selection_2.png "MIG7 Pin selection page 2")
+  * MIG7 System Signals page 
+![MIG7 System Signals page](054_MIG_System_Signals.png "MIG7 System Signals page")
+  * MIG7 Summary 
+![MIG7 Summary report](055_MIG_Summary.png "MIG7 SUmmary")
+  * Memory controller connections
+![Memory controller connections](056_Memory_Interface_Generator_connections.png "Memory controller connections")
 
 ## 3.11. Address map
 
@@ -483,10 +483,7 @@ The connected AXI devices are either memory type devices or memory mapped IO dev
 
 Check that the Microblaze local memory sections for both data and instructions are at least 32 kB.
 
-  *
-![](057_Address_Editor_before.png "")
-  *
-![](058_Address_Editor_after.png "")
+![Address map](058_Address_Editor_after.png "Address Map")
 
 
 # 4. XDC pin constraints
@@ -509,12 +506,10 @@ Some additional constraints are required to get rid of a warning:
   3. Click "Run implementation"
   4. Click "Open implemented design" and select the IO ports tab. If the XDC contains no errors. It should look like the following screenshot:
 
-  *
-![](059_HDL_wrapper.png "")
-  *
-![](060_Implemented_Design_IO_Ports.png "")
-
-TODO
+  * Create the HDL wrapper
+![Create HDL wrapper](059_HDL_wrapper.png "Create HDL wrapper")
+  * Implemented design IO Port Mapping
+![Implemented design IO Ports](060_Implemented_Design_IO_Ports.png "Implemented design IO ports")
 
 # 6. Generate bit file
 
@@ -526,10 +521,10 @@ Open the tools -> settings menu. Select bit stream options under project setting
 
 Run the bit stream generator.
 
-  *
-![](061_bit_stream_options.png "")
-  *
-![](062_Additional_bit_stream_options.png "")
+  * Set the Bit stream options
+![Bit stream options](061_bit_stream_options.png "Bit stream options")
+  * Additional bit stream options
+![Additional bit stream options](062_Additional_bit_stream_options.png "Additional bit stream options")
 
 # 7. Commit the block design to version control
 
@@ -544,29 +539,29 @@ First export the hardware definition. Select the File menu -> export -> export h
 
 Click launch "SDK" from the project menu. Choose the relevant src/sdk/workspace folder for as workspace. Vivado will start the SDK which is the Eclipse C/C++ development IDE. The workspace will contain the hardware definition "mb\_design\_wrapper....". Click the "system.hdf" file and check that the memory map is correct.
 
-  *
-![](063_export_hardware.png "")
-  *
-![](064_launch_sdk.png "")
-  *
-![](065_Xilinx_SDK.png "")
+  * Export hardware
+![SDK export hardware](063_export_hardware.png "SDK export hardware")
+  * Launch the SDK
+![Launch the SDK](064_launch_sdk.png " Launch the Xlinx SDK")
+  * Default SDK workspace
+![Default SDK workspace](065_Xilinx_SDK.png "Default SDK workspace")
  
 ## 8.1. Create bootloader and BSP.
 
 Create a new "Application project" named "Bootloader". In the "Target software" pane select "Create new" board support package. Name the BSP "Bootloader\_bsp". Click "next" and select the "SREC SPI bootloader" template. Click "Finish".
 
-![](066_Xilinx_SDK_new_Application_project.png "")
+![Create application project](066_Xilinx_SDK_new_Application_project.png "Create application project")
 
 ### 8.1.1. Configure Bootloader BSP
 
 Open the Bootloader\_bsp project and open "system.mss". Click "Modify this BSP's Settings". Select "xilisf" in the navigation tree view. Set the "serial\_flash\_family" type to 5 (Spansion). Click "Regenerate BSP sources". 
 
-  *
-![](068_Xilinx_SDK_BSP.png "")
-  *
-![](069_Xilinx_SDK_Modify_BSP.png "")
-  *
-![](070_BSP_Settings_Xilisf.png "")
+  * Open the bootloader\_bsp project
+![Bootloader BSP project](068_Xilinx_SDK_BSP.png "Bootloader BSP project")
+  * Modify the Bootloader BSP
+![Modify the Bootloader BSP](069_Xilinx_SDK_Modify_BSP.png "Modify the Bootloader BSP")
+  * Xilisf settings
+![Xilisf settings](070_BSP_Settings_Xilisf.png "Xilisf settings")
 
 ### 8.1.2. Configure Bootloader
 
@@ -580,7 +575,7 @@ In bootloader.c the VERBOSE flag should be defined (by default). This will cause
 
 This will speedup things while still giving some insight in the bootloading progress. After saving Eclipse will rebuild the Bootloader. If all is well the Bootloader should compile without errors now.
 
-![](071_Xilinx_SDK_Bootloader_Linker_map.png "")
+![Check bootloader linker map](071_Xilinx_SDK_Bootloader_Linker_map.png "Check bootloader linker map")
 
 ### 8.1.3. Programming the FPGA
 
@@ -590,7 +585,7 @@ Run the program FPGA command from the Xilinx menu. Select the bootloader.elf fil
 
 After the programming completes, in the serial terminal you should see the bootloader starting (and failing).
 
-![](072_Bootloader_Program_FPGA.png "")
+![Program FPGA](072_Bootloader_Program_FPGA.png "Program FPGA")
 
 ### 8.1.4. Flashing the FPGA bitstream.
 
@@ -598,13 +593,13 @@ Next click the "Program Flash" menu item in the Xilinx menu. Select the download
 
 After flashing you can restart the Nexys4 DDR by pressing the "prog" button. Again the bootloader should start and fail. Note that while the FPGA can load its bit file from flash it can also still be programmed as usual using JTAG.
 
-![](073_Program_Flash_Bootloader.png "")
+![Flash FPGA bootloader](073_Program_Flash_Bootloader.png "Flash FPGA Bootloader")
 
 ## 8.2. Create user application
 
 Create a new project, named TestApp. Select Create new board support package named "TestApp\_bsp". Click next and select the "Peripheral tests" template.
 
-![](074_Xilinx_SDK_Create_User_App.png "")
+![Create user application](074_Xilinx_SDK_Create_User_App.png "Create user application")
 
 ### 8.2.1. Configure TestApp BSP
 
@@ -615,7 +610,7 @@ Click "Regenerate BSP sources". Probably the build will fail. There is a bug in 
 The changes can be viewed by looking at this diff: 
     git diff 69b53308d4d4690ab77b53d72262df3ee429e0b d45cd8645e9563a86cef6648e0a15483d39f63f9 '*.c'
 
-![](075_Xilinx_SDK_Configure_lwip.png "")
+![Configure lwip](075_Xilinx_SDK_Configure_lwip.png "Configure lwip")
 
 ### 8.2.2. Configure the TestApp
 
@@ -627,7 +622,7 @@ Click the "Program Flash" menu item in the Xilinx menu. Select the TestApp.elf f
 
 Reset the Nexys4 DDR by pressing the "prog" button. The bootloader should start loading and eventually run the user application. The user application will print various test messages. The RGB LED connected to the GPIO should react to one of the tests. The last tests will test the Ethernetlite interface (you'll see the Ethernet LEDs blinking twice).
 
-![](076_Xilinx_SDK_Flash_User_App.png "")
+![Flash the user application](076_Xilinx_SDK_Flash_User_App.png "Flash user application")
 
 ## 8.3. Committing the SDK code
 
