@@ -42,7 +42,8 @@ module.exports = {
                   options: {
                     header: 'Table of Contents', // the custom header text
                     include: [
-                      'content/posts/2018-11-01/*.md' // an include glob to match against
+                      'content/posts/2018-11-01/blaat.md' // an include glob to match against
+
                     ]
                   }
                 },
