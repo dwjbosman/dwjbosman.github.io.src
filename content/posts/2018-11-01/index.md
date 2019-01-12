@@ -24,7 +24,7 @@ This tutorial is setup as follows:
 <h2>Table of contents</h2>
 
 <ul>
-<li><a href="#1-previous-work">1. Previous workIntroduction</a></li>
+<li><a href="#1-previous-work">1. Previous work</a></li>
 <li>
 <p><a href="#2-create-the-project">2. Create the project</a></p>
 <ul>
