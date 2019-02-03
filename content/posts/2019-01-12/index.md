@@ -24,7 +24,7 @@ The described management functions can be implemented with ease on a Linux platf
 
 In this tutorial the programmable logic (PL) will be configured to contain a GPIO block connected via AXI to the ARM chips in the Zynq programmable system (PS). Linux will run on the PS and will be able to access the GPIO block in the PL.
 
-The Yocto Docker file (see blow) and VHDL code can be found in the [yocto\_zedboard](https://github.com/dwjbosman/yocto_zedboard.git) repository.
+The Yocto files and VHDL code can be found in the [yocto\_zedboard](https://github.com/dwjbosman/yocto_zedboard.git) repository.
 
 ![Yocto GPIO ZED board](resources/linux_board.gif "Yocto on ZED board")
 
