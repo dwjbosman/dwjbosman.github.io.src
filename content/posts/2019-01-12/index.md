@@ -178,7 +178,7 @@ ubuntu@localhost:/sys/class/gpio$ cat gpiochip1016/label
 /amba_pl/gpio@41200000
 </pre>
 
-The address corresponds to the one specify by the hdf file. To use the interfaces:
+The address corresponds to the one specified in the hdf file. To use the interfaces:
 
 <pre>
 #enable the first two bits of the inputs 
