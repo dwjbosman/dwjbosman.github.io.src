@@ -54,11 +54,19 @@ The main DDR memory will only be used to retrieve data. The firmware itself will
 ** Uart0 (command line terminal)
 ** Uart1 (auxilary serial communication between Microblaze and Linux)
 ** DDR Ram
-** SD card (TODO, boot and root partition Linux)
+** SD card (boot and root partition Linux)
+** M\_AXI\_GP0 
+** S\_AXI\_HP0
 
-TODO check
+The Master General Purpose AXI port 0 (M\_AXI\_GP0) is used to connect an AXI interconnect. 
 
-One of the General Purpose AXI ports is used to connect an AXI interconnect. The interconnect is attached to GPIO and a BRAM controller. The GPIO is used to control LEDs,  the Microblaze reset signal and the BRAM mux. The reset and mux signal have also been connected to LEDs.
+## Interconnect
+
+The interconnect has two slave interfaces. One is connected to the PS, the other one to the Microblaze. This allows both the Microblaze and PS to access peripherals. The interconnect is attached to GPIO, a BRAM controller and UARTlite. The peripherals have the following functions:
+
+* The GPIO is used to control LEDs,  the Microblaze reset signal and the BRAM mux. The reset and mux signal have also been connected to LEDs. The LEDs are controlled by both PS and Microblaze. 
+* The BRAM controller is used to allow acessing the Microblaze BRAM from the PS.
+* The UARTlite is used by the Microblaze.
 
 ## BRAM mux
 
@@ -80,14 +88,174 @@ Vivado is delivered including the arm toolchain required for compiling programs 
 TODO toolchain config
 TODO elf to bin, remove libmetal
 
-## ps\_bsp Board support package for Linux
-
+## design\_1\_wrapper\_hw\_platform\_0
 ## ps\_device\_tree Device tree
 
 This project generates the device trees required for Yocto Linux.
 
 ## ps\_mem\_util Linux shared memory utility
 
+This project builds a simple memory IO utility. It allows one to read or write a range of physical memory addresses. The utility can copy a file to memory or read a file from memory. 
+
+* The utility can be used to copy shared memory to a file. In this case memory is read from the range 0x1000\_0000 - 0x1e00\_0000
+* The utility can be used to program the Microblaze. In this case a file is copied to memory location 0x4000\_0000 - 0x4000\_7FFF
+
+The utility makes use of the Linux <pre>mmap</pre> function.
+<pre>
+int read_file( char *argv[]) {
+	int fd, fd_out;
+
+	off_t size;
+	uint32_t pages;
+	off_t size_rounded;
+	off_t file_index;
+
+	char* fname = 0;
+	char* addr = argv[3];
+	char* len  = argv[4];
+
+	fname = argv[2];
+
+
+	fd_out = open(fname, O_RDWR | O_CREAT);
+	if (fd_out < 1) {
+		printf("Unable to open output file %s\n",fname );
+	}
+
+	void* load_address = (void*)strtoul(addr, NULL, 16);
+	printf("Loading at address %p\n ",load_address);
+
+	fd = open("/dev/mem", O_RDWR | O_SYNC);
+
+	if (fd < 1) {
+		printf("Unable to open mem device file\n");
+		close(fd_out);
+		return -1;
+	}
+
+	// determine size
+	size = strtoul(len, NULL, 10);
+	pages = size / 4096;
+	size_rounded = (pages+1) * 4096;
+	
+	printf("Reading %lu bytes\n ",size);
+
+	//base_address = mmap(load_address, size_rounded, PROT_READ, MAP_SHARED | MAP_UNINITIALIZED | MAP_FIXED, fd, 0);
+
+	base_address = mmap(0, size_rounded, PROT_READ, MAP_SHARED | MAP_UNINITIALIZED, fd, load_address);
+	if (base_address == MAP_FAILED) {
+		printf("mmap failed! %s\n", strerror(errno));
+		close(fd);
+		close(fd_out);
+		return -1;
+	}
+
+
+	for (file_index = 0; file_index < size; file_index++) {
+		uint8_t file_byte;
+		file_byte = base_address[file_index];
+		ssize_t result = write(fd_out, &file_byte,1);
+
+		if (result<0) {
+			printf("Error during filewrite: %s", strerror(errno));
+			break;
+		}
+
+		if ((file_index % 100) == 0) {
+			printf(".");
+		}
+	}
+	printf("\n");
+
+	munmap(base_address, size);
+	close(fd_out);
+	close(fd);
+	return 0;
+</pre>
+
+<pre>
+int write_file( char *argv[]) {
+	int fd, fd_in;
+
+	off_t size;
+	uint32_t pages;
+	off_t size_rounded;
+	off_t file_index;
+
+	char* fname = 0;
+	char* addr = argv[3];
+
+	fname = argv[2];
+
+
+	fd_in = open(fname, O_RDONLY);
+	if (fd_in < 1) {
+		printf("Unable to open input file %s\n",fname );
+	}
+
+	void* load_address = (void*)strtoul(addr, NULL, 16);
+	printf("Loading at address %p\n ",load_address);
+
+	fd = open("/dev/mem", O_RDWR | O_SYNC);
+
+	if (fd < 1) {
+		printf("Unable to open mem device file\n");
+		close(fd_in);
+		return -1;
+	}
+
+	// determine size
+	size = lseek(fd_in, 0L, SEEK_END);
+	lseek(fd_in, 0L, SEEK_SET);
+
+	pages = size / 4096;
+	size_rounded = (pages+1) * 4096;
+	
+	printf("Copying %ld bytes\n", size);
+	printf("Mapping %ld bytes\n", size_rounded);
+
+	//size = 0x2000;
+
+	/* Step 4, map the device memory into the process address space so that it can be
+ 	 * accessed
+ 	 */
+
+	//base_address = mmap(load_address, size_rounded, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_UNINITIALIZED | MAP_FIXED, fd, 0);
+	base_address = mmap(0, size_rounded, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_UNINITIALIZED, fd, load_address);
+	if (base_address == MAP_FAILED) {
+		printf("mmap failed! %s\n", strerror(errno));
+		close(fd);
+		close(fd_in);
+		return -1;
+	}
+
+
+	for (file_index = 0; file_index < size; file_index++) {
+		uint8_t file_byte;
+		ssize_t result = read(fd_in, &file_byte,1);
+
+		if (result<0) {
+			printf("Error during fileread: %s", strerror(errno));
+			break;
+		}
+		base_address[file_index] = file_byte;
+
+		if (base_address[file_index] != file_byte) {
+			printf("Write failed, offset %lx failed\n", file_index);
+			break;
+		}
+		if ((file_index % 100) == 0) {
+			printf(".");
+		}
+	}
+	printf("\n");
+
+	munmap(base_address, size);
+	close(fd_in);
+	close(fd);
+	return 0;
+}
+</pre>
 
 
 
@@ -153,7 +321,7 @@ Yocto can generate an installer with the cross compilers required for build soft
 
 <pre>bitbake core-image-minimal -c populate_sdk</pre>
 
-Initially this command gave a number of errors. There were missing dependencies, these have been added to the yocto/ meta-dts/ recipes-kernel/ linux/ kernel-devsrc.bbappend file.
+Initially this command gave a number of errors because of missing dependencies, these have been added to the yocto/ meta-dts/ recipes-kernel/ linux/ kernel-devsrc.bbappend file.
 
 TODO install SDK
 TODO add to Eclipse
