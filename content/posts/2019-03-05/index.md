@@ -26,12 +26,16 @@ Input to the audio engine are the slowly varying frequency, amplitude, pan and n
 
 It would be great if the envelope generator could be developed using a traditional programming language instead of resorting to a pure logic approach. A standard programming language would offer more ease while development and possibly greater flexibility. However an important drawback could be the performance of the software as the software needs to provide data at 200 Hz for 32768 oscillators. In this article and the following article I will focus on the feasibility to use a Microblaze softcore as a envelope generator. This article focuses on the basic architecure. In the next article I will be investigating the performance.
 
+# Concept
+
 This article describes the following work:
   * Addition of a Microblaze softcore to the Zynq 7020 FPGA.
   * Program the Microblaze from Linux running on the PS.
   * Running bare metal firmware on the Microblaze.
-  * Providing shared memory between Linux and the Microblaze (Asymmetric Multi Processing).
+  * Providing shared DDR memory between Linux and the Microblaze (Asymmetric Multi Processing).
   * Using Yocto to configure the Linux platform.
+
+![AMP schematic](resources/schematic.png "Asymmetric Multi Processing (AMP) setup")
 
 # Block Design
 
@@ -72,13 +76,12 @@ The BRAM mux allows one to connect two BRAM controllers to a single BRAM port. A
   * In a first try I tried to package a block design with an embedded/referenced RTL module as an IP. Although this seems to be supported since Vivado 2018.1 I was not able to get this to work. During implementation the referenced RTL module could not be found while using the IP. It was instantiated as a Black Box.
   * Although the types of the input and output interfaces were set to BRAM\_CTRL during packaging,  the type was showed as 'OTHER' while using the IP. This was solved by manually updating the block design in which the IP is used.
 
-TODO bram_mux.png
+![BRAM mux interface](resources/bram_interface.png "BRAM interface")
 
 
 ## Address map
 
-TODO address.png
-
+![AXI address map](resources/address.png "Address Map")
 
 # SDK
 
@@ -143,7 +146,7 @@ Have look at the ps\_mem\_util source code for the details. Note that the code i
 
 A board support package was generated for the Microblaze processor. Libmetal was disabled in order to fit the example application into 32kB BRAM.
 
-TODO mb_bsp.png
+![Mircoblaze bsp](resources/mb_bsp.png "Microblaze board support package")
 
 ## mb\_hello Hello World application for Microblaze
 
@@ -202,10 +205,10 @@ Creating a fragment can be done as follows (this has already been done in the re
 
 * First build a minimal image 
 <pre>bitbake core-image-minimal</pre>
-* TODO run menuconfig 
-<pre>TODO bitbake core-image-minimal</pre>
+* configure the kernel
+<pre>bitbake linux-xlnx -c menuconfig</pre>
 * Then create a diff fragment
-<pre>TODO bitbake core-image-minimal</pre>
+<pre>bitbake linux-xlnx -c diffconfig</pre>
 * Copy the fragment to the meta-dts layer and add it to the kernel recipes-kernel/linux/linux-xlnx_%.bbappend file.  
 * Rebuild the image
 <pre>bitbake core-image-minimal</pre>
@@ -219,61 +222,74 @@ Yocto can generate an installer with the cross compilers required for build soft
 
 Initially this command gave a number of errors because of missing dependencies, these have been added to the yocto/ meta-dts/ recipes-kernel/ linux/ kernel-devsrc.bbappend file.
 
-TODO install SDK
-TODO add to Eclipse
+After building the SDK can be found in:
 
+<pre>
+poky/build/tmp/work/zedboard_zynq7-poky-linux-gnueabi/core-image-minimal/1.0-r0/x86_64-deploy-core-image-minimal-populate-sdk/ poky-glibc-x86_64-core-image-minimal-cortexa9hf-neon-toolchain-2.5.2.sh
+</pre>
 
+Execute the script to install the SDK.
 
+## Root filesystem
+
+I use an Ubuntu root filesystem. Installing this is described in the previous article. One patch is needed. The toolchain compiled by Yocto expects the system library to be at a certain location. If it is not then execution of applications compiled with the toolchain will fail with a very vague error. To get the applications built with the Yocto toolchain working a sym link has to be added.
 
 # Testing
 
-After building the Linux kernel copy the files to an SD card. Formatting the SD card is described in the previous TODO article. 
+After building the Linux kernel copy the files to an SD card. Formatting the SD card is described in the previous article. 
 
-Copy the files to the boot partition:
+Copy the files located in "poky/build/tmp/deploy/images/zedboard-zynq7" to the boot partition:
 
-* poky/build/tmp/deploy/boot.bin -> boot/boot.bin        TODO check
-* poky/build/tmp/deploy/uImage.bin -> boot/uImage.bin        TODO check
-* uBoot, etc.
+* boot.bin -> boot/boot.bin The first stage bootloader
+* system-top.dtb -> uImage-system-top.dtb (Compiled device tree)
+* u-boot.img -> u-boot.img (Kernel bootloader)
+* uImage -> uImage (Linux kernel)
 
-* Convert the fpga bit file (in the design_wrapper TODO) to a fpga.bin file using the yocto/fpga-bit-to-bin.py script. Copy it to the boot parition -> fpga.bin
+Add a uEnv.txt file:
 
-* Copy the compiled executable ps_mem_util.elf (from the SDK) to the root partition /root/ubuntu/
-* Copy the mb_test.bin and mb_hello.bin firmware images (from the SDK) to the root partition /root/ubuntu/
-* Copy the microblaze scripts (yocto_zedboard/yocto/linux_utils/) to the root parition /root/ubuntu
+<pre>
+machine_name=zedboard-zynq7
+kernel_image=uImage
+kernel_load_address=0x2080000
+devicetree_image=uImage-system-top.dtb
+devicetree_load_address=0x2000000
+bootargs=console=ttyPS0,115200 root=/dev/mmcblk0p2 rw earlyprintk rootfstype=ext4 rootwait devtmpfs.mount=1
 
-Unmount the SD card and plug it in the Zedboard. Connect a USB cable to TODO connector and power on the Zed board. Wait a +/- 20 second and then use a terminal program to open a serial terminal (eg. /dev/ttyACM0). Press the TODO button to reboot linux. You should see the boot messages on the terminal.
+loadkernel=fatload mmc 0 ${kernel_load_address} ${kernel_image}
+loaddtb=fatload mmc 0 ${devicetree_load_address} ${devicetree_image}
+bootkernel=run loadkernel && run loaddtb && bootm ${kernel_load_address} - ${devicetree_load_address}
+uenvcmd=run bootkernel
+</pre>
+      
+* Convert the fpga bit file (in the design\_1\_wrapper\_hw\_platform\_0) to a fpga.bin file using the yocto/fpga-bit-to-bin.py script. Copy it to the boot parition -> fpga.bin
+
+* Copy the compiled executable ps\_mem\_util.elf (from the SDK) to the root partition /root/ubuntu/
+* Copy the mb\_test.bin and mb\_hello.bin firmware images (from the SDK) to the root partition /root/ubuntu/
+* Copy the microblaze scripts (yocto\_zedboard/yocto/linux\_utils/) to the root parition /root/ubuntu
+
+Unmount the SD card and plug it in the Zedboard. Connect a USB cable to UART connector and power on the Zed board. Wait a +/- 20 second and then use a terminal program to open a serial terminal (eg. /dev/ttyACM0). Press the PS-RST button to reboot linux. You should see the boot messages on the terminal.
 
 Login and become root. 
 
-TODO add lib link due to toolchain diff.
-
-
 Perform the following commands
-./program_mb mb_hello.bin
-./unlock_bram.sh
-./release_mb.sh
+./program\_mb mb\_hello.bin
+./unlock\_bram.sh
+./release\_mb.sh
 You should see the LEDs beeing turned on and off by the Microblaze.
 
 Test the shared memory:
 
-./program_mb mb_test.bin
-./unlock_bram.sh
-./release_mb.sh
-Wait a second and then use the ps_mem_utility to read 512 bytes from the shared memory:
-ps_mem_util r 0x10000000 512 test.bin
+./program\_mb mb\_test.bin
+./unlock\_bram.sh
+./release\_mb.sh
+Wait a second and then use the ps\_mem\_utility to read 512 bytes from the shared memory:
+
+ps\_mem\_util r 0x10000000 512 test.bin
 This file should contain increasing numbers which were written in the memory by the microblaze.
-
-
-
-
-
-
 
 # Conclusion
 
+This article showed how to set up a basic AMP system using Linux on the ARM A9 cores and a bare metal Microblaze core.  When running at 100 Mhz the Microblaze will be probably too slow to handle streaming the sine track parameters. This will be investigated further in the following article.
+
 The Yocto files, vivado project and VHDL code can be found in the [yocto\_zedboard](https://github.com/dwjbosman/yocto_zedboard.git) repository in the AMP branch.
-
-
-![Yocto GPIO ZED board](resources/linux_board.gif "Yocto on ZED board")
-
 
