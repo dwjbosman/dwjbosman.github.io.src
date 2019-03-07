@@ -42,7 +42,8 @@ module.exports = {
                   options: {
                     header: 'Table of Contents', // the custom header text
                     include: [
-                     'content/posts/2019-01-12/index.md'
+                     'content/posts/2019-01-12/index.md',
+                     'content/posts/2019-03-05/index.md'
                     ]
                   }
                 },
