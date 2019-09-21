@@ -50,7 +50,7 @@ Some editors have support for remote editing (for example via sshfs) but they st
 <br>
 <br>
 
-By installing Theia and its back end in a Docker image the ideal situation is realized. By providing a Docker Image one can easily run the whole back end in an isolated container. This container could run in the cloud or locally. One of the more challenging tasks while designing the Docker image was to create a few scripts to instantiate the Docker image in such a way that you can actually access your files outside the isolated container. I'm currently busy finalizing the embedded docker Theia image. You can find it [here](https://github.com/theia-ide/theia-apps/tree/theia-rust-embedded-docker)
+By installing Theia and its back end in a Docker image the ideal situation is realized. By providing a Docker Image one can easily run the whole back end in an isolated container. This container could run in the cloud or locally. One of the more challenging tasks while designing the Docker image was to create a few scripts to instantiate the Docker image in such a way that you can actually access your files outside the isolated container. I'm currently busy finalizing the embedded docker Theia image. You can find it [here](https://github.com/theia-ide/theia-apps/tree/theia-rust-embedded-docker). There is a README which contains further instructions.
 
 This Docker image is not yet available in the main branch of theia-apps, but you can try it from the theia-rust-embedded-docker branch until I finish it. It already can compile Rust programs for ARM, run them in Qemu and even debug them using GDB. A Rust IDE for non embedded development is already available in master. Have a look at the other apps as well. On my wish list is is still an ADA IDE based on Theia. 
 
